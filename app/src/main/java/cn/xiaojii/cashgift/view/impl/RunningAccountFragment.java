@@ -1,10 +1,15 @@
 package cn.xiaojii.cashgift.view.impl;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
+import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.bean.RunningAccountBean;
 import cn.xiaojii.cashgift.interactor.RunningAccountInterator;
 import cn.xiaojii.cashgift.presenter.impl.RunningAcountPresenter;
@@ -19,10 +24,13 @@ public class RunningAccountFragment extends BaseFragment implements IRunningAcco
 
     private RunningAcountPresenter runningAcountPresenter;
 
+
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_runningaccount, null);
         runningAcountPresenter = new RunningAcountPresenter(this, new RunningAccountInterator());
+        return view;
     }
 
     @Override
