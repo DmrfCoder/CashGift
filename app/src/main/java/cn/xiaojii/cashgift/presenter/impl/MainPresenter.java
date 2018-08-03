@@ -1,4 +1,4 @@
-package cn.xiaojii.cashgift.presenter;
+package cn.xiaojii.cashgift.presenter.impl;
 
 import cn.xiaojii.cashgift.view.IMainView;
 

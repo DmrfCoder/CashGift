@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.view.IBaseFragment;
+import cn.xiaojii.cashgift.view.IBaseView;
 import cn.xiaojii.cashgift.view.IMainView;
 
 /**
@@ -23,7 +23,7 @@ public class MainActivity extends FragmentActivity implements IMainView {
     }
 
     @Override
-    public void startfragment(IBaseFragment targetFragment) {
+    public void startfragment(IBaseView targetFragment) {
 
     }
 }
