@@ -61,9 +61,9 @@ public class MainInterator {
         void OnInitSuccess(List<RunningAccountBean> runningAccountBeanList);
     }
 
-    public void initData(Context context, OnInitDataListener onInitDataListener) {
+    public void initData( OnInitDataListener onInitDataListener) {
 
-        String fileContent = ReadFileToStringUtil.Read(context, GlobalBean.filename);
+        String fileContent = ReadFileToStringUtil.read( GlobalBean.filename);
         List<RunningAccountBean> runningAccountBeanList = JsonToListUtil.jsonToList(fileContent);
 
         if (runningAccountBeanList == null) {

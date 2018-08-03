@@ -33,7 +33,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrct
 
     @Override
     public void initData() {
-        mainInterator.initData((Context) mainView, this);
+        mainInterator.initData(this);
     }
 
     @Override

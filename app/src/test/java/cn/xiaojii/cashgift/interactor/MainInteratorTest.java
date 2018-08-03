@@ -61,4 +61,20 @@ public class MainInteratorTest {
         });
     }
 
+
+    @Test
+    public void testInitData() {
+        mainInterator.initData(new MainInterator.OnInitDataListener() {
+            @Override
+            public void OnInitError() {
+                Log.i(TAG, "OnInitError:");
+            }
+
+            @Override
+            public void OnInitSuccess(List<RunningAccountBean> runningAccountBeanList) {
+                Log.i(TAG, "onAddSuccess:" + runningAccountBeanList.toString());
+            }
+        });
+    }
+
 }

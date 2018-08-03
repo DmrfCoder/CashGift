@@ -11,4 +11,5 @@ public  class GlobalBean {
     }
 
     public static String filename="demo_cash_gift";
+    public static String filepath="CashGift";
 }
