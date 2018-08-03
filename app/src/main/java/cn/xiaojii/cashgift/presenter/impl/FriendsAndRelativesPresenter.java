@@ -12,7 +12,7 @@ import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
  * @date 2018/8/3
  */
 
-public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresenter, FriendsAndRelativesInteractor.OnInquireFinishedListenr {
+public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresenter, FriendsAndRelativesInteractor.OnInquireFinishedListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
 

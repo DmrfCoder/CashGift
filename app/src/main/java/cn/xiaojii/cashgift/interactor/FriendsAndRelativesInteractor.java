@@ -10,7 +10,7 @@ import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
  */
 
 public class FriendsAndRelativesInteractor {
-    public interface OnInquireFinishedListenr {
+    public interface OnInquireFinishedListener {
         /**
          * 监听查询失败或查询无结果
          */
@@ -24,7 +24,7 @@ public class FriendsAndRelativesInteractor {
         void onInquireSuccess(List<FriendsAndRelativesBean> friendsAndRelativesBeanList);
     }
 
-    public void Inquire(final String name, final OnInquireFinishedListenr onInquireFinishedListenr) {
+    private void Inquire(final String name, final OnInquireFinishedListener onInquireFinishedListener) {
 
     }
 }
