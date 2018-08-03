@@ -11,6 +11,7 @@ import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.util.JsonToListUtil;
 import cn.xiaojii.cashgift.util.ReadFileToStringUtil;
 import cn.xiaojii.cashgift.view.IMainView;
+import cn.xiaojii.cashgift.view.impl.MainActivity;
 
 /**
  * @author dmrfcoder
@@ -28,7 +29,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrct
 
     @Override
     public void addProject(RunningAccountBean runningAccountBean) {
-
+        mainInterator.addRunningAccount(runningAccountBean, this);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrct
 
     @Override
     public void onAddSuccess(List<RunningAccountBean> runningAccountBeanList) {
-
+        ((MainActivity) mainView).CurFragment.updateData(runningAccountBeanList);
     }
 
     @Override

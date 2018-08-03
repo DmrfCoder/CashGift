@@ -35,17 +35,27 @@ import cn.xiaojii.cashgift.widght.NoScrollViewPager;
 @SuppressLint("Registered")
 public class MainActivity extends FragmentActivity implements IMainView, TabHost.OnTabChangeListener {
 
+
     private FragmentTabHost fragmentTabHost;
     private LayoutInflater layoutInflater;
     private Class fragmentArray[] = {FriendsAndRelativesFragment.class, RunningAccountFragment.class, ProjectTableFragment.class, DiscoverFragment.class, MoreFragment.class};
     private int imageViewArray[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
     private int imageSelectedViewArray[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
     private String textViewArray[] = {"亲友团", "流水账", "项目表", "发现", "更多"};
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
+    private List<BaseFragment> fragmentList = new ArrayList<>();
     private NoScrollViewPager vp;
 
 
+    private FriendsAndRelativesFragment friendsAndRelativesFragment = new FriendsAndRelativesFragment();
+    private RunningAccountFragment runningAccountFragment = new RunningAccountFragment();
+    private ProjectTableFragment projectTableFragment = new ProjectTableFragment();
+    private DiscoverFragment discoverFragment = new DiscoverFragment();
+    private MoreFragment moreFragment = new MoreFragment();
+
     public IMainPresenter mainPresenter;
+
+    public BaseFragment CurFragment;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -94,11 +104,6 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
     }
 
     private void initPage() {
-        FriendsAndRelativesFragment friendsAndRelativesFragment = new FriendsAndRelativesFragment();
-        RunningAccountFragment runningAccountFragment = new RunningAccountFragment();
-        ProjectTableFragment projectTableFragment = new ProjectTableFragment();
-        DiscoverFragment discoverFragment = new DiscoverFragment();
-        MoreFragment moreFragment = new MoreFragment();
 
 
         fragmentList.add(friendsAndRelativesFragment);
@@ -106,7 +111,7 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
         fragmentList.add(projectTableFragment);
         fragmentList.add(discoverFragment);
         fragmentList.add(moreFragment);
-
+        CurFragment = fragmentList.get(0);
         vp.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         fragmentTabHost.getTabWidget().setDividerDrawable(null);
     }
@@ -128,6 +133,8 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
 
 
         int position = fragmentTabHost.getCurrentTab();
+
+        CurFragment = fragmentList.get(position);
         for (int i = 0; i < fragmentTabHost.getTabWidget().getChildCount(); i++) {
             TextView tv = (TextView) fragmentTabHost.getTabWidget().getChildAt(i).findViewById(R.id.id_tab_name);
             ImageView iv = (ImageView) fragmentTabHost.getTabWidget().getChildAt(i).findViewById(R.id.id_tab_icon);

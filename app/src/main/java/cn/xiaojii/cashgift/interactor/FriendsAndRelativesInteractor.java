@@ -13,6 +13,13 @@ import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
  */
 
 public class FriendsAndRelativesInteractor {
+
+    private List<FriendsAndRelativesBean> friendsAndRelativesBeanList;
+
+    public void setFriendsAndRelativesBeanList(List<FriendsAndRelativesBean> friendsAndRelativesBeanList) {
+        this.friendsAndRelativesBeanList = friendsAndRelativesBeanList;
+    }
+
     public interface OnInquireFinishedListener {
         /**
          * 监听查询失败或查询无结果

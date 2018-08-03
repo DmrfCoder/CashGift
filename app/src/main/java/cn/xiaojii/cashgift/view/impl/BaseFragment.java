@@ -3,11 +3,15 @@ package cn.xiaojii.cashgift.view.impl;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+
+import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.bean.GlobalBean;
@@ -22,10 +26,17 @@ import cn.xiaojii.cashgift.view.IBaseView;
 
 public class BaseFragment extends Fragment implements IBaseView {
     public void showAddprojectDialog(final Context context) {
-        Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(context);
         View view1 = LayoutInflater.from(context).inflate(
                 R.layout.dialog_addproject, null);
         dialog.setContentView(view1);
+
+        WindowManager m = getActivity().getWindowManager();
+        Display d = m.getDefaultDisplay();
+        android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes();
+        p.width = (int) (d.getWidth() * 0.9);
+        dialog.getWindow().setAttributes(p);
+
         Button ok, cancel;
         final EditText et_name, et_project, et_money;
         final RadioGroup inOrOutRg;
@@ -54,6 +65,7 @@ public class BaseFragment extends Fragment implements IBaseView {
                 runningAccountBean.setMoney(Integer.parseInt(money));
                 runningAccountBean.setProject(project);
                 ((MainActivity) context).mainPresenter.addProject(runningAccountBean);
+                dialog.dismiss();
 
             }
         });
@@ -62,10 +74,17 @@ public class BaseFragment extends Fragment implements IBaseView {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog.dismiss();
             }
         });
 
         dialog.show();
+    }
+
+    @Override
+    public void updateData(List<RunningAccountBean> runningAccountBeanList) {
+        if (runningAccountBeanList == null) {
+            return;
+        }
     }
 }

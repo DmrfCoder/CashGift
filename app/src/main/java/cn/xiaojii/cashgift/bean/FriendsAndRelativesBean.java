@@ -11,11 +11,37 @@ public class FriendsAndRelativesBean {
     private int out;
     private int sumMoney;
 
+
+    public FriendsAndRelativesBean(RunningAccountBean runningAccountBean) {
+        name = runningAccountBean.getName();
+        sumMoney = runningAccountBean.getMoney();
+        if (sumMoney > 0) {
+            in = 1;
+            out = 0;
+        } else {
+            in = 0;
+            out = 1;
+        }
+    }
+
     public FriendsAndRelativesBean(String name, int in, int out, int sumMoney) {
         this.name = name;
         this.in = in;
+
         this.out = out;
         this.sumMoney = sumMoney;
+    }
+
+    public void addIn() {
+        in++;
+    }
+
+    public void addOut() {
+        out++;
+    }
+
+    public void updateSumMoney(int money) {
+        sumMoney += money;
     }
 
     public String getName() {

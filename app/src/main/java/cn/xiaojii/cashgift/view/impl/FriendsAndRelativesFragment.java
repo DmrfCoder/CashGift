@@ -23,6 +23,7 @@ import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.RunningAccountBean;
 import cn.xiaojii.cashgift.interactor.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
+import cn.xiaojii.cashgift.util.ConvertBeanUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 
 /**
@@ -92,6 +93,15 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
                 //position就是点击的item的下标
                 break;
         }
+
+    }
+
+
+    @Override
+    public void updateData(List<RunningAccountBean> runningAccountBeanList) {
+        super.updateData(runningAccountBeanList);
+
+        updateListView(ConvertBeanUtil.convertRunningAccountBeanToFriendsAndRelativesBean(runningAccountBeanList));
 
     }
 }
