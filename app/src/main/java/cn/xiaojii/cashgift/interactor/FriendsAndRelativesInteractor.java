@@ -1,5 +1,8 @@
 package cn.xiaojii.cashgift.interactor;
 
+import android.widget.ListView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
@@ -24,7 +27,31 @@ public class FriendsAndRelativesInteractor {
         void onInquireSuccess(List<FriendsAndRelativesBean> friendsAndRelativesBeanList);
     }
 
-    private void Inquire(final String name, final OnInquireFinishedListener onInquireFinishedListener) {
+    public interface InitFriendsAndRelativesListener {
+        /**
+         * 监听更新数据失败
+         */
+        void onInitFriendsAndRelativesError();
+
+        /**
+         * 监听更新数据成功
+         * @param friendsAndRelativesBeanList
+         */
+        void onInitFriendsAndRelativesSuccess(List<FriendsAndRelativesBean> friendsAndRelativesBeanList);
 
     }
+
+    public void Inquire(final String name, final OnInquireFinishedListener onInquireFinishedListener) {
+
+    }
+
+    public void InitFriendsAndRelativesListView(final InitFriendsAndRelativesListener initFriendsAndRelativesListener){
+
+
+
+
+    }
+
+
+
 }

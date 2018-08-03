@@ -19,6 +19,10 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FragmentAdapter;
+import cn.xiaojii.cashgift.interactor.MainInterator;
+import cn.xiaojii.cashgift.presenter.IMainPresenter;
+import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
+import cn.xiaojii.cashgift.util.PermissionUtil;
 import cn.xiaojii.cashgift.view.IBaseView;
 import cn.xiaojii.cashgift.view.IMainView;
 import cn.xiaojii.cashgift.widght.NoScrollViewPager;
@@ -41,13 +45,22 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
     private NoScrollViewPager vp;
 
 
+    public IMainPresenter mainPresenter;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PermissionUtil.RequestPermission(this);
+        mainPresenter = new MainPresenter(this, new MainInterator());
         initView();
         initPage();
+        initData();
+    }
+
+    private void initData() {
+        mainPresenter.initData();
     }
 
     @Override
@@ -99,7 +112,7 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
     }
 
     private View getTabItemView(int tabIndex) {
-        View view = layoutInflater.inflate(R.layout.tab_content, null);
+        View view = layoutInflater.inflate(R.layout.content_bottomtab, null);
         ImageView mImageView = (ImageView) view
                 .findViewById(R.id.id_tab_icon);
         TextView mTextView = (TextView) view.findViewById(R.id.id_tab_name);

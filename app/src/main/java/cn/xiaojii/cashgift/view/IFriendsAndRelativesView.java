@@ -12,8 +12,11 @@ import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 public interface IFriendsAndRelativesView {
     /**
      * update the listview on FriendsAndRelativesView
+     *
      * @param friendsAndRelativesBeanList
      */
     void updateListView(List<FriendsAndRelativesBean> friendsAndRelativesBeanList);
+
+
 
 }

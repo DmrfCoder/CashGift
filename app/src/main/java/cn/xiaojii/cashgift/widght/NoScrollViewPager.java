@@ -28,6 +28,6 @@ public class NoScrollViewPager extends ViewPager {
     @Override
     public void setCurrentItem(int item) {
         //第二个参数传入false去掉tab切换动画
-        super.setCurrentItem(item,false);
+        super.setCurrentItem(item, false);
     }
 }

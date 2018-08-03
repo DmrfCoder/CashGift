@@ -16,6 +16,15 @@ import cn.xiaojii.cashgift.view.IProjectTableView;
  */
 
 public class ProjectTableFragment extends BaseFragment implements IProjectTableView {
+
+    private int a = 0;
+    private int b = 0;
+    private int c = 0;
+    private int d = 0;
+    private int e = 0;
+
+    String detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

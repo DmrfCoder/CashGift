@@ -14,6 +14,7 @@ public interface IFriendsAndRelativesPresenter {
 
     /**
      * inquire Friends And Relatives
+     *
      * @param name
      * @return
      */
@@ -21,8 +22,17 @@ public interface IFriendsAndRelativesPresenter {
 
     /**
      * update listview data order by code
+     *
      * @param Code
      */
     boolean updateOrder(int Code);
+
+
+    /**
+     * 初始化listview
+     */
+    boolean initFriendsAndRelativesListView();
+
+
 
 }

@@ -9,11 +9,10 @@ import cn.xiaojii.cashgift.factory.FragmentFactory;
 /**
  * Created by Carson_Ho on 16/5/23.
  */
-public class FragmentAdapter extends FragmentStatePagerAdapter{
+public class FragmentAdapter extends FragmentStatePagerAdapter {
 
 
-
-    public FragmentAdapter(FragmentManager fm ) {
+    public FragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 

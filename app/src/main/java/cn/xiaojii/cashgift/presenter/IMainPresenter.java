@@ -10,13 +10,25 @@ import cn.xiaojii.cashgift.bean.RunningAccountBean;
  * @date 2018/8/3
  */
 
-public interface IRunningAcountPresenter {
+public interface IMainPresenter {
 
 
     /**
      * 新增流水帐，新增完之后调用view的update listview
+     *
      * @param runningAccountBean
      */
-    void addRunningAcount(RunningAccountBean runningAccountBean);
+    void addProject(RunningAccountBean runningAccountBean);
+
+    /**
+     * 应用初始化时从文件中读取数据
+     */
+    void initData();
+
+    /**
+     * 从MainInterator中获取数据
+     * @return
+     */
+    List<RunningAccountBean> getData();
 
 }

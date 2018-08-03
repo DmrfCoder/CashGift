@@ -12,7 +12,7 @@ import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
  * @date 2018/8/3
  */
 
-public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresenter, FriendsAndRelativesInteractor.OnInquireFinishedListener {
+public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresenter, FriendsAndRelativesInteractor.OnInquireFinishedListener,FriendsAndRelativesInteractor.InitFriendsAndRelativesListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
 
@@ -28,9 +28,16 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     }
 
+
+
     @Override
     public boolean updateOrder(int Code) {
+        return false;
+    }
 
+    @Override
+    public boolean initFriendsAndRelativesListView() {
+        friendsAndRelativesInteractor.InitFriendsAndRelativesListView(this);
         return false;
     }
 
@@ -42,5 +49,16 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     @Override
     public void onInquireSuccess(List<FriendsAndRelativesBean> friendsAndRelativesBeanList) {
         friendsAndRelativesView.updateListView(friendsAndRelativesBeanList);
+    }
+
+    @Override
+    public void onInitFriendsAndRelativesError() {
+
+    }
+
+    @Override
+    public void onInitFriendsAndRelativesSuccess(List<FriendsAndRelativesBean> friendsAndRelativesBeanList) {
+        friendsAndRelativesView.updateListView(friendsAndRelativesBeanList);
+
     }
 }

@@ -11,8 +11,8 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.bean.RunningAccountBean;
-import cn.xiaojii.cashgift.interactor.RunningAccountInterator;
-import cn.xiaojii.cashgift.presenter.impl.RunningAcountPresenter;
+import cn.xiaojii.cashgift.interactor.MainInterator;
+import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
 import cn.xiaojii.cashgift.view.IRunningAccountView;
 
 /**
@@ -22,14 +22,12 @@ import cn.xiaojii.cashgift.view.IRunningAccountView;
 
 public class RunningAccountFragment extends BaseFragment implements IRunningAccountView {
 
-    private RunningAcountPresenter runningAcountPresenter;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_runningaccount, null);
-        runningAcountPresenter = new RunningAcountPresenter(this, new RunningAccountInterator());
         return view;
     }
 
