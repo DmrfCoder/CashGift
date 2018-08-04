@@ -45,6 +45,7 @@ public class FriendsAndRelativesInteractorTest {
         projectBean.setName("张三");
         projectBean.setProject("上学");
         projectBean.setMoney(100);
+
         friendsAndRelativesInteractor.addProject(projectBean, new IBaseInteractor.AddProjectListener() {
             @Override
             public void onAddProjectError() {

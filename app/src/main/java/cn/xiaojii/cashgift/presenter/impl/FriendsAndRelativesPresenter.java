@@ -95,6 +95,6 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     @Override
     public void onUpdateViewSuccess(List dataList) {
-        friendsAndRelativesView.updateListView(ConvertBeanUtil.convertProjectBeansToFriendsAndRelativesBeans(dataList));
+        friendsAndRelativesView.updateListView(dataList);
     }
 }

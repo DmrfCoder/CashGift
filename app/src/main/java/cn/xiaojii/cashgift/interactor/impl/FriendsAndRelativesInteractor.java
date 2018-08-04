@@ -8,6 +8,7 @@ import java.util.List;
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.util.ConvertBeanUtil;
 
 /**
  * @author dmrfcoder
@@ -59,7 +60,7 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
     @Override
     public void initData(List dataList, InitDataListener initDataListener) {
         if (dataList != null) {
-            friendsAndRelativesBeanList = dataList;
+            friendsAndRelativesBeanList = ConvertBeanUtil.convertProjectBeansToFriendsAndRelativesBeans(dataList);
             initDataListener.onInitDataSuccess(friendsAndRelativesBeanList);
         } else {
             initDataListener.onInitDataError();
