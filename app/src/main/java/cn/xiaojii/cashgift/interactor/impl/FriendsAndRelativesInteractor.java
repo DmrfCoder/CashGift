@@ -94,7 +94,23 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
 
     public void Inquire(final String name, final OnInquireFinishedListener onInquireFinishedListener) {
 
+        if (name == null) {
+            onInquireFinishedListener.onInquireError();
+        } else if (name.equals("")) {
+            onInquireFinishedListener.onInquireSuccess(friendsAndRelativesBeanList);
+        } else {
+            List<FriendsAndRelativesBean> list = new ArrayList<>();
+
+            for (FriendsAndRelativesBean friendsAndRelativesBean : friendsAndRelativesBeanList) {
+                if (friendsAndRelativesBean.getName().contains(name)) {
+                    list.add(friendsAndRelativesBean);
+                }
+            }
+            onInquireFinishedListener.onInquireSuccess(list);
+        }
     }
 
-
 }
+
+
+

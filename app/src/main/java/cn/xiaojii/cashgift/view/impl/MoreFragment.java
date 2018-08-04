@@ -24,6 +24,9 @@ public class MoreFragment extends Fragment implements IMoreView {
     public MoreFragment(IMainPresenter mainPresenter) {
     }
 
+    public MoreFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

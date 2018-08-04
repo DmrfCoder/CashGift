@@ -1,5 +1,6 @@
 package cn.xiaojii.cashgift.view.impl;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +28,10 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView 
 
     String detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
 
+    public ProjectTableFragment() {
+    }
+
+    @SuppressLint("ValidFragment")
     public ProjectTableFragment(IMainPresenter mainPresenter) {
 
     }

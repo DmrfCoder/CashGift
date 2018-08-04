@@ -1,5 +1,6 @@
 package cn.xiaojii.cashgift.view.impl;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,9 +18,12 @@ import cn.xiaojii.cashgift.view.IDiscoverView;
  * @date 2018/8/3
  */
 
+@SuppressLint("ValidFragment")
 public class DiscoverFragment extends Fragment implements IDiscoverView {
+    public DiscoverFragment() {
+    }
 
-
+    @SuppressLint("ValidFragment")
     public DiscoverFragment(IMainPresenter mainPresenter) {
 
     }

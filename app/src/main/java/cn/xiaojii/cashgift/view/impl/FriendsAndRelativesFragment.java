@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,11 +43,17 @@ import cn.xiaojii.cashgift.view.IMainView;
  */
 
 @SuppressLint("ValidFragment")
-public class FriendsAndRelativesFragment extends Fragment implements IFriendsAndRelativesView, IBaseFragmentView, View.OnClickListener, AdapterView.OnItemClickListener {
+public class FriendsAndRelativesFragment extends Fragment implements IFriendsAndRelativesView, IBaseFragmentView,
+        View.OnClickListener, AdapterView.OnItemClickListener,
+        TextWatcher {
     private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
     private ListView friendsAndRelativesListView;
     private FriendAndRelativesListViewAdapter friendAndRelativesListViewAdapter;
     private IMainView.OnAddProjectInFragmentListener onAddProjectInFragmentListener;
+    private EditText editTextInquire;
+    private Button buttonInquire;
+
+    private String TAG = "FriendsAndRelativesFragment";
 
     @Override
     public void onAttach(Context context) {
@@ -94,6 +103,12 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         friendAndRelativesListViewAdapter = new FriendAndRelativesListViewAdapter(getActivity());
         friendsAndRelativesListView.setAdapter(friendAndRelativesListViewAdapter);
 
+        editTextInquire = view.findViewById(R.id.id_search_et);
+        editTextInquire.addTextChangedListener(this);
+        editTextInquire.setOnClickListener(this);
+
+        buttonInquire = view.findViewById(R.id.id_search_bt);
+
         view.findViewById(R.id.id_search_bt).setOnClickListener(this);
         view.findViewById(R.id.id_friends_top_right).setOnClickListener(this);
 
@@ -116,6 +131,9 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
                 showDialog(getActivity());
                 break;
             case R.id.id_search_bt:
+                break;
+            case R.id.id_search_et:
+                buttonInquire.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -200,5 +218,22 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
 
         dialog.show();
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        Log.i(TAG, "beforeTextChanged");
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        friendsAndRelativesPresenter.inquireFriendsAndRelatives(charSequence.toString());
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        Log.i(TAG, "afterTextChanged");
     }
 }

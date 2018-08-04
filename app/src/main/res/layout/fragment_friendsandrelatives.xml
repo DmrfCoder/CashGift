@@ -62,28 +62,28 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:text="姓名" />
+            android:text="姓名"
+            android:textColor="@color/colorBlack" />
 
         <Button
-            android:textColor="@color/colorBlack"
             android:id="@+id/id_in_out_gift_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:text="收/送礼个数" />
+            android:text="收/送礼个数"
+            android:textColor="@color/colorBlack" />
 
         <Button
-            android:textColor="@color/colorBlack"
             android:id="@+id/id_sum_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:text="综合价值" />
+            android:text="综合价值"
+            android:textColor="@color/colorBlack" />
 
     </LinearLayout>
 

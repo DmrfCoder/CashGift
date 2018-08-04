@@ -8,7 +8,6 @@ import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
-import cn.xiaojii.cashgift.util.ConvertBeanUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 
 /**
@@ -29,9 +28,8 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
     @Override
-    public List<FriendsAndRelativesBean> inquireFriendsAndRelatives(String name) {
-
-        return null;
+    public void inquireFriendsAndRelatives(String name) {
+        friendsAndRelativesInteractor.Inquire(name, this);
 
     }
 
