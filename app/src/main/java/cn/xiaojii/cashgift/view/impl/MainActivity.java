@@ -118,7 +118,7 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
                     .setIndicator(getTabItemView(tabIndex));
             fragmentTabHost.addTab(tabSpec, fragmentArray[tabIndex], null);
             fragmentTabHost.setTag(tabIndex);
-            //fragmentTabHost.getTabWidget().getChildAt(tabIndex).setBackgroundColor(this.getResources().getColor(R.color.colorWhite, null));
+            fragmentTabHost.getTabWidget().getChildAt(tabIndex).setBackgroundColor(this.getResources().getColor(R.color.colorWhite, null));
         }
     }
 
