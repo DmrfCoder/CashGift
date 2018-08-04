@@ -48,6 +48,8 @@ public class FriendsAndRelativesFragmentTest {
         friendsAndRelativesFragment = new FriendsAndRelativesFragment();
         SupportFragmentTestUtil.startFragment(friendsAndRelativesFragment);
         View view = friendsAndRelativesFragment.getView();
+
+
         right=view.findViewById(R.id.id_friends_top_right);
 
 

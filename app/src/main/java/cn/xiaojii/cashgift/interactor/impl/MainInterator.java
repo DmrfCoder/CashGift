@@ -42,11 +42,11 @@ public class MainInterator {
         if (projectBeanList == null) {
 
             this.projectBeanList = new ArrayList<>();
-            ProjectBean projectBean=new ProjectBean();
-            ProjectBean projectBean1=new ProjectBean();
-            ProjectBean projectBean2=new ProjectBean();
-            ProjectBean projectBean3=new ProjectBean();
-            ProjectBean projectBean4=new ProjectBean();
+            ProjectBean projectBean = new ProjectBean();
+            ProjectBean projectBean1 = new ProjectBean();
+            ProjectBean projectBean2 = new ProjectBean();
+            ProjectBean projectBean3 = new ProjectBean();
+            ProjectBean projectBean4 = new ProjectBean();
 
             projectBean.setName("张三");
             projectBean.setMoney(800);
@@ -54,15 +54,10 @@ public class MainInterator {
             this.projectBeanList.add(projectBean);
 
 
-
-
-
-
             projectBean1.setName("王五");
             projectBean1.setMoney(-800);
             projectBean1.setProject("婚礼");
             this.projectBeanList.add(projectBean1);
-
 
 
             projectBean2.setName("二麻子");
@@ -117,5 +112,31 @@ public class MainInterator {
             onGetDataListener.OnGetDataSuccess(projectBeanList);
         }
     }
+
+    public interface OnAddProjectListener {
+        /**
+         * 新增收据失败
+         */
+        void onAddProjectError();
+
+        /**
+         * 新增数据包成功
+         */
+        void onAddProjectSuccess();
+    }
+
+
+    public void AddProject(ProjectBean projectBean, OnAddProjectListener onAddProjectListener) {
+        if (projectBean == null) {
+            onAddProjectListener.onAddProjectError();
+        } else {
+            if (projectBeanList == null) {
+                projectBeanList = new ArrayList<>();
+            }
+            projectBeanList.add(projectBean);
+            onAddProjectListener.onAddProjectSuccess();
+        }
+    }
+
 
 }

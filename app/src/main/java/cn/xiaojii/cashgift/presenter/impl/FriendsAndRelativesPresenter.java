@@ -85,7 +85,7 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     @Override
     public void onAddProjectSuccess(List beanList) {
-
+        friendsAndRelativesView.updateListView(beanList);
     }
 
     @Override

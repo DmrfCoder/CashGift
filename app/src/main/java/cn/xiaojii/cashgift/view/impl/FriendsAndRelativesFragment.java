@@ -32,6 +32,7 @@ import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
 import cn.xiaojii.cashgift.view.IBaseFragmentView;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
+import cn.xiaojii.cashgift.view.IMainView;
 
 /**
  * @author dmrfcoder
@@ -43,7 +44,15 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
     private ListView friendsAndRelativesListView;
     private FriendAndRelativesListViewAdapter friendAndRelativesListViewAdapter;
+    private IMainView.OnAddProjectInFragmentListener onAddProjectInFragmentListener;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof IMainView.OnAddProjectInFragmentListener) {
+            onAddProjectInFragmentListener = (IMainView.OnAddProjectInFragmentListener) context;
+        }
+    }
 
     public FriendsAndRelativesFragment() {
         friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
@@ -171,6 +180,7 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
                 projectBean.setMoney(Integer.parseInt(money));
                 projectBean.setProject(project);
                 friendsAndRelativesPresenter.addProject(projectBean);
+                onAddProjectInFragmentListener.onAddProjectInFragmentSuccess(projectBean);
                 dialog.dismiss();
 
             }

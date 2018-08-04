@@ -19,6 +19,7 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FragmentAdapter;
+import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
@@ -33,7 +34,7 @@ import cn.xiaojii.cashgift.widght.NoScrollViewPager;
  */
 
 @SuppressLint("Registered")
-public class MainActivity extends FragmentActivity implements IMainView, TabHost.OnTabChangeListener {
+public class MainActivity extends FragmentActivity implements IMainView, TabHost.OnTabChangeListener, IMainView.OnAddProjectInFragmentListener {
 
 
     public FragmentTabHost fragmentTabHost;
@@ -167,4 +168,13 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
         vp.setCurrentItem(position);
     }
 
+    @Override
+    public void onAddProjectInFragmentSuccess(ProjectBean projectBean) {
+        mainPresenter.addProject(projectBean);
+    }
+
+    @Override
+    public void onAddProjectInFragmentError() {
+
+    }
 }

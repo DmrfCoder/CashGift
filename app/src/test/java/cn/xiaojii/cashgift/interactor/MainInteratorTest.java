@@ -43,17 +43,7 @@ public class MainInteratorTest {
         projectBean.setProject("婚礼");
         projectBean.setMoney(1000);
 
-        mainInterator.addRunningAccount(projectBean, new MainInterator.OnAddProjrctListener() {
-            @Override
-            public void onAddError() {
-                Log.i(TAG, "onAddError");
-            }
 
-            @Override
-            public void onAddSuccess(List<ProjectBean> projectBeanList) {
-                Log.i(TAG, "onAddSuccess:" + projectBeanList.toString());
-            }
-        });
     }
 
 

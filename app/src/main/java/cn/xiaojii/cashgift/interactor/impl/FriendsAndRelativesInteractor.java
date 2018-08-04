@@ -21,6 +21,38 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
 
     @Override
     public void addProject(ProjectBean projectBean, IBaseInteractor.AddProjectListener addProjectListener) {
+        if (projectBean == null) {
+            addProjectListener.onAddProjectError();
+        }
+        if (friendsAndRelativesBeanList == null) {
+            friendsAndRelativesBeanList = new ArrayList<>();
+            FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
+            friendsAndRelativesBeanList.add(friendsAndRelativesBean);
+            addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
+        } else {
+            boolean findFlag = false;
+            for (FriendsAndRelativesBean friendsAndRelativesBean : friendsAndRelativesBeanList) {
+                if (friendsAndRelativesBean.getName().equals(projectBean.getName())) {
+                    findFlag = true;
+                    if (friendsAndRelativesBean.getSumMoney() > 0) {
+                        friendsAndRelativesBean.addIn();
+
+                    } else {
+                        friendsAndRelativesBean.addOut();
+
+                    }
+                    friendsAndRelativesBean.updateSumMoney(friendsAndRelativesBean.getSumMoney());
+                    addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
+
+                }
+            }
+
+            if (!findFlag) {
+                FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
+                friendsAndRelativesBeanList.add(friendsAndRelativesBean);
+                addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
+            }
+        }
 
     }
 
@@ -29,16 +61,16 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
         if (dataList != null) {
             friendsAndRelativesBeanList = dataList;
             initDataListener.onInitDataSuccess(friendsAndRelativesBeanList);
-        }else {
+        } else {
             initDataListener.onInitDataError();
         }
     }
 
     @Override
     public void updateView(UpdateViewListener updateViewListener) {
-        if (friendsAndRelativesBeanList!=null){
+        if (friendsAndRelativesBeanList != null) {
             updateViewListener.onUpdateViewSuccess(friendsAndRelativesBeanList);
-        }else {
+        } else {
             updateViewListener.onUpdateViewError();
         }
     }

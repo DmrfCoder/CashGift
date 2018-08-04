@@ -26,4 +26,11 @@ public interface IMainPresenter {
      */
     void getData(MainInterator.OnGetDataListener onGetDataListener);
 
+    /**
+     *
+     * 增加流水，参数为泛型
+     * @param projectBean
+     */
+    void addProject(ProjectBean projectBean);
+
 }

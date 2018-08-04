@@ -22,7 +22,7 @@ import cn.xiaojii.cashgift.view.impl.RunningAccountFragment;
  * @date 2018/8/3
  */
 
-public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener {
+public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener ,MainInterator.OnAddProjectListener{
     private IMainView mainView;
     private MainInterator mainInterator;
 
@@ -44,6 +44,11 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
         mainInterator.GetData(onGetDataListener);
     }
 
+    @Override
+    public void addProject(ProjectBean projectBean) {
+        mainInterator.AddProject(projectBean,this);
+    }
+
 
     @Override
     public void OnInitError() {
@@ -56,7 +61,13 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     }
 
 
+    @Override
+    public void onAddProjectError() {
 
+    }
 
+    @Override
+    public void onAddProjectSuccess() {
 
+    }
 }
