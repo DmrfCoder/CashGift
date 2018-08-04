@@ -2,9 +2,8 @@ package cn.xiaojii.cashgift.presenter.impl;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
-import cn.xiaojii.cashgift.interactor.RunningAccountInteractor;
-import cn.xiaojii.cashgift.presenter.IMainPresenter;
+import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.interactor.impl.RunningAccountInteractor;
 import cn.xiaojii.cashgift.presenter.IRunningAccountPresenter;
 
 /**
@@ -14,7 +13,7 @@ import cn.xiaojii.cashgift.presenter.IRunningAccountPresenter;
 
 public class RunningAccountPresenter implements IRunningAccountPresenter,RunningAccountInteractor.OnAddProjrctListener {
     @Override
-    public void addProject(RunningAccountBean runningAccountBean) {
+    public void addProject(ProjectBean projectBean) {
 
     }
 
@@ -24,7 +23,7 @@ public class RunningAccountPresenter implements IRunningAccountPresenter,Running
     }
 
     @Override
-    public void onAddSuccess(List<RunningAccountBean> runningAccountBeanList) {
+    public void onAddSuccess(List<ProjectBean> projectBeanList) {
 
     }
 }

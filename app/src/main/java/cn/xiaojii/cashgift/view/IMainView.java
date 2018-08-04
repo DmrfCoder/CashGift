@@ -10,7 +10,7 @@ public interface IMainView {
      *
      * @param targetFragment
      */
-    void startfragment(IBaseView targetFragment);
+    void startfragment(IBaseFragmentView targetFragment);
 
 }
 

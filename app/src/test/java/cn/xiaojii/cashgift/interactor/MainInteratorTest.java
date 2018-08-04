@@ -2,23 +2,18 @@ package cn.xiaojii.cashgift.interactor;
 
 import android.util.Log;
 
-import org.apache.tools.ant.Main;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowLog;
 
 import java.util.List;
 
 import cn.xiaojii.cashgift.BuildConfig;
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
-import cn.xiaojii.cashgift.view.impl.MainActivity;
-
-import static org.junit.Assert.*;
+import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 
 /**
  * @author dmrfcoder
@@ -30,7 +25,7 @@ import static org.junit.Assert.*;
 public class MainInteratorTest {
 
     private MainInterator mainInterator;
-    private RunningAccountBean runningAccountBean;
+    private ProjectBean projectBean;
     private String TAG = "MainInteratorTest";
 
 
@@ -43,20 +38,20 @@ public class MainInteratorTest {
 
     @Test
     public void testAddRunningAccount() {
-        runningAccountBean = new RunningAccountBean();
-        runningAccountBean.setName("张三");
-        runningAccountBean.setProject("婚礼");
-        runningAccountBean.setMoney(1000);
+        projectBean = new ProjectBean();
+        projectBean.setName("张三");
+        projectBean.setProject("婚礼");
+        projectBean.setMoney(1000);
 
-        mainInterator.addRunningAccount(runningAccountBean, new MainInterator.OnAddProjrctListener() {
+        mainInterator.addRunningAccount(projectBean, new MainInterator.OnAddProjrctListener() {
             @Override
             public void onAddError() {
                 Log.i(TAG, "onAddError");
             }
 
             @Override
-            public void onAddSuccess(List<RunningAccountBean> runningAccountBeanList) {
-                Log.i(TAG, "onAddSuccess:" + runningAccountBeanList.toString());
+            public void onAddSuccess(List<ProjectBean> projectBeanList) {
+                Log.i(TAG, "onAddSuccess:" + projectBeanList.toString());
             }
         });
     }
@@ -71,8 +66,8 @@ public class MainInteratorTest {
             }
 
             @Override
-            public void OnInitSuccess(List<RunningAccountBean> runningAccountBeanList) {
-                Log.i(TAG, "onAddSuccess:" + runningAccountBeanList.toString());
+            public void OnInitSuccess(List<ProjectBean> projectBeanList) {
+                Log.i(TAG, "onAddSuccess:" + projectBeanList.toString());
             }
         });
     }

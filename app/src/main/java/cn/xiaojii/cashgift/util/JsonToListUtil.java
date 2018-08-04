@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
+import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
  * @author dmrfcoder
@@ -17,13 +17,13 @@ import cn.xiaojii.cashgift.bean.RunningAccountBean;
  */
 
 public class JsonToListUtil {
-    public static List<RunningAccountBean> jsonToList(String strJson) {
+    public static List<ProjectBean> jsonToList(String strJson) {
 
         if (strJson==null||strJson.equals("")){
             return null;
         }
 
-        List<RunningAccountBean> runningAccountBeanList;
+        List<ProjectBean> projectBeanList;
 
         Gson gson = new Gson();
 
@@ -31,14 +31,14 @@ public class JsonToListUtil {
         JsonElement jsonElement = jsonParser.parse(strJson);
         JsonArray jsonArray = jsonElement.getAsJsonArray();
         Iterator it = jsonArray.iterator();
-        runningAccountBeanList = new ArrayList<>();
+        projectBeanList = new ArrayList<>();
 
         while (it.hasNext()) {
             jsonElement = (JsonElement) it.next();
             strJson = jsonElement.toString();
-            RunningAccountBean runningAccountBean = gson.fromJson(strJson, RunningAccountBean.class);
-            runningAccountBeanList.add(runningAccountBean);
+            ProjectBean projectBean = gson.fromJson(strJson, ProjectBean.class);
+            projectBeanList.add(projectBean);
         }
-        return runningAccountBeanList;
+        return projectBeanList;
     }
 }

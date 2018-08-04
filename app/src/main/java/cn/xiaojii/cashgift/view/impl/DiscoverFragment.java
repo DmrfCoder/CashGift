@@ -3,11 +3,13 @@ package cn.xiaojii.cashgift.view.impl;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IDiscoverView;
 
 /**
@@ -15,8 +17,12 @@ import cn.xiaojii.cashgift.view.IDiscoverView;
  * @date 2018/8/3
  */
 
-public class DiscoverFragment extends BaseFragment implements IDiscoverView {
+public class DiscoverFragment extends Fragment implements IDiscoverView {
 
+
+    public DiscoverFragment(IMainPresenter mainPresenter) {
+
+    }
 
     @Nullable
     @Override

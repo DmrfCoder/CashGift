@@ -1,13 +1,17 @@
 package cn.xiaojii.cashgift.view.impl;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,10 +24,13 @@ import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FriendAndRelativesListViewAdapter;
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.GlobalBean;
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
-import cn.xiaojii.cashgift.interactor.FriendsAndRelativesInteractor;
+import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
+import cn.xiaojii.cashgift.interactor.impl.MainInterator;
+import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
-import cn.xiaojii.cashgift.util.ConvertBeanUtil;
+import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
+import cn.xiaojii.cashgift.view.IBaseFragmentView;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 
 /**
@@ -31,17 +38,38 @@ import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
  * @date 2018/8/3
  */
 
-public class FriendsAndRelativesFragment extends BaseFragment implements IFriendsAndRelativesView, View.OnClickListener, AdapterView.OnItemClickListener {
+@SuppressLint("ValidFragment")
+public class FriendsAndRelativesFragment extends Fragment implements IFriendsAndRelativesView, IBaseFragmentView, View.OnClickListener, AdapterView.OnItemClickListener {
     private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
     private ListView friendsAndRelativesListView;
     private FriendAndRelativesListViewAdapter friendAndRelativesListViewAdapter;
+
+
+    public FriendsAndRelativesFragment() {
+        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
+    }
+
+    public FriendsAndRelativesFragment(IMainPresenter mainPresenter) {
+        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
+        mainPresenter.getData(new MainInterator.OnGetDataListener() {
+            @Override
+            public void OnGetDataError() {
+                friendsAndRelativesPresenter.initData(null);
+            }
+
+            @Override
+            public void OnGetDataSuccess(List<ProjectBean> projectBeanList) {
+                friendsAndRelativesPresenter.initData(projectBeanList);
+            }
+        });
+    }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friendsandrelatives, null);
-        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
+
         initView(view);
 
 
@@ -56,11 +84,11 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
         friendsAndRelativesListView = view.findViewById(R.id.id_friends_listview);
         friendAndRelativesListViewAdapter = new FriendAndRelativesListViewAdapter(getActivity());
         friendsAndRelativesListView.setAdapter(friendAndRelativesListViewAdapter);
-        friendsAndRelativesPresenter.initFriendsAndRelativesListView();
 
         view.findViewById(R.id.id_search_bt).setOnClickListener(this);
         view.findViewById(R.id.id_friends_top_right).setOnClickListener(this);
 
+        friendsAndRelativesPresenter.updateView();
 
     }
 
@@ -76,7 +104,7 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_top_right:
-                showAddprojectDialog(getActivity());
+                showDialog(getActivity());
                 break;
             case R.id.id_search_bt:
                 break;
@@ -98,10 +126,65 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
 
 
     @Override
-    public void updateData(List<RunningAccountBean> runningAccountBeanList) {
-        super.updateData(runningAccountBeanList);
+    public void updateData(List<Class> classList) {
 
-        updateListView(ConvertBeanUtil.convertRunningAccountBeanToFriendsAndRelativesBean(runningAccountBeanList));
+    }
+
+    @Override
+    public void showDialog(Context context) {
+        final Dialog dialog = new Dialog(context);
+        View view1 = LayoutInflater.from(context).inflate(
+                R.layout.dialog_addproject, null);
+        dialog.setContentView(view1);
+
+        WindowManager m = getActivity().getWindowManager();
+        Display d = m.getDefaultDisplay();
+        final android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes();
+        p.width = (int) (d.getWidth() * 0.9);
+        dialog.getWindow().setAttributes(p);
+
+        Button ok, cancel;
+        final EditText et_name, et_project, et_money;
+        final RadioGroup inOrOutRg;
+
+        et_name = view1.findViewById(R.id.id_dialog_et_name);
+        et_project = view1.findViewById(R.id.id_dialog_et_project);
+        et_money = view1.findViewById(R.id.id_dialog_et_money);
+        inOrOutRg = view1.findViewById(R.id.id_dialog_inout);
+
+        ok = view1.findViewById(R.id.id_dialog_ok);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = et_name.getText().toString();
+                String project = et_project.getText().toString();
+                String money = et_money.getText().toString();
+                GlobalBean.inOrOut inOrOut;
+                if (inOrOutRg.getCheckedRadioButtonId() == R.id.id_dialog_in) {
+                    inOrOut = GlobalBean.inOrOut.IN;
+                } else {
+                    inOrOut = GlobalBean.inOrOut.OUT;
+                }
+
+                ProjectBean projectBean = new ProjectBean();
+                projectBean.setName(name);
+                projectBean.setMoney(Integer.parseInt(money));
+                projectBean.setProject(project);
+                friendsAndRelativesPresenter.addProject(projectBean);
+                dialog.dismiss();
+
+            }
+        });
+
+        cancel = view1.findViewById(R.id.id_dialog_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
 
     }
 }

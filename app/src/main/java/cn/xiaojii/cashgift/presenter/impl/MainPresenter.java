@@ -1,24 +1,28 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
-import cn.xiaojii.cashgift.interactor.MainInterator;
+import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
-import cn.xiaojii.cashgift.util.JsonToListUtil;
-import cn.xiaojii.cashgift.util.ReadFileToStringUtil;
 import cn.xiaojii.cashgift.view.IMainView;
+import cn.xiaojii.cashgift.view.impl.DiscoverFragment;
+import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 import cn.xiaojii.cashgift.view.impl.MainActivity;
+import cn.xiaojii.cashgift.view.impl.MoreFragment;
+import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
+import cn.xiaojii.cashgift.view.impl.RunningAccountFragment;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/3
  */
 
-public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrctListener, MainInterator.OnInitDataListener {
+public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener {
     private IMainView mainView;
     private MainInterator mainInterator;
 
@@ -27,10 +31,8 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrct
         this.mainInterator = mainInterator;
     }
 
-    @Override
-    public void addProject(RunningAccountBean runningAccountBean) {
-        mainInterator.addRunningAccount(runningAccountBean, this);
-    }
+
+
 
     @Override
     public void initData() {
@@ -38,19 +40,10 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrct
     }
 
     @Override
-    public List<RunningAccountBean> getData() {
-        return mainInterator.getRunningAccountBeanList();
+    public void getData(MainInterator.OnGetDataListener onGetDataListener) {
+        mainInterator.GetData(onGetDataListener);
     }
 
-    @Override
-    public void onAddError() {
-
-    }
-
-    @Override
-    public void onAddSuccess(List<RunningAccountBean> runningAccountBeanList) {
-        ((MainActivity) mainView).CurFragment.updateData(runningAccountBeanList);
-    }
 
     @Override
     public void OnInitError() {
@@ -58,6 +51,12 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnAddProjrct
     }
 
     @Override
-    public void OnInitSuccess(List<RunningAccountBean> runningAccountBeanList) {
+    public void OnInitSuccess(List<ProjectBean> projectBeanList) {
+
     }
+
+
+
+
+
 }

@@ -2,7 +2,7 @@ package cn.xiaojii.cashgift.view;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
+import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
  * @author dmrfcoder
@@ -13,7 +13,7 @@ public interface IRunningAccountView {
     /**
      * update the listview on IRunningAccountView
      *
-     * @param runningAccountBeanList
+     * @param projectBeanList
      */
-    void updateListView(List<RunningAccountBean> runningAccountBeanList);
+    void updateListView(List<ProjectBean> projectBeanList);
 }

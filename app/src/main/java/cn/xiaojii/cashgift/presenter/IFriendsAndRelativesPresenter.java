@@ -28,10 +28,6 @@ public interface IFriendsAndRelativesPresenter {
     boolean updateOrder(int Code);
 
 
-    /**
-     * 初始化listview
-     */
-    boolean initFriendsAndRelativesListView();
 
 
 

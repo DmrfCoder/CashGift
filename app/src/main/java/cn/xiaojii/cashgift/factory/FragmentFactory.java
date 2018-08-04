@@ -3,6 +3,7 @@ package cn.xiaojii.cashgift.factory;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
 import cn.xiaojii.cashgift.view.impl.DiscoverFragment;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 import cn.xiaojii.cashgift.view.impl.MoreFragment;
@@ -19,23 +20,23 @@ public class FragmentFactory {
      * @param position
      * @return
      */
-    public static Fragment createForMain(int position) {
+    public static Fragment createForMain(int position,MainPresenter mainPresenter) {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FriendsAndRelativesFragment();
+                fragment = new FriendsAndRelativesFragment(mainPresenter);
                 break;
             case 1:
-                fragment = new RunningAccountFragment();
+                fragment = new RunningAccountFragment(mainPresenter);
                 break;
             case 2:
-                fragment = new ProjectTableFragment();
+                fragment = new ProjectTableFragment(mainPresenter);
                 break;
             case 3:
-                fragment = new DiscoverFragment();
+                fragment = new DiscoverFragment(mainPresenter);
                 break;
             case 4:
-                fragment = new MoreFragment();
+                fragment = new MoreFragment(mainPresenter);
                 break;
             default:
                 break;

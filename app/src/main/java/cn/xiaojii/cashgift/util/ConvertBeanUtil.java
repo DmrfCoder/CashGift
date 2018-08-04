@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
+import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
  * @author dmrfcoder
@@ -13,11 +13,11 @@ import cn.xiaojii.cashgift.bean.RunningAccountBean;
 
 public class ConvertBeanUtil {
 
-    public static List<FriendsAndRelativesBean> convertRunningAccountBeanToFriendsAndRelativesBean(List<RunningAccountBean> runningAccountBeanList) {
+    public static List<FriendsAndRelativesBean> convertProjectBeansToFriendsAndRelativesBeans(List<ProjectBean> projectBeanList) {
         List<FriendsAndRelativesBean> friendsAndRelativesBeanList = new ArrayList<>();
 
-        for (RunningAccountBean runningAccountBean : runningAccountBeanList) {
-            String name = runningAccountBean.getName();
+        for (ProjectBean projectBean : projectBeanList) {
+            String name = projectBean.getName();
             boolean find_flag = false;
             for (FriendsAndRelativesBean friendsAndRelativesBean : friendsAndRelativesBeanList) {
                 if (friendsAndRelativesBean.getName().equals(name)) {
@@ -33,7 +33,7 @@ public class ConvertBeanUtil {
                 }
             }
             if (!find_flag) {
-                FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(runningAccountBean);
+                FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
                 friendsAndRelativesBeanList.add(friendsAndRelativesBean);
 
             }

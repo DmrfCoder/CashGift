@@ -3,7 +3,9 @@ package cn.xiaojii.cashgift.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.github.dfqin.grantor.PermissionListener;
@@ -15,6 +17,7 @@ import com.github.dfqin.grantor.PermissionsUtil;
  */
 
 public class PermissionUtil {
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static void RequestPermission(final Context context) {
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (PermissionsUtil.hasPermission(context, permissions)) {

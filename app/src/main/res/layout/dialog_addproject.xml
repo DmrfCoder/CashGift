@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_dialog"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,11 +20,12 @@
             android:textColor="@color/colorBlack" />
 
         <EditText
+            android:text="张三"
             android:id="@+id/id_dialog_et_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:background="@drawable/background_edit_text"
+            android:background="@drawable/background_dialog_edittext"
             android:imeOptions="actionDone"
             android:padding="4sp"
             android:paddingLeft="2sp"
@@ -53,11 +55,12 @@
             android:textColor="@color/colorBlack" />
 
         <EditText
+            android:text="结婚"
             android:id="@+id/id_dialog_et_project"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:background="@drawable/background_edit_text"
+            android:background="@drawable/background_dialog_edittext"
             android:imeOptions="actionDone"
             android:padding="4sp"
             android:paddingLeft="2sp"
@@ -136,11 +139,12 @@
             android:textColor="@color/colorBlack" />
 
         <EditText
+            android:text="800"
             android:id="@+id/id_dialog_et_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:background="@drawable/background_edit_text"
+            android:background="@drawable/background_dialog_edittext"
             android:imeOptions="actionDone"
             android:padding="4sp"
             android:paddingLeft="2sp"

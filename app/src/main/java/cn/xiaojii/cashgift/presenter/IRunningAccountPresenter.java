@@ -1,6 +1,6 @@
 package cn.xiaojii.cashgift.presenter;
 
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
+import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
  * @author dmrfcoder
@@ -12,8 +12,8 @@ public interface IRunningAccountPresenter {
     /**
      * 新增流水帐，新增完之后调用view的update listview
      *
-     * @param runningAccountBean
+     * @param projectBean
      */
-    void addProject(RunningAccountBean runningAccountBean);
+    void addProject(ProjectBean projectBean);
 
 }

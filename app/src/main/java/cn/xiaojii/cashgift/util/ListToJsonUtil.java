@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
+import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
  * @author dmrfcoder
@@ -12,9 +12,9 @@ import cn.xiaojii.cashgift.bean.RunningAccountBean;
  */
 
 public class ListToJsonUtil {
-    public static String ListToJson(List<RunningAccountBean> runningAccountBeanList) {
+    public static String ListToJson(List<ProjectBean> projectBeanList) {
         Gson gson=new Gson();
-        String strJson=gson.toJson(runningAccountBeanList);
+        String strJson=gson.toJson(projectBeanList);
         return strJson;
     }
 }

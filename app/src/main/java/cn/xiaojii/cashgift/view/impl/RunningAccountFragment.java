@@ -3,6 +3,7 @@ package cn.xiaojii.cashgift.view.impl;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.RunningAccountBean;
-import cn.xiaojii.cashgift.interactor.MainInterator;
-import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
+import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IRunningAccountView;
 
 /**
@@ -20,9 +20,12 @@ import cn.xiaojii.cashgift.view.IRunningAccountView;
  * @date 2018/8/3
  */
 
-public class RunningAccountFragment extends BaseFragment implements IRunningAccountView {
+public class RunningAccountFragment extends Fragment implements IRunningAccountView {
 
 
+    public RunningAccountFragment(IMainPresenter mainPresenter) {
+
+    }
 
     @Nullable
     @Override
@@ -32,7 +35,7 @@ public class RunningAccountFragment extends BaseFragment implements IRunningAcco
     }
 
     @Override
-    public void updateListView(List<RunningAccountBean> runningAccountBeanList) {
+    public void updateListView(List<ProjectBean> projectBeanList) {
 
     }
 }

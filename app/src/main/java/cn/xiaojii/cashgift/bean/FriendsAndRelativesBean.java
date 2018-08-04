@@ -12,9 +12,9 @@ public class FriendsAndRelativesBean {
     private int sumMoney;
 
 
-    public FriendsAndRelativesBean(RunningAccountBean runningAccountBean) {
-        name = runningAccountBean.getName();
-        sumMoney = runningAccountBean.getMoney();
+    public FriendsAndRelativesBean(ProjectBean projectBean) {
+        name = projectBean.getName();
+        sumMoney = projectBean.getMoney();
         if (sumMoney > 0) {
             in = 1;
             out = 0;

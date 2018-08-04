@@ -7,14 +7,14 @@ import java.util.Calendar;
  * @date 2018/8/3
  */
 
-public class RunningAccountBean {
+public class ProjectBean {
     private String name;
     private String project;
     private String year;
     private String monthAndDay;
     private int money;
 
-    public RunningAccountBean() {
+    public ProjectBean() {
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR) + "";
         monthAndDay = (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.DAY_OF_MONTH);
