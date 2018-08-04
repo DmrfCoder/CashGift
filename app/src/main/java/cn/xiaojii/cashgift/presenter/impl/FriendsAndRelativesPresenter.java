@@ -1,5 +1,7 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
+import android.content.BroadcastReceiver;
+
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
@@ -21,6 +23,8 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         IBaseInteractor.UpdateViewListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
+
+
 
     public FriendsAndRelativesPresenter(IFriendsAndRelativesView friendsAndRelativesView, FriendsAndRelativesInteractor friendsAndRelativesInteractor) {
         this.friendsAndRelativesView = friendsAndRelativesView;
@@ -57,7 +61,7 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
     @Override
-    public void initData(List dataList) {
+    public void initFragmentData(List dataList) {
         friendsAndRelativesInteractor.initData(dataList, this);
     }
 

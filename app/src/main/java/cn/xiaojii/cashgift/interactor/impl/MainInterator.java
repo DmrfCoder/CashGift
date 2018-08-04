@@ -8,7 +8,9 @@ import java.util.List;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.util.JsonToListUtil;
+import cn.xiaojii.cashgift.util.ListToJsonUtil;
 import cn.xiaojii.cashgift.util.ReadFileToStringUtil;
+import cn.xiaojii.cashgift.util.WriteStringToFileUtil;
 import cn.xiaojii.cashgift.view.impl.DiscoverFragment;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 import cn.xiaojii.cashgift.view.impl.MoreFragment;
@@ -28,6 +30,11 @@ public class MainInterator {
     private List<ProjectBean> projectBeanList;
 
 
+    public void onDestroy() {
+        String json = ListToJsonUtil.ListToJson(projectBeanList);
+        WriteStringToFileUtil.write(json, GlobalBean.filename);
+    }
+
     public interface OnInitDataListener {
         void OnInitError();
 
@@ -42,7 +49,8 @@ public class MainInterator {
         if (projectBeanList == null) {
 
             this.projectBeanList = new ArrayList<>();
-            ProjectBean projectBean = new ProjectBean();
+
+            /*ProjectBean projectBean = new ProjectBean();
             ProjectBean projectBean1 = new ProjectBean();
             ProjectBean projectBean2 = new ProjectBean();
             ProjectBean projectBean3 = new ProjectBean();
@@ -75,7 +83,7 @@ public class MainInterator {
             projectBean4.setMoney(900);
             projectBean4.setProject("婚礼");
             this.projectBeanList.add(projectBean4);
-
+*/
             onInitDataListener.OnInitError();
 
 
@@ -122,7 +130,7 @@ public class MainInterator {
         /**
          * 新增数据包成功
          */
-        void onAddProjectSuccess();
+        void onAddProjectSuccess(List<ProjectBean> list);
     }
 
 
@@ -134,7 +142,8 @@ public class MainInterator {
                 projectBeanList = new ArrayList<>();
             }
             projectBeanList.add(projectBean);
-            onAddProjectListener.onAddProjectSuccess();
+
+            onAddProjectListener.onAddProjectSuccess(projectBeanList);
         }
     }
 

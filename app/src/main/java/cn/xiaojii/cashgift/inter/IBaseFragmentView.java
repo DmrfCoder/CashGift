@@ -1,4 +1,4 @@
-package cn.xiaojii.cashgift.view;
+package cn.xiaojii.cashgift.inter;
 
 import android.content.Context;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2018/8/2
  */
 
-public interface IBaseFragmentView {
+public interface IBaseFragmentView  {
 
     /**
      * 更新数据list，泛型
@@ -22,4 +22,5 @@ public interface IBaseFragmentView {
      * @param context
      */
     void showDialog(final Context context);
+
 }

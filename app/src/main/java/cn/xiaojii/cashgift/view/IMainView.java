@@ -2,6 +2,7 @@ package cn.xiaojii.cashgift.view;
 
 
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 
 /**
  * @author dmrfcoder

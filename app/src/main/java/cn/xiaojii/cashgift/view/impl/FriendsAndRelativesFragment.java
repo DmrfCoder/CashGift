@@ -27,13 +27,15 @@ import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FriendAndRelativesListViewAdapter;
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ParcelableListBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.inter.OnBroadCastListener;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
-import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
-import cn.xiaojii.cashgift.view.IBaseFragmentView;
+import cn.xiaojii.cashgift.receiver.DataReceiver;
+import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 import cn.xiaojii.cashgift.view.IMainView;
 
@@ -45,13 +47,15 @@ import cn.xiaojii.cashgift.view.IMainView;
 @SuppressLint("ValidFragment")
 public class FriendsAndRelativesFragment extends Fragment implements IFriendsAndRelativesView, IBaseFragmentView,
         View.OnClickListener, AdapterView.OnItemClickListener,
-        TextWatcher {
+        TextWatcher ,OnBroadCastListener{
     private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
     private ListView friendsAndRelativesListView;
     private FriendAndRelativesListViewAdapter friendAndRelativesListViewAdapter;
     private IMainView.OnAddProjectInFragmentListener onAddProjectInFragmentListener;
     private EditText editTextInquire;
     private Button buttonInquire;
+    private DataReceiver dataReceiver;
+
 
     private String TAG = "FriendsAndRelativesFragment";
 
@@ -72,15 +76,18 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         mainPresenter.getData(new MainInterator.OnGetDataListener() {
             @Override
             public void OnGetDataError() {
-                friendsAndRelativesPresenter.initData(null);
+                friendsAndRelativesPresenter.initFragmentData(null);
             }
 
             @Override
             public void OnGetDataSuccess(List<ProjectBean> projectBeanList) {
-                friendsAndRelativesPresenter.initData(projectBeanList);
+                friendsAndRelativesPresenter.initFragmentData(projectBeanList);
             }
         });
+        dataReceiver=new DataReceiver(this);
     }
+
+
 
 
     @Nullable
@@ -235,5 +242,11 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     @Override
     public void afterTextChanged(Editable editable) {
         Log.i(TAG, "afterTextChanged");
+    }
+
+
+    @Override
+    public void onRecevie(ParcelableListBean parcelableListBean) {
+        friendsAndRelativesPresenter.initFragmentData(parcelableListBean.getProjectBeanList());
     }
 }

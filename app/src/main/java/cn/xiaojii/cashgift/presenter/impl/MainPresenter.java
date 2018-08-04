@@ -1,28 +1,24 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.support.v4.app.Fragment;
-import android.view.View;
+import android.content.Intent;
+import android.os.Bundle;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ParcelableListBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IMainView;
-import cn.xiaojii.cashgift.view.impl.DiscoverFragment;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 import cn.xiaojii.cashgift.view.impl.MainActivity;
-import cn.xiaojii.cashgift.view.impl.MoreFragment;
-import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
-import cn.xiaojii.cashgift.view.impl.RunningAccountFragment;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/3
  */
 
-public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener ,MainInterator.OnAddProjectListener{
+public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener, MainInterator.OnAddProjectListener {
     private IMainView mainView;
     private MainInterator mainInterator;
 
@@ -32,10 +28,8 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     }
 
 
-
-
     @Override
-    public void initData() {
+    public void initActivityData() {
         mainInterator.initData(this);
     }
 
@@ -46,7 +40,12 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
 
     @Override
     public void addProject(ProjectBean projectBean) {
-        mainInterator.AddProject(projectBean,this);
+        mainInterator.AddProject(projectBean, this);
+    }
+
+    @Override
+    public void onDestroy() {
+        mainInterator.onDestroy();
     }
 
 
@@ -67,7 +66,14 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     }
 
     @Override
-    public void onAddProjectSuccess() {
-
+    public void onAddProjectSuccess(List<ProjectBean> list) {
+        ParcelableListBean parcelableListBean = new ParcelableListBean(list);
+        Intent intent = new Intent(GlobalBean.NORMAR_ACTION);
+        Bundle bundle=new Bundle();
+        bundle.putParcelable(GlobalBean.BROADCAST_TAG,parcelableListBean);
+        intent.putExtras(bundle);
+        ((MainActivity) mainView).sendBroadcast(intent);
     }
+
+
 }

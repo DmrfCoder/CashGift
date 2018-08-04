@@ -21,10 +21,9 @@ import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FragmentAdapter;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
-import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
 import cn.xiaojii.cashgift.util.PermissionUtil;
-import cn.xiaojii.cashgift.view.IBaseFragmentView;
+import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.view.IMainView;
 import cn.xiaojii.cashgift.widght.NoScrollViewPager;
 
@@ -76,7 +75,7 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
 
     private void initData() {
         mainPresenter = new MainPresenter(this, new MainInterator());
-        mainPresenter.initData();
+        mainPresenter.initActivityData();
     }
 
     @Override
@@ -175,6 +174,14 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
 
     @Override
     public void onAddProjectInFragmentError() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        mainPresenter.onDestroy();
 
     }
 }

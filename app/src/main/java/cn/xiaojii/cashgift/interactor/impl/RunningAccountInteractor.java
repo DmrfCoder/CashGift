@@ -17,6 +17,9 @@ public class RunningAccountInteractor {
         this.projectBeanList = projectBeanList;
     }
 
+    public RunningAccountInteractor() {
+    }
+
     public interface OnAddProjrctListener {
         /**
          * 增加流水账失败时调用

@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,11 +35,17 @@ public class ReadFileToStringUtil {
                 }
 
                 filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath + "/" + filename + ".json";
-                FileInputStream input = new FileInputStream(filename);
-                byte[] b = new byte[input.available()];
-                input.read(b);
-                String result = new String(b);
-                return result;
+                try {
+                    FileInputStream input = new FileInputStream(filename);
+                    byte[] b = new byte[input.available()];
+                    input.read(b);
+                    String result = new String(b);
+                    return result;
+                } catch (FileNotFoundException e) {
+                    return null;
+                }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

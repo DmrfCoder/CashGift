@@ -22,7 +22,7 @@ public interface IBasePresenter {
      * 初始化
      * @param dataList
      */
-    void initData(List dataList);
+    void initFragmentData(List dataList);
 
     /**
      * 从model拿到数据更新视图

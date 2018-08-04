@@ -18,7 +18,7 @@ public interface IMainPresenter {
     /**
      * 应用初始化时从文件中读取数据
      */
-    void initData();
+    void initActivityData();
 
     /**
      * 获取数据给调用者
@@ -33,4 +33,8 @@ public interface IMainPresenter {
      */
     void addProject(ProjectBean projectBean);
 
+    /**
+     * 存储数据
+     */
+    void onDestroy();
 }
