@@ -177,7 +177,11 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
 
                 ProjectBean projectBean = new ProjectBean();
                 projectBean.setName(name);
-                projectBean.setMoney(Integer.parseInt(money));
+                if (inOrOut == GlobalBean.inOrOut.IN) {
+                    projectBean.setMoney(Math.abs(Integer.parseInt(money)));
+                } else {
+                    projectBean.setMoney(-Math.abs(Integer.parseInt(money)));
+                }
                 projectBean.setProject(project);
                 friendsAndRelativesPresenter.addProject(projectBean);
                 onAddProjectInFragmentListener.onAddProjectInFragmentSuccess(projectBean);
