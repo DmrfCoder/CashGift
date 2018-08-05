@@ -35,7 +35,7 @@ import cn.xiaojii.cashgift.view.IRunningAccountView;
  */
 
 @SuppressLint("ValidFragment")
-public class RunningAccountFragment extends Fragment implements IRunningAccountView, OnBroadCastListener, IBaseFragmentView {
+public class RunningAccountFragment extends Fragment implements View.OnClickListener,IRunningAccountView, OnBroadCastListener, IBaseFragmentView {
 
     private RunningAccountPresenter runningAccountPresenter;
     private DataReceiver dataReceiver;
@@ -76,7 +76,16 @@ public class RunningAccountFragment extends Fragment implements IRunningAccountV
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_runningaccount, null);
+        initView(view);
         return view;
+    }
+
+    private void initView(View view) {
+        runningAccountListView=view.findViewById(R.id.id_listview_runningaccount);
+        runningAccountListViewAdapter=new RunningAccountListViewAdapter(getActivity());
+        runningAccountListView.setAdapter(runningAccountListViewAdapter);
+        view.findViewById(R.id.id_runningaccount_top_right).setOnClickListener(this);
+        runningAccountPresenter.updateView();
     }
 
     @Override
@@ -97,6 +106,11 @@ public class RunningAccountFragment extends Fragment implements IRunningAccountV
 
     @Override
     public void showDialog(Context context) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 }

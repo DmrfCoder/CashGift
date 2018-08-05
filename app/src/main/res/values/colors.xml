@@ -10,6 +10,7 @@
     <color name="colorGreen">#008000</color>
     <color name="colorGreenLight">#7CFC00</color>
     <color name="colorBrown">#96403F</color>
+    <color name="colorTextviewLine">#DC7C34</color>
 
 
 </resources>
