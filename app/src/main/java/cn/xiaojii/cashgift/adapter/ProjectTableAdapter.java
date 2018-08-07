@@ -19,6 +19,8 @@ import cn.xiaojii.cashgift.bean.ProjectTableBean;
 
 public class ProjectTableAdapter extends BaseAdapter {
 
+    private String TAG="ProjectTableAdapter";
+
     private List<ProjectTableBean> projectTableBeanList;
     private Context context;
 

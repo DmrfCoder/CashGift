@@ -1,5 +1,7 @@
 package cn.xiaojii.cashgift.bean;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,9 @@ import java.util.List;
  */
 
 public class ProjectTableBean {
+    private String TAG="ProjectTableBean";
+
+
     private String name;
     private int sumMoneyIn;
     private int sumMoneyOut;
@@ -23,11 +28,20 @@ public class ProjectTableBean {
 
 
     public void updateMoneyIn(int in) {
+
+        Log.i(TAG,"updateMoneyIn--in:"+in+" before:"+sumMoneyIn);
         sumMoneyIn += in;
+        if (sumMoneyIn!=800){
+            int c=0;
+        }
+
+
     }
 
     public void updateMoneyOut(int out) {
+        Log.i(TAG,"updateMoneyOut--out:"+out+" before:"+sumMoneyIn);
         sumMoneyOut += out;
+
     }
 
     public ProjectTableBean() {
@@ -74,7 +88,21 @@ public class ProjectTableBean {
 
 
     public boolean hasTargetBean(ProjectBean projectBean) {
-        return projectBeanList.contains(projectBean);
+
+
+        if (projectBeanList==null){
+            return false;
+        }
+
+        for (ProjectBean projectBean1:projectBeanList){
+            if (projectBean1.equals(projectBean)){
+                return true;
+            }
+
+        }
+
+        return false;
+
     }
 
 }

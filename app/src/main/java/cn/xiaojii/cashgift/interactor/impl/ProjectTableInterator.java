@@ -28,6 +28,7 @@ public class ProjectTableInterator implements IBaseInteractor {
         }
     }
 
+
     private boolean addSingleProjectBean(ProjectBean projectBean) {
 
         Log.i(TAG, "addSingleProjectBean");
@@ -73,12 +74,17 @@ public class ProjectTableInterator implements IBaseInteractor {
 
     }
 
+
+
     @Override
     public void initData(List dataList, InitDataListener initDataListener) {
+
         //这里的datalist应该是projectbean类型的
+        Log.i(TAG,"initData");
         for (Object projectBean : dataList) {
             if (!addSingleProjectBean((ProjectBean) projectBean)) {
                 initDataListener.onInitDataError();
+
             }
         }
 
