@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
 
         friendsAndRelativesFragment = new FriendsAndRelativesFragment();
         runningAccountFragment = new RunningAccountFragment();
-        projectTableFragment = new ProjectTableFragment(mainPresenter);
+        projectTableFragment = new ProjectTableFragment();
         discoverFragment = new DiscoverFragment(mainPresenter);
         moreFragment = new MoreFragment(mainPresenter);
 

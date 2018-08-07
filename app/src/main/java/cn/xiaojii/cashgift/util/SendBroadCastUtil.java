@@ -40,6 +40,9 @@ public class SendBroadCastUtil {
     }
 
     public static void sendAddProjectBC(Fragment fragment, ProjectBean projectBean,String fragmentName) {
+        if (projectBean==null||fragmentName==null){
+            return;
+        }
         Intent intent = new Intent(GlobalBean.NORMAR_ACTION3);
         Bundle bundle = new Bundle();
         bundle.putParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY, projectBean);

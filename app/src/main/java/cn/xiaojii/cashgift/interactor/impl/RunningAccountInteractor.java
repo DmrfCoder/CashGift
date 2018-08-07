@@ -20,7 +20,6 @@ import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 public class RunningAccountInteractor implements IBaseInteractor {
 
     private List<ProjectBean> projectBeanList;
-    private BroadcastReceiver broadcastReceiver;
 
 
 

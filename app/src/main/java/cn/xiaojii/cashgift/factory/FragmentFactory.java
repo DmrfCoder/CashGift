@@ -30,7 +30,7 @@ public class FragmentFactory {
                 fragment = new RunningAccountFragment();
                 break;
             case 2:
-                fragment = new ProjectTableFragment(mainPresenter);
+                fragment = new ProjectTableFragment();
                 break;
             case 3:
                 fragment = new DiscoverFragment(mainPresenter);
