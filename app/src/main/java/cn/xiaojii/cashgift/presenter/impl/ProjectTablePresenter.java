@@ -51,7 +51,6 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
                     addProjectFromBC(projectBean);
                 }
             }
-
         }
     };
 

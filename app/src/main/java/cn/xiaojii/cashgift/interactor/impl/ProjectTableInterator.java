@@ -29,6 +29,7 @@ public class ProjectTableInterator implements IBaseInteractor {
     }
 
     private boolean addSingleProjectBean(ProjectBean projectBean) {
+
         Log.i(TAG, "addSingleProjectBean");
         if (projectBean == null) {
             return false;
