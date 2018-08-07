@@ -28,4 +28,9 @@ public interface IBasePresenter {
      * 从model拿到数据更新视图
      */
     void updateView();
+
+    /**
+     * 当Fragment进入后台模式时调用
+     */
+    void onPause();
 }

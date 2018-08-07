@@ -33,7 +33,7 @@ import cn.xiaojii.cashgift.widght.NoScrollViewPager;
  */
 
 @SuppressLint("Registered")
-public class MainActivity extends FragmentActivity implements IMainView, TabHost.OnTabChangeListener, IMainView.OnAddProjectInFragmentListener {
+public class MainActivity extends FragmentActivity implements IMainView, TabHost.OnTabChangeListener {
 
 
     public FragmentTabHost fragmentTabHost;
@@ -61,6 +61,8 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PermissionUtil.RequestPermission(this);
+
+
         init();
 
 
@@ -88,8 +90,8 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
     private void initView() {
 
 
-        friendsAndRelativesFragment = new FriendsAndRelativesFragment(mainPresenter);
-        runningAccountFragment = new RunningAccountFragment(mainPresenter);
+        friendsAndRelativesFragment = new FriendsAndRelativesFragment();
+        runningAccountFragment = new RunningAccountFragment();
         projectTableFragment = new ProjectTableFragment(mainPresenter);
         discoverFragment = new DiscoverFragment(mainPresenter);
         moreFragment = new MoreFragment(mainPresenter);
@@ -167,15 +169,7 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
         vp.setCurrentItem(position);
     }
 
-    @Override
-    public void onAddProjectInFragmentSuccess(ProjectBean projectBean) {
-        mainPresenter.addProject(projectBean);
-    }
 
-    @Override
-    public void onAddProjectInFragmentError() {
-
-    }
 
     @Override
     protected void onDestroy() {

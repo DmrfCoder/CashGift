@@ -15,21 +15,6 @@ public interface IMainView {
      */
     void startfragment(IBaseFragmentView targetFragment);
 
-    public interface OnAddProjectInFragmentListener {
-
-
-        /**
-         * 在fragment中添加数据成功
-         * @param projectBean
-         */
-        void onAddProjectInFragmentSuccess(ProjectBean projectBean);
-
-        /**
-         * 在fragment中添加数据失败
-         */
-        void onAddProjectInFragmentError();
-
-    }
 
 }
 

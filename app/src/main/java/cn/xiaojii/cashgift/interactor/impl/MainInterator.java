@@ -1,5 +1,9 @@
 package cn.xiaojii.cashgift.interactor.impl;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
@@ -11,11 +15,6 @@ import cn.xiaojii.cashgift.util.JsonToListUtil;
 import cn.xiaojii.cashgift.util.ListToJsonUtil;
 import cn.xiaojii.cashgift.util.ReadFileToStringUtil;
 import cn.xiaojii.cashgift.util.WriteStringToFileUtil;
-import cn.xiaojii.cashgift.view.impl.DiscoverFragment;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
-import cn.xiaojii.cashgift.view.impl.MoreFragment;
-import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
-import cn.xiaojii.cashgift.view.impl.RunningAccountFragment;
 
 /**
  * @author dmrfcoder
@@ -25,9 +24,13 @@ import cn.xiaojii.cashgift.view.impl.RunningAccountFragment;
 public class MainInterator {
     public MainInterator() {
         projectBeanList = new ArrayList<>();
+
     }
 
     private List<ProjectBean> projectBeanList;
+
+
+
 
 
     public void onDestroy() {
@@ -148,4 +151,7 @@ public class MainInterator {
     }
 
 
+    public List<ProjectBean> getProjectBeanList() {
+        return projectBeanList;
+    }
 }

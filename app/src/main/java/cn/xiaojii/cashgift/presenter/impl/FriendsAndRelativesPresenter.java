@@ -1,15 +1,24 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
+import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
+import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 
 /**
@@ -23,12 +32,23 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         IBaseInteractor.UpdateViewListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
+    private BroadcastReceiver getBeanListBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            List<ProjectBean> projectBeans = bundle.getParcelableArrayList(GlobalBean.BROADCAST_BEAN_LIST_KEY);
+            initFragmentData(projectBeans);
+        }
+    };
 
 
-
-    public FriendsAndRelativesPresenter(IFriendsAndRelativesView friendsAndRelativesView, FriendsAndRelativesInteractor friendsAndRelativesInteractor) {
+    public FriendsAndRelativesPresenter(IFriendsAndRelativesView friendsAndRelativesView, final FriendsAndRelativesInteractor friendsAndRelativesInteractor) {
         this.friendsAndRelativesView = friendsAndRelativesView;
         this.friendsAndRelativesInteractor = friendsAndRelativesInteractor;
+        IntentFilter getBeanListFilter = new IntentFilter();
+        getBeanListFilter.addAction(GlobalBean.NORMAR_ACTION2);
+        getBeanListFilter.setPriority(Integer.MAX_VALUE);
+        ((Fragment) friendsAndRelativesView).getActivity().registerReceiver(getBeanListBroadcastReceiver, getBeanListFilter);
     }
 
     @Override
@@ -57,7 +77,9 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     @Override
     public void addProject(ProjectBean projectBean) {
+
         friendsAndRelativesInteractor.addProject(projectBean, this);
+        SendBroadCastUtil.sendAddProjectBC((Fragment) friendsAndRelativesView, projectBean);
     }
 
     @Override
@@ -71,13 +93,17 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
     @Override
+    public void onPause() {
+    }
+
+    @Override
     public void onInitDataError() {
 
     }
 
     @Override
     public void onInitDataSuccess(List dataList) {
-        //friendsAndRelativesView.updateListView(dataList);
+        friendsAndRelativesView.updateListView(dataList);
     }
 
     @Override
@@ -85,9 +111,11 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public void onAddProjectSuccess(List beanList) {
+    public void onAddProjectSuccess(List beanList, String BroadCastTag, ProjectBean projectBean) {
         friendsAndRelativesView.updateListView(beanList);
+
     }
 
     @Override
@@ -99,4 +127,6 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     public void onUpdateViewSuccess(List dataList) {
         friendsAndRelativesView.updateListView(dataList);
     }
+
+
 }

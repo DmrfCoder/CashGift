@@ -14,17 +14,18 @@ public interface IBaseInteractor {
 
     public interface AddProjectListener {
         /**
-         * 添加成功
+         *
+         * 添加失败
          */
         void onAddProjectError();
 
 
         /**
-         * 添加失败
-         *
+         * 添加成功
          * @param beanList
+         * @param BroadCastTag
          */
-        void onAddProjectSuccess(List beanList);
+        void onAddProjectSuccess(List beanList,String BroadCastTag,ProjectBean projectBean);
     }
 
 

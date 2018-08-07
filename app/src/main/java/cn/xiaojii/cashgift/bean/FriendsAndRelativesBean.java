@@ -14,7 +14,7 @@ public class FriendsAndRelativesBean {
 
     public FriendsAndRelativesBean(ProjectBean projectBean) {
         name = projectBean.getName();
-        sumMoney = projectBean.getMoney();
+        sumMoney = projectBean.getIntMoney();
         if (sumMoney > 0) {
             in = 1;
             out = 0;
@@ -70,6 +70,10 @@ public class FriendsAndRelativesBean {
 
     public int getSumMoney() {
         return sumMoney;
+    }
+
+    public String getStrSumMoney() {
+        return sumMoney+"";
     }
 
     public void setSumMoney(int sumMoney) {

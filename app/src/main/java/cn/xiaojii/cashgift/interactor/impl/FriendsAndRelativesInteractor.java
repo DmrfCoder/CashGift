@@ -1,11 +1,15 @@
 package cn.xiaojii.cashgift.interactor.impl;
 
-import android.widget.ListView;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
+import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.util.ConvertBeanUtil;
@@ -20,6 +24,10 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
     private List<FriendsAndRelativesBean> friendsAndRelativesBeanList;
 
 
+    public FriendsAndRelativesInteractor() {
+
+    }
+
     @Override
     public void addProject(ProjectBean projectBean, IBaseInteractor.AddProjectListener addProjectListener) {
         if (projectBean == null) {
@@ -29,7 +37,6 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
             friendsAndRelativesBeanList = new ArrayList<>();
             FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
             friendsAndRelativesBeanList.add(friendsAndRelativesBean);
-            addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
         } else {
             boolean findFlag = false;
             for (FriendsAndRelativesBean friendsAndRelativesBean : friendsAndRelativesBeanList) {
@@ -43,7 +50,6 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
 
                     }
                     friendsAndRelativesBean.updateSumMoney(friendsAndRelativesBean.getSumMoney());
-                    addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
 
                 }
             }
@@ -51,9 +57,10 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
             if (!findFlag) {
                 FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
                 friendsAndRelativesBeanList.add(friendsAndRelativesBean);
-                addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
+
             }
         }
+        addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList, "FriendsAndRelatives", projectBean);
 
     }
 
@@ -74,6 +81,15 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
         } else {
             updateViewListener.onUpdateViewError();
         }
+    }
+
+    private void addProject(ProjectBean projectBean) {
+        FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
+        if (friendsAndRelativesBeanList == null) {
+            friendsAndRelativesBeanList = new ArrayList<>();
+        }
+        friendsAndRelativesBeanList.add(friendsAndRelativesBean);
+        //这里只要把数据加进去就可以了，不用刷新view，因为此时view对用户不可见
     }
 
 

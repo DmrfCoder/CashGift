@@ -1,5 +1,8 @@
 package cn.xiaojii.cashgift.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Calendar;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Calendar;
  * @date 2018/8/3
  */
 
-public class ProjectBean {
+public class ProjectBean implements Parcelable {
     private String name;
     private String project;
     private String year;
@@ -19,6 +22,26 @@ public class ProjectBean {
         year = c.get(Calendar.YEAR) + "";
         monthAndDay = (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.DAY_OF_MONTH);
     }
+
+    protected ProjectBean(Parcel in) {
+        name = in.readString();
+        project = in.readString();
+        year = in.readString();
+        monthAndDay = in.readString();
+        money = in.readInt();
+    }
+
+    public static final Creator<ProjectBean> CREATOR = new Creator<ProjectBean>() {
+        @Override
+        public ProjectBean createFromParcel(Parcel in) {
+            return new ProjectBean(in);
+        }
+
+        @Override
+        public ProjectBean[] newArray(int size) {
+            return new ProjectBean[size];
+        }
+    };
 
     public String getProject() {
         return project;
@@ -44,7 +67,11 @@ public class ProjectBean {
         this.monthAndDay = monthAndDay;
     }
 
-    public int getMoney() {
+    public String getMoney() {
+        return money+"";
+    }
+
+    public int getIntMoney() {
         return money;
     }
 
@@ -59,5 +86,19 @@ public class ProjectBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(project);
+        parcel.writeString(year);
+        parcel.writeString(monthAndDay);
+        parcel.writeInt(money);
     }
 }

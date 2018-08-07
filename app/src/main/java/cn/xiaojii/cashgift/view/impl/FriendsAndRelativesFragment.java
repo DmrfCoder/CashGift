@@ -2,10 +2,14 @@ package cn.xiaojii.cashgift.view.impl;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,20 +26,19 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FriendAndRelativesListViewAdapter;
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.GlobalBean;
-import cn.xiaojii.cashgift.bean.ParcelableListBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.inter.OnBroadCastListener;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
-import cn.xiaojii.cashgift.receiver.DataReceiver;
 import cn.xiaojii.cashgift.inter.IBaseFragmentView;
+import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 import cn.xiaojii.cashgift.view.IMainView;
 
@@ -47,49 +50,18 @@ import cn.xiaojii.cashgift.view.IMainView;
 @SuppressLint("ValidFragment")
 public class FriendsAndRelativesFragment extends Fragment implements IFriendsAndRelativesView, IBaseFragmentView,
         View.OnClickListener, AdapterView.OnItemClickListener,
-        TextWatcher ,OnBroadCastListener{
+        TextWatcher {
     private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
     private ListView friendsAndRelativesListView;
     private FriendAndRelativesListViewAdapter friendAndRelativesListViewAdapter;
-    private IMainView.OnAddProjectInFragmentListener onAddProjectInFragmentListener;
     private EditText editTextInquire;
     private Button buttonInquire;
-    private DataReceiver dataReceiver;
 
 
     private String TAG = "FriendsAndRelativesFragment";
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof IMainView.OnAddProjectInFragmentListener) {
-            onAddProjectInFragmentListener = (IMainView.OnAddProjectInFragmentListener) context;
-        }
-    }
 
-    public FriendsAndRelativesFragment() {
-        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
-    }
-
-    public FriendsAndRelativesFragment(IMainPresenter mainPresenter) {
-        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
-        mainPresenter.getData(new MainInterator.OnGetDataListener() {
-            @Override
-            public void OnGetDataError() {
-                friendsAndRelativesPresenter.initFragmentData(null);
-            }
-
-            @Override
-            public void OnGetDataSuccess(List<ProjectBean> projectBeanList) {
-                friendsAndRelativesPresenter.initFragmentData(projectBeanList);
-            }
-        });
-        dataReceiver=new DataReceiver(this);
-    }
-
-
-
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,8 +69,21 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
 
         initView(view);
 
+        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
+
+
+        SendBroadCastUtil.sendNeedDataBC(this);
+
+        friendsAndRelativesPresenter.updateView();
+
 
         return view;
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private void initView(View view) {
@@ -119,13 +104,15 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         view.findViewById(R.id.id_search_bt).setOnClickListener(this);
         view.findViewById(R.id.id_friends_top_right).setOnClickListener(this);
 
-        friendsAndRelativesPresenter.updateView();
 
     }
 
 
     @Override
     public void updateListView(List<FriendsAndRelativesBean> friendsAndRelativesBeanList) {
+        if (friendsAndRelativesBeanList == null) {
+            return;
+        }
         friendAndRelativesListViewAdapter.setFriendsAndRelativesBeanList(friendsAndRelativesBeanList);
         friendAndRelativesListViewAdapter.notifyDataSetChanged();
     }
@@ -209,7 +196,6 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
                 }
                 projectBean.setProject(project);
                 friendsAndRelativesPresenter.addProject(projectBean);
-                onAddProjectInFragmentListener.onAddProjectInFragmentSuccess(projectBean);
                 dialog.dismiss();
 
             }
@@ -226,6 +212,7 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         dialog.show();
 
     }
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -245,8 +232,4 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     }
 
 
-    @Override
-    public void onRecevie(ParcelableListBean parcelableListBean) {
-        friendsAndRelativesPresenter.initFragmentData(parcelableListBean.getProjectBeanList());
-    }
 }

@@ -15,17 +15,13 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.RunningAccountListViewAdapter;
-import cn.xiaojii.cashgift.bean.ParcelableListBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.inter.OnBroadCastListener;
-import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.interactor.impl.RunningAccountInteractor;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
-import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.presenter.impl.RunningAccountPresenter;
-import cn.xiaojii.cashgift.receiver.DataReceiver;
 import cn.xiaojii.cashgift.inter.IBaseFragmentView;
+import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IMainView;
 import cn.xiaojii.cashgift.view.IRunningAccountView;
 
@@ -35,47 +31,25 @@ import cn.xiaojii.cashgift.view.IRunningAccountView;
  */
 
 @SuppressLint("ValidFragment")
-public class RunningAccountFragment extends Fragment implements View.OnClickListener,IRunningAccountView, OnBroadCastListener, IBaseFragmentView {
+public class RunningAccountFragment extends Fragment implements View.OnClickListener,IRunningAccountView, IBaseFragmentView {
 
     private RunningAccountPresenter runningAccountPresenter;
-    private DataReceiver dataReceiver;
-    private IMainView.OnAddProjectInFragmentListener onAddProjectInFragmentListener;
     private RunningAccountListViewAdapter runningAccountListViewAdapter;
     private ListView runningAccountListView;
 
+
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof IMainView.OnAddProjectInFragmentListener) {
-            onAddProjectInFragmentListener = (IMainView.OnAddProjectInFragmentListener) context;
-        }
-    }
+    public void onStart() {
+        super.onStart();
 
-
-    @SuppressLint("ValidFragment")
-    public RunningAccountFragment(IMainPresenter mainPresenter) {
-        runningAccountPresenter = new RunningAccountPresenter(this, new RunningAccountInteractor());
-        mainPresenter.getData(new MainInterator.OnGetDataListener() {
-            @Override
-            public void OnGetDataError() {
-                runningAccountPresenter.initFragmentData(null);
-            }
-
-            @Override
-            public void OnGetDataSuccess(List<ProjectBean> projectBeanList) {
-                runningAccountPresenter.initFragmentData(projectBeanList);
-            }
-        });
-        dataReceiver = new DataReceiver(this);
-    }
-
-    public RunningAccountFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_runningaccount, null);
+        runningAccountPresenter=new RunningAccountPresenter(this,new RunningAccountInteractor());
+        SendBroadCastUtil.sendNeedDataBC(this);
         initView(view);
         return view;
     }
@@ -94,10 +68,7 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
         runningAccountListViewAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onRecevie(ParcelableListBean parcelableListBean) {
-        runningAccountPresenter.initFragmentData(parcelableListBean.getProjectBeanList());
-    }
+
 
     @Override
     public void updateData(List<Class> classList) {
@@ -108,6 +79,8 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
     public void showDialog(Context context) {
 
     }
+
+
 
     @Override
     public void onClick(View view) {

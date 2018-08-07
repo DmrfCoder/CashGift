@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
@@ -22,12 +21,8 @@ public class RunningAccountListViewAdapter extends BaseAdapter {
     //ProjectBean其实就是RunningAccountBean
 
 
-
-
     private List<ProjectBean> projectBeanList;
     private Context context;
-
-
 
 
     public RunningAccountListViewAdapter(Context context) {
@@ -40,9 +35,11 @@ public class RunningAccountListViewAdapter extends BaseAdapter {
     }
 
     public void setProjectBeanList(List<ProjectBean> projectBeanList) {
+        if (projectBeanList==null){
+            return;
+        }
         this.projectBeanList = projectBeanList;
     }
-
 
 
     @Override
@@ -64,8 +61,8 @@ public class RunningAccountListViewAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         RunningAccountListViewAdapter.ViewHolder holder;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_friendandrelatives, null);
-            holder = new RunningAccountListViewAdapter().ViewHolder(convertView);
+            convertView = View.inflate(context, R.layout.item_runningaccount, null);
+            holder = new RunningAccountListViewAdapter.ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (RunningAccountListViewAdapter.ViewHolder) convertView.getTag();
@@ -73,9 +70,11 @@ public class RunningAccountListViewAdapter extends BaseAdapter {
         ProjectBean projectBean = projectBeanList.get(i);
 
 
-        holder.name.setText(friendsAndRelativesBean.getName());
-        holder.inOutCount.setText(friendsAndRelativesBean.getIn() + "/" + friendsAndRelativesBean.getOut());
-        holder.sumMoney.setText(friendsAndRelativesBean.getSumMoney()+"");
+        holder.txName.setText(projectBean.getName());
+        holder.txSumMoney.setText(projectBean.getMoney());
+        holder.txYear.setText(projectBean.getYear());
+        holder.txMonthAndDay.setText(projectBean.getMonthAndDay());
+        holder.txProject.setText(projectBean.getProject());
 
         return convertView;
     }
@@ -84,15 +83,19 @@ public class RunningAccountListViewAdapter extends BaseAdapter {
     static class ViewHolder {
 
 
-        public TextView name;
-        public TextView inOutCount;
-        public TextView sumMoney;
+        public TextView txYear;
+        public TextView txMonthAndDay;
+        public TextView txName;
+        public TextView txProject;
+        public TextView txSumMoney;
 
 
         ViewHolder(View view) {
-            this.name = view.findViewById(R.id.id_item_friend_name);
-            this.inOutCount = view.findViewById(R.id.id_item_friend_inout_count);
-            this.sumMoney = view.findViewById(R.id.id_item_friend_sum_money);
+            this.txYear = view.findViewById(R.id.id_item_running_time_year);
+            this.txMonthAndDay = view.findViewById(R.id.id_item_running_time_month_day);
+            this.txName = view.findViewById(R.id.id_item_running_name);
+            this.txProject = view.findViewById(R.id.id_item_running_project);
+            this.txSumMoney=view.findViewById(R.id.id_item_runing_sum_money);
         }
     }
 

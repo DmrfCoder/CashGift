@@ -23,4 +23,7 @@ public interface IBaseFragmentView  {
      */
     void showDialog(final Context context);
 
+
+
+
 }

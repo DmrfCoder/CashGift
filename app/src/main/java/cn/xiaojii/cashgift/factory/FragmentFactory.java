@@ -24,10 +24,10 @@ public class FragmentFactory {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FriendsAndRelativesFragment(mainPresenter);
+                fragment = new FriendsAndRelativesFragment();
                 break;
             case 1:
-                fragment = new RunningAccountFragment(mainPresenter);
+                fragment = new RunningAccountFragment();
                 break;
             case 2:
                 fragment = new ProjectTableFragment(mainPresenter);

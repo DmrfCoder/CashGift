@@ -68,7 +68,7 @@ public class FriendAndRelativesListViewAdapter extends BaseAdapter {
         FriendsAndRelativesBean friendsAndRelativesBean = friendsAndRelativesBeanList.get(position);
         holder.name.setText(friendsAndRelativesBean.getName());
         holder.inOutCount.setText(friendsAndRelativesBean.getIn() + "/" + friendsAndRelativesBean.getOut());
-        holder.sumMoney.setText(friendsAndRelativesBean.getSumMoney()+"");
+        holder.sumMoney.setText(friendsAndRelativesBean.getStrSumMoney());
 
         return convertView;
     }
