@@ -32,6 +32,8 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         IBaseInteractor.UpdateViewListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
+
+
     private BroadcastReceiver getBeanListBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -42,6 +44,22 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     };
 
 
+    private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            String fragmentName = bundle.getString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY);
+            if (!"FriendsAndRelativesPresenter".equals(fragmentName)) {
+                ProjectBean projectBean = bundle.getParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY);
+                if (projectBean != null) {
+                    addProjectFromBC(projectBean);
+                }
+            }
+
+        }
+    };
+
     public FriendsAndRelativesPresenter(IFriendsAndRelativesView friendsAndRelativesView, final FriendsAndRelativesInteractor friendsAndRelativesInteractor) {
         this.friendsAndRelativesView = friendsAndRelativesView;
         this.friendsAndRelativesInteractor = friendsAndRelativesInteractor;
@@ -49,6 +67,13 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         getBeanListFilter.addAction(GlobalBean.NORMAR_ACTION2);
         getBeanListFilter.setPriority(Integer.MAX_VALUE);
         ((Fragment) friendsAndRelativesView).getActivity().registerReceiver(getBeanListBroadcastReceiver, getBeanListFilter);
+        SendBroadCastUtil.sendNeedDataBC((Fragment)friendsAndRelativesView);
+
+        IntentFilter addDataProjectReceiverFilter = new IntentFilter();
+        addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
+        addDataProjectReceiverFilter.setPriority(Integer.MAX_VALUE);
+        ((Fragment) friendsAndRelativesView).getActivity().registerReceiver(addDataProjectReceiver, addDataProjectReceiverFilter);
+
     }
 
     @Override
@@ -75,12 +100,19 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
 
-    @Override
-    public void addProject(ProjectBean projectBean) {
 
+
+    @Override
+    public void addProjectFromDG(ProjectBean projectBean) {
         friendsAndRelativesInteractor.addProject(projectBean, this);
-        SendBroadCastUtil.sendAddProjectBC((Fragment) friendsAndRelativesView, projectBean);
+        SendBroadCastUtil.sendAddProjectBC((Fragment)friendsAndRelativesView,projectBean,"FriendsAndRelativesPresenter");
     }
+
+    @Override
+    public void addProjectFromBC(ProjectBean projectBean) {
+        friendsAndRelativesInteractor.addProject(projectBean, this);
+    }
+
 
     @Override
     public void initFragmentData(List dataList) {

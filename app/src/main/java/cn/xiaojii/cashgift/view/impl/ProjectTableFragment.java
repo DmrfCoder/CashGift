@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
+import cn.xiaojii.cashgift.presenter.impl.ProjectTablePresenter;
 import cn.xiaojii.cashgift.view.IProjectTableView;
 
 /**
@@ -26,7 +27,13 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView 
     private int d = 0;
     private int e = 0;
 
+
+
     String detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
+
+
+    private ProjectTablePresenter projectTablePresenter;
+
 
     public ProjectTableFragment() {
     }

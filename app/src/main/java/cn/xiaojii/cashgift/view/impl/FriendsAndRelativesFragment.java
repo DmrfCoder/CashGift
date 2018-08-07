@@ -2,9 +2,7 @@ package cn.xiaojii.cashgift.view.impl;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,7 +24,6 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import java.util.List;
-import java.util.Objects;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FriendAndRelativesListViewAdapter;
@@ -34,13 +31,9 @@ import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
-import cn.xiaojii.cashgift.interactor.impl.MainInterator;
-import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.presenter.impl.FriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.inter.IBaseFragmentView;
-import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
-import cn.xiaojii.cashgift.view.IMainView;
 
 /**
  * @author dmrfcoder
@@ -72,7 +65,7 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
 
 
-        SendBroadCastUtil.sendNeedDataBC(this);
+
 
         friendsAndRelativesPresenter.updateView();
 
@@ -135,6 +128,8 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         }
     }
 
+
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         switch (adapterView.getId()) {
@@ -195,7 +190,8 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
                     projectBean.setMoney(-Math.abs(Integer.parseInt(money)));
                 }
                 projectBean.setProject(project);
-                friendsAndRelativesPresenter.addProject(projectBean);
+                friendsAndRelativesPresenter.addProjectFromDG(projectBean);
+
                 dialog.dismiss();
 
             }

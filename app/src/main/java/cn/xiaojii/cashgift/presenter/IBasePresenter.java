@@ -13,10 +13,17 @@ public interface IBasePresenter {
 
     /**
      *
-     * 增加流水，参数为泛型
+     * 从dialog中增加条目，参数为泛型,
      * @param projectBean
      */
-    void addProject(ProjectBean projectBean);
+    void addProjectFromDG(ProjectBean projectBean);
+
+
+    /**
+     * 增加从brodcast中获取的条目
+     * @param projectBean
+     */
+    void addProjectFromBC(ProjectBean projectBean);
 
     /**
      * 初始化

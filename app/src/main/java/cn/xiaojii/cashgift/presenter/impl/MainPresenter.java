@@ -41,12 +41,13 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
             Bundle bundle = intent.getExtras();
             String key = bundle.getString(GlobalBean.BROADCAST_NEED_DATA_KEY);
             if (GlobalBean.BROADCAST_NEED_DATA.equals(key)) {
-                sendDataBroadCast();
+               sendDataBroadCast();
             }
         }
     };
 
     private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
@@ -54,7 +55,6 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
             if (projectBean != null) {
                 addProject(projectBean);
             }
-
         }
     };
 

@@ -83,14 +83,6 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
         }
     }
 
-    private void addProject(ProjectBean projectBean) {
-        FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
-        if (friendsAndRelativesBeanList == null) {
-            friendsAndRelativesBeanList = new ArrayList<>();
-        }
-        friendsAndRelativesBeanList.add(friendsAndRelativesBean);
-        //这里只要把数据加进去就可以了，不用刷新view，因为此时view对用户不可见
-    }
 
 
     public interface OnInquireFinishedListener {

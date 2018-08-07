@@ -24,12 +24,8 @@ public class RunningAccountInteractor implements IBaseInteractor {
 
 
 
-    private void addProject(ProjectBean projectBean) {
-        if (projectBeanList == null) {
-            projectBeanList = new ArrayList<>();
-        }
-        projectBeanList.add(projectBean);
-    }
+
+
 
     @Override
     public void addProject(ProjectBean projectBean, AddProjectListener addProjectListener) {
@@ -38,10 +34,9 @@ public class RunningAccountInteractor implements IBaseInteractor {
         }
         if (projectBeanList == null) {
             projectBeanList = new ArrayList<>();
-
         }
         projectBeanList.add(projectBean);
-        addProjectListener.onAddProjectSuccess(projectBeanList, "RunningAccount",projectBean);
+        addProjectListener.onAddProjectSuccess(projectBeanList, "RunningAccount", projectBean);
     }
 
     @Override

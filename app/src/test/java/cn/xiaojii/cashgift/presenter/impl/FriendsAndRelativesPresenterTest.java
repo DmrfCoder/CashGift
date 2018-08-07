@@ -7,15 +7,11 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
-import java.util.List;
-
 import cn.xiaojii.cashgift.BuildConfig;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -47,7 +43,7 @@ public class FriendsAndRelativesPresenterTest {
         projectBean.setName("张三");
         projectBean.setProject("上学");
         projectBean.setMoney(100);
-        friendsAndRelativesPresenter.addProject(projectBean);
+        friendsAndRelativesPresenter.addProjectFromDG(projectBean);
 
         verify(friendsAndRelativesPresenter, never()).onAddProjectError();
 
