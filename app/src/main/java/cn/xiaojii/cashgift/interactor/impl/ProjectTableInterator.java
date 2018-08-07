@@ -1,5 +1,7 @@
 package cn.xiaojii.cashgift.interactor.impl;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,20 +16,20 @@ import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 
 public class ProjectTableInterator implements IBaseInteractor {
     private List<ProjectTableBean> projectTableBeanList;
+    private String TAG = "ProjectTableInterator";
 
 
     @Override
     public void addProject(ProjectBean projectBean, AddProjectListener addProjectListener) {
         if (addSingleProjectBean(projectBean)) {
-
             addProjectListener.onAddProjectSuccess(projectTableBeanList, null, null);
         } else {
             addProjectListener.onAddProjectError();
         }
-
     }
 
     private boolean addSingleProjectBean(ProjectBean projectBean) {
+        Log.i(TAG, "addSingleProjectBean");
         if (projectBean == null) {
             return false;
         }
@@ -35,9 +37,11 @@ public class ProjectTableInterator implements IBaseInteractor {
         if (projectTableBeanList == null) {
             projectTableBeanList = new ArrayList<>();
         } else {
-
             for (ProjectTableBean projectTableBean : projectTableBeanList) {
-                if (projectTableBean.getName().equals(projectBean.getProject())&&!projectTableBean.hasTargetBean(projectBean)) {
+                if (projectTableBean.getName().equals(projectBean.getProject())) {
+                    if (projectTableBean.hasTargetBean(projectBean) ){
+                        return false;
+                    }
                     findFlag = true;
 
                     projectTableBean.addProjectBean(projectBean);

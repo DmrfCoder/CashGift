@@ -2,6 +2,11 @@ package cn.xiaojii.cashgift;
 
 import org.junit.Test;
 
+import java.util.List;
+
+import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectTableBean;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +17,18 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
+        ProjectTableBean projectTableBean=new ProjectTableBean();
+        projectTableBean.setName("demo");
+        ProjectBean projectBean=new ProjectBean();
+        projectBean.setName("demo");
+        projectTableBean.addProjectBean(projectBean);
+
+        if (projectTableBean.hasTargetBean(projectBean)){
+            System.out.print("true");
+        }else {
+            System.out.print("false");
+        }
+
         assertEquals(4, 2 + 2);
     }
 }
