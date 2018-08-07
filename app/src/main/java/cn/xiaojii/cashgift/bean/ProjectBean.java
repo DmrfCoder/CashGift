@@ -17,6 +17,24 @@ public class ProjectBean implements Parcelable {
     private String monthAndDay;
     private int money;
 
+
+    @Override
+    public boolean equals(Object obj) {
+        ProjectBean projectBean=(ProjectBean) obj;
+        if (projectBean.getName().equals(this.name)){
+            if (projectBean.getIntMoney()==this.money){
+                if (projectBean.getProject().equals(this.project)){
+                    if (projectBean.getYear().equals(this.year)){
+                        if (projectBean.getMonthAndDay().equals(this.monthAndDay)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public ProjectBean() {
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR) + "";
