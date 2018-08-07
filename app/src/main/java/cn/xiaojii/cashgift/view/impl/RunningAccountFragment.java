@@ -64,7 +64,6 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
         runningAccountListViewAdapter=new RunningAccountListViewAdapter(getActivity());
         runningAccountListView.setAdapter(runningAccountListViewAdapter);
         view.findViewById(R.id.id_runningaccount_top_right).setOnClickListener(this);
-        runningAccountPresenter.updateView();
 
     }
 
