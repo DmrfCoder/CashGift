@@ -46,17 +46,7 @@ public class FriendsAndRelativesInteractorTest {
         projectBean.setProject("上学");
         projectBean.setMoney(100);
 
-        friendsAndRelativesInteractor.addProject(projectBean, new IBaseInteractor.AddProjectListener() {
-            @Override
-            public void onAddProjectError() {
-                Log.e(TAG, "onAddProjectError");
-            }
 
-            @Override
-            public void onAddProjectSuccess(List beanList) {
-                Log.i(TAG, "onAddProjectSuccess");
-            }
-        });
     }
 
 }
