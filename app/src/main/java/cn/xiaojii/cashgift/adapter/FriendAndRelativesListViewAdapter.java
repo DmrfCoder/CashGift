@@ -71,6 +71,8 @@ public class FriendAndRelativesListViewAdapter extends BaseAdapter {
         holder.sumMoney.setText(friendsAndRelativesBean.getStrSumMoney());
         if (friendsAndRelativesBean.getSumMoney()<0){
             holder.sumMoney.setBackgroundResource(R.color.colorGreen);
+        }else {
+            holder.sumMoney.setBackgroundResource(R.color.colorBrown);
         }
 
         return convertView;
