@@ -24,7 +24,7 @@ import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
  * @date 2018/8/7
  */
 
-public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.AddProjectListener, IBaseInteractor.InitDataListener {
+public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.AddProjectListener, IBaseInteractor.InitDataListener, ProjectTableInterator.OnUpdateTopBarDataListener {
     private ProjectTableFragment projectTableFragment;
     private ProjectTableInterator projectTableInterator;
 
@@ -107,7 +107,9 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
 
     @Override
     public void onAddProjectSuccess(List beanList, String BroadCastTag, ProjectBean projectBean) {
+        projectTableInterator.updateTopBarData(this);
         projectTableFragment.updateListView(beanList);
+
     }
 
     @Override
@@ -117,6 +119,18 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
 
     @Override
     public void onInitDataSuccess(List dataList) {
+        projectTableInterator.updateTopBarData(this);
         projectTableFragment.updateListView(dataList);
+
+    }
+
+    @Override
+    public void onUpdateTopBarDataError() {
+
+    }
+
+    @Override
+    public void onUpdateTopBarDataSuccess(int a, int b, int c, int d, int e,int totalMoney) {
+        projectTableFragment.updateTopBarData(a, b, c, d, e,totalMoney);
     }
 }

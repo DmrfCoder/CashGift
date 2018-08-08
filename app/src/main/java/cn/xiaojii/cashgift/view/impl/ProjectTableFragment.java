@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,19 +30,12 @@ import cn.xiaojii.cashgift.view.IProjectTableView;
 
 public class ProjectTableFragment extends Fragment implements IProjectTableView, IBaseFragmentView {
 
-    private int a = 0;
-    private int b = 0;
-    private int c = 0;
-    private int d = 0;
-    private int e = 0;
-
-
-    String detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
-
 
     private ProjectTablePresenter projectTablePresenter;
     private ProjectTableAdapter projectTableAdapter;
     private ListView projectTableListView;
+    private TextView txDetailProjectTable;
+    private TextView txTopTotalMoney;
 
 
     @Nullable
@@ -55,6 +49,8 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     }
 
     private void initView(View view) {
+        txTopTotalMoney = view.findViewById(R.id.id_summoney_projettable);
+        txDetailProjectTable = view.findViewById(R.id.id_detail_projecttable);
         projectTableListView = view.findViewById(R.id.id_listview_projecttable);
         projectTableAdapter = new ProjectTableAdapter(getActivity());
         projectTableListView.setAdapter(projectTableAdapter);
@@ -80,5 +76,13 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
         projectTableAdapter.notifyDataSetChanged();
 
 
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    public void updateTopBarData(int a, int b, int c, int d, int e, int totalMoney) {
+        String detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
+        txDetailProjectTable.setText(detailProjectTable);
+        txTopTotalMoney.setText(totalMoney + "");
     }
 }
