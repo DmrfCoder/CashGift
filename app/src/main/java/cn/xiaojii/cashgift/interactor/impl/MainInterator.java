@@ -27,7 +27,7 @@ public class MainInterator {
 
     }
 
-    private List<ProjectBean> projectBeanList;
+    private static List<ProjectBean> projectBeanList;
 
 
 
@@ -116,7 +116,7 @@ public class MainInterator {
     }
 
 
-    public void GetData(OnGetDataListener onGetDataListener) {
+    public static void GetData(OnGetDataListener onGetDataListener) {
         if (projectBeanList == null) {
             onGetDataListener.OnGetDataError();
         } else {

@@ -136,6 +136,12 @@ public class ProjectTableInterator implements IBaseInteractor {
 
     }
 
+    @Override
+    public void clickListViewItem(String name, ClickListviewItemListener clickListviewItemListener) {
+
+    }
+
+
 
     public interface OnUpdateTopBarDataListener {
         /**

@@ -91,11 +91,13 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
         discoverFragment = new DiscoverFragment(mainPresenter);
         moreFragment = new MoreFragment(mainPresenter);
 
+
         fragmentList.add(friendsAndRelativesFragment);
         fragmentList.add(runningAccountFragment);
         fragmentList.add(projectTableFragment);
         fragmentList.add(discoverFragment);
         fragmentList.add(moreFragment);
+
 
 
     }
@@ -104,6 +106,7 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
     public void startfragment(Fragment targetFragment,boolean addToBackStack) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
+
         fragmentTransaction.replace(R.id.id_fragment_layout, targetFragment,targetFragment.getClass().getName());
         if (addToBackStack){
             fragmentTransaction.addToBackStack(null);

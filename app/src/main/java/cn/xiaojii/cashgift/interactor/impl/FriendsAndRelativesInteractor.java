@@ -22,6 +22,7 @@ import cn.xiaojii.cashgift.util.ConvertBeanUtil;
 public class FriendsAndRelativesInteractor implements IBaseInteractor {
 
     private List<FriendsAndRelativesBean> friendsAndRelativesBeanList;
+    private List<ProjectBean> projectBeanList;
 
 
     public FriendsAndRelativesInteractor() {
@@ -33,6 +34,7 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
         if (projectBean == null) {
             addProjectListener.onAddProjectError();
         }
+        projectBeanList.add(projectBean);
         if (friendsAndRelativesBeanList == null) {
             friendsAndRelativesBeanList = new ArrayList<>();
             FriendsAndRelativesBean friendsAndRelativesBean = new FriendsAndRelativesBean(projectBean);
@@ -67,6 +69,7 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
     @Override
     public void initData(List dataList, InitDataListener initDataListener) {
         if (dataList != null) {
+            projectBeanList = dataList;
             friendsAndRelativesBeanList = ConvertBeanUtil.convertProjectBeansToFriendsAndRelativesBeans(dataList);
             initDataListener.onInitDataSuccess(friendsAndRelativesBeanList);
         } else {
@@ -83,6 +86,10 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
         }
     }
 
+    @Override
+    public void clickListViewItem(String name, ClickListviewItemListener clickListviewItemListener) {
+
+    }
 
 
     public interface OnInquireFinishedListener {
@@ -117,6 +124,32 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
             onInquireFinishedListener.onInquireSuccess(list);
         }
     }
+
+    public interface NeedPositionNameListener {
+        /**
+         * 获取position处的姓名失败
+         */
+        void onNeedPositionNameError();
+
+        /**
+         * 获取position处的姓名成功
+         *
+         * @param name
+         */
+        void onNeedPositionNameSuccess(String name);
+
+
+    }
+
+
+    public void clickListViewItem(int position, NeedPositionNameListener needPositionNameListener) {
+        if (position >= friendsAndRelativesBeanList.size()) {
+            needPositionNameListener.onNeedPositionNameError();
+        } else {
+            needPositionNameListener.onNeedPositionNameSuccess(friendsAndRelativesBeanList.get(position).getName());
+        }
+    }
+
 
 }
 

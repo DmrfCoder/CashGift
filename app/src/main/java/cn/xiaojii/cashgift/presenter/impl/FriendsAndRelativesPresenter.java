@@ -20,6 +20,8 @@ import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
+import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
+import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 
 /**
  * @author dmrfcoder
@@ -29,7 +31,8 @@ import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresenter,
         IBasePresenter, FriendsAndRelativesInteractor.OnInquireFinishedListener,
         IBaseInteractor.InitDataListener, IBaseInteractor.AddProjectListener,
-        IBaseInteractor.UpdateViewListener {
+        IBaseInteractor.UpdateViewListener, IBaseInteractor.ClickListviewItemListener,
+        FriendsAndRelativesInteractor.NeedPositionNameListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
 
@@ -67,7 +70,7 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         getBeanListFilter.addAction(GlobalBean.NORMAR_ACTION2);
         getBeanListFilter.setPriority(Integer.MAX_VALUE);
         ((Fragment) friendsAndRelativesView).getActivity().registerReceiver(getBeanListBroadcastReceiver, getBeanListFilter);
-        SendBroadCastUtil.sendNeedDataBC((Fragment)friendsAndRelativesView);
+        SendBroadCastUtil.sendNeedDataBC((Fragment) friendsAndRelativesView);
 
         IntentFilter addDataProjectReceiverFilter = new IntentFilter();
         addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
@@ -88,6 +91,11 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         return false;
     }
 
+    @Override
+    public void clickListViewItem(int position) {
+        friendsAndRelativesInteractor.clickListViewItem(position, this);
+    }
+
 
     @Override
     public void onInquireError() {
@@ -100,12 +108,10 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
 
-
-
     @Override
     public void addProjectFromDG(ProjectBean projectBean) {
         friendsAndRelativesInteractor.addProject(projectBean, this);
-        SendBroadCastUtil.sendAddProjectBC((Fragment)friendsAndRelativesView,projectBean,"FriendsAndRelativesPresenter");
+        SendBroadCastUtil.sendAddProjectBC((Fragment) friendsAndRelativesView, projectBean, "FriendsAndRelativesPresenter");
     }
 
     @Override
@@ -161,4 +167,24 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
 
+    @Override
+    public void onClickItemError() {
+
+    }
+
+    @Override
+    public void onCliskItemSuccess(List dataList) {
+        //发送广播
+        SendBroadCastUtil.sendListToFriendsItemPresenterBC((Fragment) friendsAndRelativesView, dataList);
+    }
+
+    @Override
+    public void onNeedPositionNameError() {
+
+    }
+
+    @Override
+    public void onNeedPositionNameSuccess(String name) {
+        ((FriendsAndRelativesFragment) friendsAndRelativesView).jumpToTargetItemFragment(name);
+    }
 }

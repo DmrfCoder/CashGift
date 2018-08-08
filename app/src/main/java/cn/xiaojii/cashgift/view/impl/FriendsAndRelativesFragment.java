@@ -65,8 +65,6 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
 
 
-
-
         friendsAndRelativesPresenter.updateView();
 
 
@@ -87,6 +85,8 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         friendsAndRelativesListView = view.findViewById(R.id.id_friends_listview);
         friendAndRelativesListViewAdapter = new FriendAndRelativesListViewAdapter(getActivity());
         friendsAndRelativesListView.setAdapter(friendAndRelativesListViewAdapter);
+
+        friendsAndRelativesListView.setOnItemClickListener(this);
 
         editTextInquire = view.findViewById(R.id.id_search_et);
         editTextInquire.addTextChangedListener(this);
@@ -115,9 +115,9 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_top_right:
-               // showDialog(getActivity());
-                FriendsAndRelativesItemFragment friendsAndRelativesItemFragment=new FriendsAndRelativesItemFragment();
-                ( (MainActivity)getActivity()).startfragment(friendsAndRelativesItemFragment,true);
+                // showDialog(getActivity());
+                FriendsAndRelativesItemFragment friendsAndRelativesItemFragment = new FriendsAndRelativesItemFragment();
+                ((MainActivity) getActivity()).startfragment(friendsAndRelativesItemFragment, true);
                 break;
             case R.id.id_search_bt:
                 break;
@@ -131,12 +131,14 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     }
 
 
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         switch (adapterView.getId()) {
             case R.id.id_friends_listview:
-                //position就是点击的item的下标
+
+                friendsAndRelativesPresenter.clickListViewItem(position);
+                break;
+            default:
                 break;
         }
 
@@ -229,5 +231,9 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         Log.i(TAG, "afterTextChanged");
     }
 
+    public void jumpToTargetItemFragment(String name) {
 
+        ((MainActivity) getActivity()).startfragment(FriendsAndRelativesItemFragment.newInstance(name), true);
+
+    }
 }

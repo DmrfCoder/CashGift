@@ -39,15 +39,26 @@ public class SendBroadCastUtil {
         mainActivity.sendBroadcast(intent);
     }
 
-    public static void sendAddProjectBC(Fragment fragment, ProjectBean projectBean,String fragmentName) {
-        if (projectBean==null||fragmentName==null){
+    public static void sendAddProjectBC(Fragment fragment, ProjectBean projectBean, String fragmentName) {
+        if (projectBean == null || fragmentName == null) {
             return;
         }
         Intent intent = new Intent(GlobalBean.NORMAR_ACTION3);
         Bundle bundle = new Bundle();
         bundle.putParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY, projectBean);
-        bundle.putString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY,fragmentName);
+        bundle.putString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY, fragmentName);
         intent.putExtras(bundle);
         fragment.getActivity().sendBroadcast(intent);
     }
+
+
+    public static void sendListToFriendsItemPresenterBC(Fragment fragment, List<ProjectBean> projectBeans) {
+        Intent intent = new Intent(GlobalBean.NORMAR_ACTION4);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(GlobalBean.BROADCAST_BEAN_LIST_KEY, (ArrayList<? extends Parcelable>) projectBeans);
+        intent.putExtras(bundle);
+        fragment.getActivity().sendBroadcast(intent);
+    }
+
+
 }

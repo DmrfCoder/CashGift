@@ -57,6 +57,13 @@ public class RunningAccountInteractor implements IBaseInteractor {
         }
     }
 
+    @Override
+    public void clickListViewItem(String name, ClickListviewItemListener clickListviewItemListener) {
+
+    }
+
+
+
     public interface OnAddProjrctListener {
         /**
          * 增加流水账失败时调用

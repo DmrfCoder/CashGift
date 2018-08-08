@@ -14,7 +14,6 @@ public interface IBaseInteractor {
 
     public interface AddProjectListener {
         /**
-         *
          * 添加失败
          */
         void onAddProjectError();
@@ -22,10 +21,11 @@ public interface IBaseInteractor {
 
         /**
          * 添加成功
+         *
          * @param beanList
          * @param BroadCastTag
          */
-        void onAddProjectSuccess(List beanList,String BroadCastTag,ProjectBean projectBean);
+        void onAddProjectSuccess(List beanList, String BroadCastTag, ProjectBean projectBean);
     }
 
 
@@ -79,4 +79,22 @@ public interface IBaseInteractor {
     void updateView(UpdateViewListener updateViewListener);
 
 
+    public interface ClickListviewItemListener {
+        /**
+         * 点击item发生错误
+         */
+        void onClickItemError();
+
+        /**
+         * 逻辑处理成功，返回对应信息
+         * @param dataList
+         */
+        void onCliskItemSuccess(List dataList);
+    }
+
+    /**
+     * 处理item的点击逻辑
+     * @param name
+     */
+    void clickListViewItem(String name,ClickListviewItemListener clickListviewItemListener);
 }

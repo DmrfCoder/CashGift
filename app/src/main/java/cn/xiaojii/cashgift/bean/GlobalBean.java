@@ -29,4 +29,8 @@ public class GlobalBean {
     public static String BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY = "add_project_fragment_name_key";
 
 
+
+    public static String NORMAR_ACTION4 = "cn.xiaojii.normal.receiver4";
+
+
 }
