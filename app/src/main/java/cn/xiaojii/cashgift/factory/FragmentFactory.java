@@ -20,7 +20,7 @@ public class FragmentFactory {
      * @param position
      * @return
      */
-    public static Fragment createForMain(int position,MainPresenter mainPresenter) {
+    public static Fragment createForMain(int position) {
         Fragment fragment = null;
         switch (position) {
             case 0:
@@ -33,10 +33,10 @@ public class FragmentFactory {
                 fragment = new ProjectTableFragment();
                 break;
             case 3:
-                fragment = new DiscoverFragment(mainPresenter);
+                fragment = new DiscoverFragment();
                 break;
             case 4:
-                fragment = new MoreFragment(mainPresenter);
+                fragment = new MoreFragment();
                 break;
             default:
                 break;

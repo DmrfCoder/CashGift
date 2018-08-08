@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -33,17 +36,12 @@ import cn.xiaojii.cashgift.widght.NoScrollViewPager;
  */
 
 @SuppressLint("Registered")
-public class MainActivity extends FragmentActivity implements IMainView, TabHost.OnTabChangeListener {
+public class MainActivity extends FragmentActivity implements IMainView, View.OnClickListener {
 
 
-    public FragmentTabHost fragmentTabHost;
-    private LayoutInflater layoutInflater;
-    private Class fragmentArray[] = {FriendsAndRelativesFragment.class, RunningAccountFragment.class, ProjectTableFragment.class, DiscoverFragment.class, MoreFragment.class};
-    private int imageViewArray[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
-    private int imageSelectedViewArray[] = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
-    private String textViewArray[] = {"亲友团", "流水账", "项目表", "发现", "更多"};
+    private int[] imageViewArray = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+    private int[] imageSelectedViewArray = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
     private List<Fragment> fragmentList = new ArrayList<>();
-    private NoScrollViewPager vp;
 
 
     private FriendsAndRelativesFragment friendsAndRelativesFragment;
@@ -54,6 +52,15 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
 
     public MainPresenter mainPresenter;
 
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
+    private int curSelectTabIndex = 0;
+
+    private ImageView[] imageViews = new ImageView[5];
+    private TextView[] textViews = new TextView[5];
+    private LinearLayout[] linearLayouts = new LinearLayout[5];
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -61,7 +68,6 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PermissionUtil.RequestPermission(this);
-
 
         init();
 
@@ -78,17 +84,6 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
     private void initData() {
         mainPresenter = new MainPresenter(this, new MainInterator());
         mainPresenter.initActivityData();
-    }
-
-    @Override
-    public void startfragment(IBaseFragmentView targetFragment) {
-
-    }
-
-    //    控件初始化控件
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initView() {
-
 
         friendsAndRelativesFragment = new FriendsAndRelativesFragment();
         runningAccountFragment = new RunningAccountFragment();
@@ -103,72 +98,74 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
         fragmentList.add(moreFragment);
 
 
-        vp = (NoScrollViewPager) findViewById(R.id.id_viewpaper);
+    }
 
-
-        layoutInflater = LayoutInflater.from(this);
-
-        fragmentTabHost = (FragmentTabHost) findViewById(R.id.id_tabhost);
-        fragmentTabHost.setup(this, getSupportFragmentManager(), R.id.id_viewpaper);
-        fragmentTabHost.setOnTabChangedListener(this);
-
-        int tabCount = textViewArray.length;
-
-        for (int tabIndex = 0; tabIndex < tabCount; tabIndex++) {
-            TabHost.TabSpec tabSpec = fragmentTabHost.newTabSpec(textViewArray[tabIndex])
-                    .setIndicator(getTabItemView(tabIndex));
-            fragmentTabHost.addTab(tabSpec, fragmentArray[tabIndex], null);
-            fragmentTabHost.setTag(tabIndex);
-            fragmentTabHost.getTabWidget().getChildAt(tabIndex).setBackgroundColor(this.getResources().getColor(R.color.colorWhite, null));
+    @Override
+    public void startfragment(Fragment targetFragment,boolean addToBackStack) {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.id_fragment_layout, targetFragment,targetFragment.getClass().getName());
+        if (addToBackStack){
+            fragmentTransaction.addToBackStack(null);
         }
+        fragmentTransaction.commit();
     }
-
-    private void initPage() {
-
-
-        vp.setAdapter(new FragmentAdapter(getSupportFragmentManager(), mainPresenter));
-        fragmentTabHost.getTabWidget().setDividerDrawable(null);
-    }
-
-    private View getTabItemView(int tabIndex) {
-        View view = layoutInflater.inflate(R.layout.content_bottomtab, null);
-        ImageView mImageView = (ImageView) view
-                .findViewById(R.id.id_tab_icon);
-        TextView mTextView = (TextView) view.findViewById(R.id.id_tab_name);
-        mImageView.setBackgroundResource(imageViewArray[tabIndex]);
-        mTextView.setText(textViewArray[tabIndex]);
-        return view;
-    }
-
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onTabChanged(String tabId) {
+    public void onTabChanged(int position) {
+        if (position != curSelectTabIndex) {
+
+            imageViews[curSelectTabIndex].setBackgroundResource(imageViewArray[curSelectTabIndex]);
+            textViews[curSelectTabIndex].setTextColor(this.getResources().getColor(R.color.colorBlack, null));
 
 
-        int position = fragmentTabHost.getCurrentTab();
+            curSelectTabIndex = position;
+            imageViews[curSelectTabIndex].setBackgroundResource(imageSelectedViewArray[curSelectTabIndex]);
+            textViews[curSelectTabIndex].setTextColor(this.getResources().getColor(R.color.colorBlue, null));
 
 
-        for (int i = 0; i < fragmentTabHost.getTabWidget().getChildCount(); i++) {
-            TextView tv = (TextView) fragmentTabHost.getTabWidget().getChildAt(i).findViewById(R.id.id_tab_name);
-            ImageView iv = (ImageView) fragmentTabHost.getTabWidget().getChildAt(i).findViewById(R.id.id_tab_icon);
 
+            startfragment(fragmentList.get(curSelectTabIndex),false);
 
-            if (i == position) {
-                iv.setBackgroundResource(imageSelectedViewArray[i]);
-                tv.setTextColor(this.getResources().getColor(R.color.colorBlue, null));
-
-            } else {//不选中
-                iv.setBackgroundResource(imageViewArray[i]);
-                tv.setTextColor(this.getResources().getColor(R.color.colorBlack, null));
-
-            }
         }
-
-
-        vp.setCurrentItem(position);
     }
 
+    //    控件初始化控件
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void initView() {
+
+
+        findViewById(R.id.id_linear0).setOnClickListener(this);
+        findViewById(R.id.id_linear1).setOnClickListener(this);
+        findViewById(R.id.id_linear2).setOnClickListener(this);
+        findViewById(R.id.id_linear3).setOnClickListener(this);
+        findViewById(R.id.id_linear4).setOnClickListener(this);
+
+        imageViews[0] = findViewById(R.id.id_image_zeroth);
+        imageViews[1] = findViewById(R.id.id_image_first);
+        imageViews[2] = findViewById(R.id.id_image_second);
+        imageViews[3] = findViewById(R.id.id_image_third);
+        imageViews[4] = findViewById(R.id.id_image_fourth);
+
+
+        textViews[0] = findViewById(R.id.id_tx_zeroth);
+        textViews[1] = findViewById(R.id.id_tx_first);
+        textViews[2] = findViewById(R.id.id_tx_second);
+        textViews[3] = findViewById(R.id.id_tx_third);
+        textViews[4] = findViewById(R.id.id_tx_fourth);
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void initPage() {
+        imageViews[0].setBackgroundResource(imageSelectedViewArray[curSelectTabIndex]);
+        textViews[0].setTextColor(this.getResources().getColor(R.color.colorBlue, null));
+
+
+        startfragment(fragmentList.get(0),false);
+    }
 
 
     @Override
@@ -176,6 +173,32 @@ public class MainActivity extends FragmentActivity implements IMainView, TabHost
 
         super.onDestroy();
         mainPresenter.onDestroy();
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.id_linear0:
+                onTabChanged(0);
+                break;
+            case R.id.id_linear1:
+                onTabChanged(1);
+                break;
+            case R.id.id_linear2:
+                onTabChanged(2);
+                break;
+            case R.id.id_linear3:
+                onTabChanged(3);
+                break;
+            case R.id.id_linear4:
+                onTabChanged(4);
+                break;
+            default:
+                break;
+
+        }
 
     }
 }

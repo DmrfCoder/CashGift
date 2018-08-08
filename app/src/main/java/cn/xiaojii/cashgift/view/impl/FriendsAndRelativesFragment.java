@@ -115,7 +115,9 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_top_right:
-                showDialog(getActivity());
+               // showDialog(getActivity());
+                FriendsAndRelativesItemFragment friendsAndRelativesItemFragment=new FriendsAndRelativesItemFragment();
+                ( (MainActivity)getActivity()).startfragment(friendsAndRelativesItemFragment,true);
                 break;
             case R.id.id_search_bt:
                 break;

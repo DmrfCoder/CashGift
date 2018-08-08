@@ -13,16 +13,13 @@ import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
 public class FragmentAdapter extends FragmentStatePagerAdapter {
 
 
-    private MainPresenter mainPresenter;
-
-    public FragmentAdapter(FragmentManager fm, MainPresenter mainPresenter) {
+    public FragmentAdapter(FragmentManager fm) {
         super(fm);
-        this.mainPresenter = mainPresenter;
     }
 
     @Override
     public Fragment getItem(int arg0) {
-        return FragmentFactory.createForMain(arg0, mainPresenter);
+        return FragmentFactory.createForMain(arg0);
     }//根据Item的位置返回对应位置的Fragment，绑定item和Fragment
 
     @Override
