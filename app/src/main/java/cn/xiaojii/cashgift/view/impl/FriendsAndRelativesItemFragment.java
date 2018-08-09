@@ -33,13 +33,14 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
 
     private FriendsAndRelativesItemPresenter friendsAndRelativesItemPresenter;
     private ListView friendsAndRelativesItemListview;
-    private TextView txTotalMoney, txInCount, txOutCount;
+    private TextView txTotalMoney, txInCount, txOutCount, txName;
 
     /**
      * RunningAccountListViewAdapter就是此处需要的adapter
      */
     private RunningAccountListViewAdapter friendsAndRelativesListViewAdapter;
     private int totalMoney = 0, inCount = 0, outCount = 0;
+    private String name = "";
 
 
     @Nullable
@@ -70,6 +71,7 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
         txTotalMoney = view.findViewById(R.id.id_friends_item_summoney);
         txInCount = view.findViewById(R.id.id_friends_item_in_count);
         txOutCount = view.findViewById(R.id.id_friends_item_out_count);
+        txName = view.findViewById(R.id.id_friends_item_top_center);
         updateTextView();
 
     }
@@ -80,13 +82,11 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
     }
 
 
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_item_top_right:
-                showAddProjectFragmentDialog(getActivity(),"FriendsAndRelativesItemFragment");
+                showAddProjectFragmentDialog(getActivity(), "FriendsAndRelativesItemFragment");
                 break;
             case R.id.id_friends_item_top_left:
 
@@ -98,10 +98,11 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void updateView(int totalMoney, int inCount, int outCount) {
+    public void updateView(int totalMoney, int inCount, int outCount,String name) {
         this.totalMoney = totalMoney;
         this.inCount = inCount;
         this.outCount = outCount;
+        this.name=name;
         updateTextView();
     }
 
@@ -110,6 +111,7 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
             txTotalMoney.setText(totalMoney + "");
             txInCount.setText(inCount + "");
             txOutCount.setText(outCount + "");
+            txName.setText(name);
         }
 
     }

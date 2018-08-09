@@ -6,21 +6,25 @@ import cn.xiaojii.cashgift.bean.ProjectBean;
 
 /**
  * @author dmrfcoder
- * @date 2018/8/8
+ * @date 2018/8/9
  */
 
-public interface IFriendsAndRelativesItemView {
+public interface IProjectTableItemView {
+
+
     /**
      * 更新顶部信息栏
-     * @param totalMoney
      * @param inCount
+     * @param inMoney
      * @param outCount
+     * @param outMoney
      */
-    public void updateView(int totalMoney,int inCount,int outCount,String name);
+    public void updateView(int inCount,int inMoney,int outCount,int outMoney);
 
     /**
      * 更新；listview
      * @param projectBeanList
      */
     public void updateListView(List<ProjectBean> projectBeanList);
+
 }

@@ -47,7 +47,7 @@ public class FriendsAndRelativesItemInteractor implements
                     outCount++;
                 }
                 totalSumMoney += projectBean.getIntMoney();
-                updateFariViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount);
+                updateFariViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount,name);
             }else {
                 updateFariViewListener.onUpdateViewError();
             }
@@ -83,7 +83,7 @@ public class FriendsAndRelativesItemInteractor implements
         }
 
         projectBeanList = projectBeans;
-        updateFariViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount);
+        updateFariViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount,name);
     }
 
 
@@ -102,7 +102,7 @@ public class FriendsAndRelativesItemInteractor implements
         if (projectBeanList == null) {
             updateViewListener.onUpdateViewError();
         } else {
-            updateViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount);
+            updateViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount,name);
         }
     }
 }

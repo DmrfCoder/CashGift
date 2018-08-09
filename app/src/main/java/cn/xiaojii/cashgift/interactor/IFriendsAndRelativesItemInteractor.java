@@ -18,12 +18,16 @@ public interface IFriendsAndRelativesItemInteractor {
          */
         void onUpdateViewError();
 
+
         /**
          * 监听更新数据成功
-         *
          * @param dataList
+         * @param totalMoney
+         * @param inCount
+         * @param outCount
+         * @param name
          */
-        void onUpdateViewSuccess(List dataList, int totalMoney, int inCount, int outCount);
+        void onUpdateViewSuccess(List dataList, int totalMoney, int inCount, int outCount,String name);
 
     }
 

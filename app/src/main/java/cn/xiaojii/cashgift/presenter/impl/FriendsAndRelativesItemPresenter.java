@@ -78,9 +78,9 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
 
     @Override
-    public void onUpdateViewSuccess(List dataList, int totalMoney, int inCount, int outCount) {
+    public void onUpdateViewSuccess(List dataList, int totalMoney, int inCount, int outCount,String name) {
         friendsAndRelativesItemFragment.updateListView(dataList);
-        friendsAndRelativesItemFragment.updateView(totalMoney, inCount, outCount);
+        friendsAndRelativesItemFragment.updateView(totalMoney, inCount, outCount,name);
     }
 
 
