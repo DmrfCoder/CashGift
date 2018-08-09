@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IDiscoverView;
@@ -20,14 +23,9 @@ import cn.xiaojii.cashgift.view.IDiscoverView;
  */
 
 @SuppressLint("ValidFragment")
-public class DiscoverFragment extends Fragment implements IDiscoverView,IBaseFragmentView {
-    public DiscoverFragment() {
-    }
+public class DiscoverFragment extends Fragment implements IDiscoverView, IBaseFragmentView, View.OnClickListener {
 
-    @SuppressLint("ValidFragment")
-    public DiscoverFragment(IMainPresenter mainPresenter) {
 
-    }
 
     @Nullable
     @Override
@@ -39,6 +37,23 @@ public class DiscoverFragment extends Fragment implements IDiscoverView,IBaseFra
 
     @Override
     public void initFragment(View view) {
+        view.findViewById(R.id.id_discover_excel).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.id_discover_excel:
+                EventBus.getDefault().post(GlobalBean.EXPORTEXCEL);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
     }
 }

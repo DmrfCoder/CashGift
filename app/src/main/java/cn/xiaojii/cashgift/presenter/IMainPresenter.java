@@ -38,4 +38,11 @@ public interface IMainPresenter {
      * 存储数据
      */
     void onDestroy();
+
+
+    /**
+     * 接收导出excel的指令
+     * @param code
+     */
+    void receiveExportExcel(String code);
 }

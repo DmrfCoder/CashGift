@@ -1,5 +1,9 @@
 package cn.xiaojii.cashgift.bean;
 
+import android.os.Environment;
+
+import java.io.IOException;
+
 /**
  * @author dmrfcoder
  * @date 2018/8/3
@@ -23,20 +27,30 @@ public class GlobalBean {
     public static String BROADCAST_NEED_DATA = "need_data";
 
 
-
     public static String NORMAR_ACTION3 = "cn.xiaojii.normal.receiver3";
     public static String BROADCAST_ADD_PROJECT_BEAN_KEY = "add_project_bean_key";
     public static String BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY = "add_project_fragment_name_key";
 
 
-
     public static String NORMAR_ACTION4 = "cn.xiaojii.normal.receiver4";
 
 
-    public static String TAG_MAINPRESENTER="MainPresenter";
-    public static String TAG_DIALOGFRAGMENT="AddProjectDialogFragment";
-    public static String TAG_FRIENDSANDRELATIVES="FriendsAndRelativesPresenter";
-    public static String TAG_PROJECTTABLE="ProjectTablePresenter";
+    public static String TAG_MAINPRESENTER = "MainPresenter";
+    public static String TAG_DIALOGFRAGMENT = "AddProjectDialogFragment";
+    public static String TAG_FRIENDSANDRELATIVES = "FriendsAndRelativesPresenter";
+    public static String TAG_PROJECTTABLE = "ProjectTablePresenter";
+
+    public static String EXPORTEXCEL = "export_excel";
+
+    public static String APP_FOLDER_PATH;
+
+    static {
+        try {
+            APP_FOLDER_PATH = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

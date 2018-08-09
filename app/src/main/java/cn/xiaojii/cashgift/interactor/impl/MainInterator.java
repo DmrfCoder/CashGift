@@ -11,6 +11,8 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.UserBean;
+import cn.xiaojii.cashgift.interactor.IMainInteractor;
 import cn.xiaojii.cashgift.util.JsonToListUtil;
 import cn.xiaojii.cashgift.util.ListToJsonUtil;
 import cn.xiaojii.cashgift.util.ReadFileToStringUtil;
@@ -21,21 +23,28 @@ import cn.xiaojii.cashgift.util.WriteStringToFileUtil;
  * @date 2018/8/3
  */
 
-public class MainInterator {
+public class MainInterator implements IMainInteractor {
     public MainInterator() {
         projectBeanList = new ArrayList<>();
-
+        userBean = new UserBean();
     }
 
     private static List<ProjectBean> projectBeanList;
-
-
-
+    private UserBean userBean;
 
 
     public void onDestroy() {
         String json = ListToJsonUtil.ListToJson(projectBeanList);
         WriteStringToFileUtil.write(json, GlobalBean.filename);
+    }
+
+    @Override
+    public void exportExcel(ExportExcelListener exportExcelListener) {
+        if (projectBeanList == null) {
+            exportExcelListener.onExportExcelError();
+        } else {
+            exportExcelListener.onExportExcelSuccess(projectBeanList,userBean);
+        }
     }
 
     public interface OnInitDataListener {
@@ -53,40 +62,6 @@ public class MainInterator {
 
             this.projectBeanList = new ArrayList<>();
 
-            /*ProjectBean projectBean = new ProjectBean();
-            ProjectBean projectBean1 = new ProjectBean();
-            ProjectBean projectBean2 = new ProjectBean();
-            ProjectBean projectBean3 = new ProjectBean();
-            ProjectBean projectBean4 = new ProjectBean();
-
-            projectBean.setPersonName("张三");
-            projectBean.setMoney(800);
-            projectBean.setProject("婚礼");
-            this.projectBeanList.add(projectBean);
-
-
-            projectBean1.setPersonName("王五");
-            projectBean1.setMoney(-800);
-            projectBean1.setProject("婚礼");
-            this.projectBeanList.add(projectBean1);
-
-
-            projectBean2.setPersonName("二麻子");
-            projectBean2.setMoney(-100);
-            projectBean2.setProject("婚礼");
-            this.projectBeanList.add(projectBean2);
-
-
-            projectBean3.setPersonName("demo");
-            projectBean3.setMoney(900);
-            projectBean3.setProject("婚礼");
-            this.projectBeanList.add(projectBean3);
-
-            projectBean4.setPersonName("李四");
-            projectBean4.setMoney(900);
-            projectBean4.setProject("婚礼");
-            this.projectBeanList.add(projectBean4);
-*/
             onInitDataListener.OnInitError();
 
 

@@ -5,22 +5,28 @@ import android.util.Log;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
+import cn.xiaojii.cashgift.bean.UserBean;
+import cn.xiaojii.cashgift.interactor.IMainInteractor;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
+import cn.xiaojii.cashgift.util.ExcelUtil;
 import cn.xiaojii.cashgift.view.IMainView;
+import cn.xiaojii.cashgift.view.impl.MainActivity;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/3
  */
 
-public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener, MainInterator.OnAddProjectListener {
+public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataListener,
+        MainInterator.OnAddProjectListener, IMainInteractor.ExportExcelListener {
     private IMainView mainView;
     private MainInterator mainInterator;
 
@@ -61,6 +67,14 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    @Subscribe
+    public void receiveExportExcel(String code) {
+        if (code.equals(GlobalBean.EXPORTEXCEL)) {
+            mainInterator.exportExcel(this);
+        }
+    }
+
 
     @Override
     public void OnInitError() {
@@ -90,4 +104,22 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
         EventBus.getDefault().postSticky(projectListMessageEvent);
     }
 
+    @Override
+    public void onExportExcelError() {
+
+    }
+
+    @Override
+    public void onExportExcelSuccess(List list, UserBean userBean) {
+        File file = new File(GlobalBean.APP_FOLDER_PATH);
+        //文件夹是否已经存在
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        String[] title = {"姓名", "项目", "收支", "日期"};
+        String fileName = file.toString() + "/" + userBean.getExcelName();
+        ExcelUtil.initExcel(fileName, title);
+        ExcelUtil.writeObjListToExcel(list, fileName, (MainActivity) mainView);
+    }
 }

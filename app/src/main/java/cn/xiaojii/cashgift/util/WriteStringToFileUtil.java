@@ -24,13 +24,13 @@ public class WriteStringToFileUtil {
         //如果手机已插入sd卡,且app具有读写sd卡的权限
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             try {
-                File dir = new File(Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath);
+                File dir = new File(GlobalBean.APP_FOLDER_PATH);
                 //文件夹是否已经存在
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
-                filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath + "/" + filename + ".json";
+                filename = GlobalBean.APP_FOLDER_PATH + "/" + filename + ".json";
                 FileOutputStream output = new FileOutputStream(filename);
                 output.write(content.getBytes());
                 output.close();
