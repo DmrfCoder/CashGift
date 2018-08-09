@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
         runningAccountFragment = new RunningAccountFragment();
         projectTableFragment = new ProjectTableFragment();
         discoverFragment = new DiscoverFragment();
-        moreFragment = new MoreFragment(mainPresenter);
+        moreFragment = new MoreFragment();
 
 
         fragmentList.add(friendsAndRelativesFragment);

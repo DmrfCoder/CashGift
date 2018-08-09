@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_gravity="center"
+    <Button
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/id_more_finger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="more" />
+        android:text="指纹解锁" />
+
+    <Button
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/id_more_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="图案解锁" />
+
 </LinearLayout>
