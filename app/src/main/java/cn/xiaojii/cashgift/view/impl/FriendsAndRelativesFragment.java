@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -115,9 +117,9 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_top_right:
-                // showDialog(getActivity());
-                FriendsAndRelativesItemFragment friendsAndRelativesItemFragment = new FriendsAndRelativesItemFragment();
-                ((MainActivity) getActivity()).startfragment(friendsAndRelativesItemFragment, true);
+                showAddProjectFragmentDialog(getActivity(), "FriendsAndRelativesFragment");
+                // FriendsAndRelativesItemFragment friendsAndRelativesItemFragment = new FriendsAndRelativesItemFragment();
+                // ((MainActivity) getActivity()).startfragment(friendsAndRelativesItemFragment, true);
                 break;
             case R.id.id_search_bt:
                 break;
@@ -151,65 +153,11 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
     }
 
     @Override
-    public void showDialog(Context context) {
-        final Dialog dialog = new Dialog(context);
-        View view1 = LayoutInflater.from(context).inflate(
-                R.layout.dialog_addproject, null);
-        dialog.setContentView(view1);
+    public void showAddProjectFragmentDialog(Context context, final String tag) {
 
-        WindowManager m = getActivity().getWindowManager();
-        Display d = m.getDefaultDisplay();
-        final android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes();
-        p.width = (int) (d.getWidth() * 0.9);
-        dialog.getWindow().setAttributes(p);
 
-        Button ok, cancel;
-        final EditText et_name, et_project, et_money;
-        final RadioGroup inOrOutRg;
-
-        et_name = view1.findViewById(R.id.id_dialog_et_name);
-        et_project = view1.findViewById(R.id.id_dialog_et_project);
-        et_money = view1.findViewById(R.id.id_dialog_et_money);
-        inOrOutRg = view1.findViewById(R.id.id_dialog_inout);
-
-        ok = view1.findViewById(R.id.id_dialog_ok);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = et_name.getText().toString();
-                String project = et_project.getText().toString();
-                String money = et_money.getText().toString();
-                GlobalBean.inOrOut inOrOut;
-                if (inOrOutRg.getCheckedRadioButtonId() == R.id.id_dialog_in) {
-                    inOrOut = GlobalBean.inOrOut.IN;
-                } else {
-                    inOrOut = GlobalBean.inOrOut.OUT;
-                }
-
-                ProjectBean projectBean = new ProjectBean();
-                projectBean.setName(name);
-                if (inOrOut == GlobalBean.inOrOut.IN) {
-                    projectBean.setMoney(Math.abs(Integer.parseInt(money)));
-                } else {
-                    projectBean.setMoney(-Math.abs(Integer.parseInt(money)));
-                }
-                projectBean.setProject(project);
-                friendsAndRelativesPresenter.addProjectFromDG(projectBean);
-
-                dialog.dismiss();
-
-            }
-        });
-
-        cancel = view1.findViewById(R.id.id_dialog_cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
+        AddProjectDialogFragment addProjectDialogFragment = new AddProjectDialogFragment();
+        addProjectDialogFragment.show(getFragmentManager(), tag);
 
     }
 
@@ -235,5 +183,11 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
 
         ((MainActivity) getActivity()).startfragment(FriendsAndRelativesItemFragment.newInstance(name), true);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        friendsAndRelativesPresenter.onDestroy();
     }
 }

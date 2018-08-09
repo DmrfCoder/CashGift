@@ -1,27 +1,16 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import org.greenrobot.eventbus.EventBus;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import java.util.List;
+
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
-import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IMainView;
-import cn.xiaojii.cashgift.view.impl.MainActivity;
 
 /**
  * @author dmrfcoder
@@ -34,53 +23,12 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
 
     private String TAG = "MainPresenter";
 
-    private BroadcastReceiver needDataReceiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            String key = bundle.getString(GlobalBean.BROADCAST_NEED_DATA_KEY);
-            if (GlobalBean.BROADCAST_NEED_DATA.equals(key)) {
-               sendDataBroadCast();
-            }
-        }
-    };
-
-    private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            ProjectBean projectBean = bundle.getParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY);
-            if (projectBean != null) {
-                addProject(projectBean);
-            }
-        }
-    };
-
-
 
 
     public MainPresenter(IMainView mainView, MainInterator mainInterator) {
         this.mainView = mainView;
         this.mainInterator = mainInterator;
-        IntentFilter needDataReceiverFilter = new IntentFilter();
-        needDataReceiverFilter.addAction(GlobalBean.NORMAR_ACTION);
-        needDataReceiverFilter.setPriority(Integer.MAX_VALUE);
-        ((MainActivity) mainView).registerReceiver(needDataReceiver, needDataReceiverFilter);
 
-        IntentFilter addDataProjectReceiverFilter = new IntentFilter();
-        addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
-        addDataProjectReceiverFilter.setPriority(Integer.MAX_VALUE);
-        ((MainActivity) mainView).registerReceiver(addDataProjectReceiver, addDataProjectReceiverFilter);
-
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void sendDataBroadCast() {
-        List<ProjectBean> projectBeans = mainInterator.getProjectBeanList();
-        SendBroadCastUtil.sendDataBC((MainActivity) mainView, projectBeans);
     }
 
 
@@ -102,6 +50,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     public void onDestroy() {
         mainInterator.onDestroy();
+
     }
 
 
@@ -113,6 +62,8 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     public void OnInitSuccess(List<ProjectBean> projectBeanList) {
 
+        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(projectBeanList);
+        EventBus.getDefault().postSticky(projectListMessageEvent);
     }
 
 

@@ -16,7 +16,6 @@ import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.RunningAccountInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
-import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IRunningAccountView;
 
 /**
@@ -29,32 +28,6 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
 
     private IRunningAccountView runningAccountView;
     private BroadcastReceiver dataReceive;
-    private BroadcastReceiver getListBeanBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            Bundle bundle = intent.getExtras();
-            List<ProjectBean> projectBeans = bundle.getParcelableArrayList(GlobalBean.BROADCAST_BEAN_LIST_KEY);
-            initFragmentData(projectBeans);
-        }
-    };
-
-
-    private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            String fragmentName = bundle.getString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY);
-            if (!"RunningAccountPresenter".equals(fragmentName)) {
-                ProjectBean projectBean = bundle.getParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY);
-                if (projectBean != null) {
-                    addProjectFromBC(projectBean);
-                }
-            }
-
-        }
-    };
 
 
     public RunningAccountPresenter(IRunningAccountView runningAccountView, RunningAccountInteractor runningAccountInteractor) {
@@ -62,18 +35,7 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
         this.runningAccountInteractor = runningAccountInteractor;
 
 
-        SendBroadCastUtil.sendNeedDataBC((Fragment) runningAccountView);
 
-        IntentFilter getListBeanfilter = new IntentFilter();
-        getListBeanfilter.addAction(GlobalBean.NORMAR_ACTION2);
-        getListBeanfilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) runningAccountView).getActivity().registerReceiver(getListBeanBroadcastReceiver, getListBeanfilter);
-
-
-        IntentFilter addDataProjectReceiverFilter = new IntentFilter();
-        addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
-        addDataProjectReceiverFilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) runningAccountView).getActivity().registerReceiver(addDataProjectReceiver, addDataProjectReceiverFilter);
 
 
     }
@@ -83,19 +45,18 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
 
 
     @Override
-    public void addProjectFromDG(ProjectBean projectBean) {
+    public void addProjectFromDialog(ProjectBean projectBean) {
 
-        runningAccountInteractor.addProject(projectBean,this);
-        SendBroadCastUtil.sendAddProjectBC((Fragment)runningAccountView,projectBean,"RunningAccountPresenter");
-    }
-
-    @Override
-    public void addProjectFromBC(ProjectBean projectBean) {
         runningAccountInteractor.addProject(projectBean,this);
     }
 
     @Override
-    public void initFragmentData(List dataList) {
+    public void addProjectFromEventBus(ProjectBean projectBean) {
+        runningAccountInteractor.addProject(projectBean,this);
+    }
+
+    @Override
+    public void initDataFromMainInteractor(List dataList) {
         runningAccountInteractor.initData(dataList, this);
     }
 
@@ -106,6 +67,11 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
 
     @Override
     public void onPause() {
+
+    }
+
+    @Override
+    public void onDestroy() {
 
     }
 

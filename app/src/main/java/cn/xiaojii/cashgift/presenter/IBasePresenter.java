@@ -16,20 +16,20 @@ public interface IBasePresenter {
      * 从dialog中增加条目，参数为泛型,
      * @param projectBean
      */
-    void addProjectFromDG(ProjectBean projectBean);
+    void addProjectFromDialog(ProjectBean projectBean);
 
 
     /**
      * 增加从brodcast中获取的条目
      * @param projectBean
      */
-    void addProjectFromBC(ProjectBean projectBean);
+    void addProjectFromEventBus(ProjectBean projectBean);
 
     /**
      * 初始化
      * @param dataList
      */
-    void initFragmentData(List dataList);
+    void initDataFromMainInteractor(List dataList);
 
     /**
      * 从model拿到数据更新视图
@@ -40,4 +40,10 @@ public interface IBasePresenter {
      * 当Fragment进入后台模式时调用
      */
     void onPause();
+
+
+    /**
+     * view销毁时调用
+     */
+    void onDestroy();
 }

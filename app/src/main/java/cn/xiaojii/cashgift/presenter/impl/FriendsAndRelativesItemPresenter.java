@@ -17,7 +17,6 @@ import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesItemPresenter;
-import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 
 /**
@@ -28,31 +27,7 @@ import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesItemPresenter, IBasePresenter, IBaseInteractor.UpdateViewListener, IBaseInteractor.InitDataListener, IBaseInteractor.ClickListviewItemListener {
     private FriendsAndRelativesItemFragment friendsAndRelativesItemFragment;
     private FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor;
-    private BroadcastReceiver getBeanListBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            List<ProjectBean> projectBeans = bundle.getParcelableArrayList(GlobalBean.BROADCAST_BEAN_LIST_KEY);
-           // initFragmentData(projectBeans);
-        }
-    };
 
-
-    private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            String fragmentName = bundle.getString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY);
-            if (!"FriendsAndRelativesItemPresenter".equals(fragmentName)) {
-                ProjectBean projectBean = bundle.getParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY);
-                if (projectBean != null) {
-                    addProjectFromBC(projectBean);
-                }
-            }
-
-        }
-    };
 
 
     public FriendsAndRelativesItemPresenter(FriendsAndRelativesItemFragment friendsAndRelativesItemFragment, FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor) {
@@ -60,33 +35,22 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
         this.friendsAndRelativesItemInteractor = friendsAndRelativesItemInteractor;
 
 
-        IntentFilter getBeanListFilter = new IntentFilter();
-        getBeanListFilter.addAction(GlobalBean.NORMAR_ACTION2);
-        getBeanListFilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) friendsAndRelativesItemFragment).getActivity().registerReceiver(getBeanListBroadcastReceiver, getBeanListFilter);
-
-        SendBroadCastUtil.sendNeedDataBC((Fragment) friendsAndRelativesItemFragment);
-
-        IntentFilter addDataProjectReceiverFilter = new IntentFilter();
-        addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
-        addDataProjectReceiverFilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) friendsAndRelativesItemFragment).getActivity().registerReceiver(addDataProjectReceiver, addDataProjectReceiverFilter);
 
 
     }
 
     @Override
-    public void addProjectFromDG(ProjectBean projectBean) {
+    public void addProjectFromDialog(ProjectBean projectBean) {
 
     }
 
     @Override
-    public void addProjectFromBC(ProjectBean projectBean) {
+    public void addProjectFromEventBus(ProjectBean projectBean) {
 
     }
 
     @Override
-    public void initFragmentData(List dataList) {
+    public void initDataFromMainInteractor(List dataList) {
         friendsAndRelativesItemInteractor.initData(dataList, this);
     }
 
@@ -97,6 +61,11 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
     @Override
     public void onPause() {
+
+    }
+
+    @Override
+    public void onDestroy() {
 
     }
 

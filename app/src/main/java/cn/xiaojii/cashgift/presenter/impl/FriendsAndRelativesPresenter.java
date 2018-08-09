@@ -1,27 +1,24 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
-import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
-import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 
 /**
  * @author dmrfcoder
@@ -37,45 +34,16 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
 
 
-    private BroadcastReceiver getBeanListBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            List<ProjectBean> projectBeans = bundle.getParcelableArrayList(GlobalBean.BROADCAST_BEAN_LIST_KEY);
-            initFragmentData(projectBeans);
-        }
-    };
 
 
-    private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            String fragmentName = bundle.getString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY);
-            if (!"FriendsAndRelativesPresenter".equals(fragmentName)) {
-                ProjectBean projectBean = bundle.getParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY);
-                if (projectBean != null) {
-                    addProjectFromBC(projectBean);
-                }
-            }
-
-        }
-    };
 
     public FriendsAndRelativesPresenter(IFriendsAndRelativesView friendsAndRelativesView, final FriendsAndRelativesInteractor friendsAndRelativesInteractor) {
         this.friendsAndRelativesView = friendsAndRelativesView;
         this.friendsAndRelativesInteractor = friendsAndRelativesInteractor;
-        IntentFilter getBeanListFilter = new IntentFilter();
-        getBeanListFilter.addAction(GlobalBean.NORMAR_ACTION2);
-        getBeanListFilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) friendsAndRelativesView).getActivity().registerReceiver(getBeanListBroadcastReceiver, getBeanListFilter);
-        SendBroadCastUtil.sendNeedDataBC((Fragment) friendsAndRelativesView);
 
-        IntentFilter addDataProjectReceiverFilter = new IntentFilter();
-        addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
-        addDataProjectReceiverFilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) friendsAndRelativesView).getActivity().registerReceiver(addDataProjectReceiver, addDataProjectReceiverFilter);
+        EventBus.getDefault().register(this);
+
+
 
     }
 
@@ -85,6 +53,12 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void receiveEventBus(ProjectListMessageEvent projectListMessageEvent) {
+        if (projectListMessageEvent != null) {
+            initDataFromMainInteractor(projectListMessageEvent.getProjectBeans());
+        }
+    }
 
     @Override
     public boolean updateOrder(int Code) {
@@ -109,19 +83,19 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
 
     @Override
-    public void addProjectFromDG(ProjectBean projectBean) {
-        friendsAndRelativesInteractor.addProject(projectBean, this);
-        SendBroadCastUtil.sendAddProjectBC((Fragment) friendsAndRelativesView, projectBean, "FriendsAndRelativesPresenter");
-    }
-
-    @Override
-    public void addProjectFromBC(ProjectBean projectBean) {
+    public void addProjectFromDialog(ProjectBean projectBean) {
         friendsAndRelativesInteractor.addProject(projectBean, this);
     }
 
+    @Override
+    @Subscribe
+    public void addProjectFromEventBus(ProjectBean projectBean) {
+        friendsAndRelativesInteractor.addProject(projectBean, this);
+    }
+
 
     @Override
-    public void initFragmentData(List dataList) {
+    public void initDataFromMainInteractor(List dataList) {
         friendsAndRelativesInteractor.initData(dataList, this);
     }
 
@@ -132,6 +106,12 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     @Override
     public void onPause() {
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+
     }
 
     @Override
@@ -175,7 +155,6 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     @Override
     public void onCliskItemSuccess(List dataList) {
         //发送广播
-        SendBroadCastUtil.sendListToFriendsItemPresenterBC((Fragment) friendsAndRelativesView, dataList);
     }
 
     @Override

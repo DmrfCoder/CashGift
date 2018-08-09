@@ -16,7 +16,6 @@ import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.ProjectTableInterator;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
-import cn.xiaojii.cashgift.util.SendBroadCastUtil;
 import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
 
 /**
@@ -28,65 +27,28 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
     private ProjectTableFragment projectTableFragment;
     private ProjectTableInterator projectTableInterator;
 
-    private BroadcastReceiver getListBeanBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            Bundle bundle = intent.getExtras();
-            List<ProjectBean> projectBeans = bundle.getParcelableArrayList(GlobalBean.BROADCAST_BEAN_LIST_KEY);
-            initFragmentData(projectBeans);
-        }
-    };
-
-
-    private BroadcastReceiver addDataProjectReceiver = new BroadcastReceiver() {
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            String fragmentName = bundle.getString(GlobalBean.BROADCAST_ADD_PROJECT_FRAGMENT_NAME_KEY);
-            if (!"ProjectTablePresenter".equals(fragmentName)) {
-                ProjectBean projectBean = bundle.getParcelable(GlobalBean.BROADCAST_ADD_PROJECT_BEAN_KEY);
-                if (projectBean != null) {
-                    addProjectFromBC(projectBean);
-                }
-            }
-        }
-    };
 
 
     public ProjectTablePresenter(ProjectTableFragment projectTableFragment, ProjectTableInterator projectTableInterator) {
         this.projectTableFragment = projectTableFragment;
         this.projectTableInterator = projectTableInterator;
 
-        SendBroadCastUtil.sendNeedDataBC((Fragment) projectTableFragment);
-
-        IntentFilter getListBeanfilter = new IntentFilter();
-        getListBeanfilter.addAction(GlobalBean.NORMAR_ACTION2);
-        getListBeanfilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) projectTableFragment).getActivity().registerReceiver(getListBeanBroadcastReceiver, getListBeanfilter);
-
-
-        IntentFilter addDataProjectReceiverFilter = new IntentFilter();
-        addDataProjectReceiverFilter.addAction(GlobalBean.NORMAR_ACTION3);
-        addDataProjectReceiverFilter.setPriority(Integer.MAX_VALUE);
-        ((Fragment) projectTableFragment).getActivity().registerReceiver(addDataProjectReceiver, addDataProjectReceiverFilter);
 
 
     }
 
     @Override
-    public void addProjectFromDG(ProjectBean projectBean) {
+    public void addProjectFromDialog(ProjectBean projectBean) {
 
     }
 
     @Override
-    public void addProjectFromBC(ProjectBean projectBean) {
+    public void addProjectFromEventBus(ProjectBean projectBean) {
         projectTableInterator.addProject(projectBean, this);
     }
 
     @Override
-    public void initFragmentData(List dataList) {
+    public void initDataFromMainInteractor(List dataList) {
         projectTableInterator.initData(dataList, this);
     }
 
@@ -97,6 +59,11 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
 
     @Override
     public void onPause() {
+
+    }
+
+    @Override
+    public void onDestroy() {
 
     }
 

@@ -63,9 +63,11 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     }
 
     @Override
-    public void showDialog(Context context) {
+    public void showAddProjectFragmentDialog(Context context, String tag) {
 
     }
+
+
 
     @Override
     public void updateListView(List<ProjectTableBean> projectTableBeanList) {

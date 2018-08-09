@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +72,9 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
         PermissionUtil.RequestPermission(this);
 
         init();
-
-
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void init() {
@@ -102,37 +104,7 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
 
     }
 
-    @Override
-    public void startfragment(Fragment targetFragment,boolean addToBackStack) {
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.id_fragment_layout, targetFragment,targetFragment.getClass().getName());
-        if (addToBackStack){
-            fragmentTransaction.addToBackStack(null);
-        }
-        fragmentTransaction.commit();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onTabChanged(int position) {
-        if (position != curSelectTabIndex) {
-
-            imageViews[curSelectTabIndex].setBackgroundResource(imageViewArray[curSelectTabIndex]);
-            textViews[curSelectTabIndex].setTextColor(this.getResources().getColor(R.color.colorBlack, null));
-
-
-            curSelectTabIndex = position;
-            imageViews[curSelectTabIndex].setBackgroundResource(imageSelectedViewArray[curSelectTabIndex]);
-            textViews[curSelectTabIndex].setTextColor(this.getResources().getColor(R.color.colorBlue, null));
-
-
-
-            startfragment(fragmentList.get(curSelectTabIndex),false);
-
-        }
-    }
 
     //    控件初始化控件
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -179,6 +151,39 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
 
     }
 
+
+    @Override
+    public void startfragment(Fragment targetFragment,boolean addToBackStack) {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.id_fragment_layout, targetFragment,targetFragment.getClass().getName());
+        if (addToBackStack){
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onTabChanged(int position) {
+        if (position != curSelectTabIndex) {
+
+            imageViews[curSelectTabIndex].setBackgroundResource(imageViewArray[curSelectTabIndex]);
+            textViews[curSelectTabIndex].setTextColor(this.getResources().getColor(R.color.colorBlack, null));
+
+
+            curSelectTabIndex = position;
+            imageViews[curSelectTabIndex].setBackgroundResource(imageSelectedViewArray[curSelectTabIndex]);
+            textViews[curSelectTabIndex].setTextColor(this.getResources().getColor(R.color.colorBlue, null));
+
+
+
+            startfragment(fragmentList.get(curSelectTabIndex),false);
+
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
@@ -204,4 +209,6 @@ public class MainActivity extends FragmentActivity implements IMainView, View.On
         }
 
     }
+
+
 }

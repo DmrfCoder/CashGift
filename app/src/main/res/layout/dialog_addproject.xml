@@ -102,16 +102,18 @@
 
             <RadioButton
                 android:id="@+id/id_dialog_in"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
+                style="@style/DialogRadioButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="收入" />
 
             <RadioButton
                 android:id="@+id/id_dialog_out"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
+                style="@style/DialogRadioButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="支出" />
         </info.hoang8f.android.segmented.SegmentedGroup>

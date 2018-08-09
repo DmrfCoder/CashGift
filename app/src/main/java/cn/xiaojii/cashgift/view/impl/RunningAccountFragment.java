@@ -81,6 +81,11 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
     }
 
     @Override
+    public void showAddProjectFragmentDialog(Context context, String tag) {
+
+    }
+
+   // @Override
     public void showDialog(Context context) {
         final Dialog dialog = new Dialog(context);
         View view1 = LayoutInflater.from(context).inflate(
@@ -124,7 +129,7 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
                     projectBean.setMoney(-Math.abs(Integer.parseInt(money)));
                 }
                 projectBean.setProject(project);
-                runningAccountPresenter.addProjectFromDG(projectBean);
+                runningAccountPresenter.addProjectFromDialog(projectBean);
                 dialog.dismiss();
 
             }

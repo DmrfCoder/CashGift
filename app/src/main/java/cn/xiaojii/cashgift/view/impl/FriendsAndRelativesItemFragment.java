@@ -78,9 +78,11 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
     }
 
     @Override
-    public void showDialog(Context context) {
+    public void showAddProjectFragmentDialog(Context context, String tag) {
 
     }
+
+
 
     @Override
     public void onClick(View view) {

@@ -43,7 +43,7 @@ public class FriendsAndRelativesPresenterTest {
         projectBean.setName("张三");
         projectBean.setProject("上学");
         projectBean.setMoney(100);
-        friendsAndRelativesPresenter.addProjectFromDG(projectBean);
+        friendsAndRelativesPresenter.addProjectFromDialog(projectBean);
 
         verify(friendsAndRelativesPresenter, never()).onAddProjectError();
 
