@@ -16,6 +16,7 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.RunningAccountListViewAdapter;
+import cn.xiaojii.cashgift.base.BaseFragment;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesItemInteractor;
@@ -27,7 +28,7 @@ import cn.xiaojii.cashgift.view.IFriendsAndRelativesItemView;
  * @date 2018/8/8
  */
 
-public class FriendsAndRelativesItemFragment extends Fragment implements IFriendsAndRelativesItemView, IBaseFragmentView, View.OnClickListener {
+public class FriendsAndRelativesItemFragment extends BaseFragment implements IFriendsAndRelativesItemView, IBaseFragmentView, View.OnClickListener {
 
 
     private FriendsAndRelativesItemPresenter friendsAndRelativesItemPresenter;
@@ -78,15 +79,21 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
 
     }
 
-    @Override
-    public void showAddProjectFragmentDialog(Context context, String tag) {
 
-    }
 
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.id_friends_item_top_right:
+                showAddProjectFragmentDialog(getActivity(),"FriendsAndRelativesItemFragment");
+                break;
+            case R.id.id_friends_item_top_left:
 
+                break;
+            default:
+                break;
+        }
     }
 
     @SuppressLint("SetTextI18n")

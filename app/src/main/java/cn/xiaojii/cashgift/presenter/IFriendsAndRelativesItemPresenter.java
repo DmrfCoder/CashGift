@@ -16,6 +16,5 @@ public interface IFriendsAndRelativesItemPresenter {
      * 更新当前item对象的姓名
      * @param name
      */
-    @Subscribe
     void updateTargetName(String name);
 }

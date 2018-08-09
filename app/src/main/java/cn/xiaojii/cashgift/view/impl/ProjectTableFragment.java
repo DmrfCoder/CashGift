@@ -70,10 +70,6 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
 
     }
 
-    @Override
-    public void showAddProjectFragmentDialog(Context context, String tag) {
-
-    }
 
 
     @Override

@@ -19,10 +19,5 @@ public interface IBaseFragmentView  {
     void updateData(List<Class> classList);
 
 
-    /**
-     *新增条目
-     * @param context
-     * @param tag
-     */
-    void showAddProjectFragmentDialog(Context context, String tag);
+
 }

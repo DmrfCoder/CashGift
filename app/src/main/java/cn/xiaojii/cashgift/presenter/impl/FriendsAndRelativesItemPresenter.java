@@ -50,8 +50,9 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
 
     @Override
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-        friendsAndRelativesItemInteractor.initData(projectListMessageEvent.getProjectBeans());
+        friendsAndRelativesItemInteractor.initData(projectListMessageEvent.getProjectBeans(),this);
     }
 
 

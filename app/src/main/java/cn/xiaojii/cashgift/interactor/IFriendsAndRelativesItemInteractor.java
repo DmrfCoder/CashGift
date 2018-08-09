@@ -4,6 +4,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import cn.xiaojii.cashgift.bean.ProjectBean;
+
 /**
  * @author dmrfcoder
  * @date 2018/8/9
@@ -34,8 +36,9 @@ public interface IFriendsAndRelativesItemInteractor {
     /**
      * 初始化数据并刷新视图
      * @param dataList
+     * @param updateViewListener
      */
-    void initData(List dataList);
+    void initData(List dataList,UpdateFariViewListener updateViewListener);
 
 
     public interface ClickListviewItemListener {
@@ -57,4 +60,8 @@ public interface IFriendsAndRelativesItemInteractor {
      * @param updateFariViewListener
      */
     void clickListViewItem(String name, UpdateFariViewListener updateFariViewListener);
+
+
+
+
 }

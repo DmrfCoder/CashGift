@@ -12,12 +12,12 @@ import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesItemInteractor;
  * @date 2018/8/8
  */
 
-public class FriendsAndRelativesItemInteractor implements IBaseInteractor,
+public class FriendsAndRelativesItemInteractor implements
         IFriendsAndRelativesItemInteractor, MainInterator.OnGetDataListener {
 
     private List<ProjectBean> projectBeanList;
     private int totalSumMoney, inCount, outCount;
-    private String name;
+    private String name = "";
 
 
     public FriendsAndRelativesItemInteractor() {
@@ -28,33 +28,33 @@ public class FriendsAndRelativesItemInteractor implements IBaseInteractor,
         outCount = 0;
     }
 
+
+
     @Override
-    public void addProject(ProjectBean projectBean, AddProjectListener addProjectListener) {
-        if (projectBean == null) {
-            addProjectListener.onAddProjectError();
+    public void initData(List dataList, UpdateFariViewListener updateFariViewListener) {
+        if ("".equals(name)) {
+            projectBeanList = dataList;
+            updateFariViewListener.onUpdateViewError();
         } else {
-            if (projectBean.getName().equals(name)) {
+            ProjectBean projectBean = (ProjectBean) dataList.get(dataList.size() - 1);
+            if (name.equals(projectBean.getName())) {
+
                 projectBeanList.add(projectBean);
+
                 if (projectBean.getIntMoney() > 0) {
                     inCount++;
                 } else {
                     outCount++;
                 }
                 totalSumMoney += projectBean.getIntMoney();
+                updateFariViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount);
+            }else {
+                updateFariViewListener.onUpdateViewError();
             }
 
-            addProjectListener.onAddProjectSuccess(projectBeanList);
+
         }
 
-    }
-
-    @Override
-    public void initData(List dataList) {
-        if (dataList == null) {
-            return;
-        } else {
-            projectBeanList = dataList;
-        }
     }
 
     @Override
@@ -82,7 +82,7 @@ public class FriendsAndRelativesItemInteractor implements IBaseInteractor,
             }
         }
 
-        projectBeanList=projectBeans;
+        projectBeanList = projectBeans;
         updateFariViewListener.onUpdateViewSuccess(projectBeanList, totalSumMoney, inCount, outCount);
     }
 

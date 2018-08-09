@@ -29,6 +29,7 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.FriendAndRelativesListViewAdapter;
+import cn.xiaojii.cashgift.base.BaseFragment;
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
@@ -43,7 +44,7 @@ import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
  */
 
 @SuppressLint("ValidFragment")
-public class FriendsAndRelativesFragment extends Fragment implements IFriendsAndRelativesView, IBaseFragmentView,
+public class FriendsAndRelativesFragment extends BaseFragment implements IFriendsAndRelativesView, IBaseFragmentView,
         View.OnClickListener, AdapterView.OnItemClickListener,
         TextWatcher {
     private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
@@ -150,14 +151,7 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
 
     }
 
-    @Override
-    public void showAddProjectFragmentDialog(Context context, final String tag) {
 
-
-        AddProjectDialogFragment addProjectDialogFragment = new AddProjectDialogFragment();
-        addProjectDialogFragment.show(getFragmentManager(), tag);
-
-    }
 
 
     @Override
