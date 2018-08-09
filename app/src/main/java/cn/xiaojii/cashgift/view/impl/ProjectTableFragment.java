@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ import cn.xiaojii.cashgift.view.IProjectTableView;
  * @date 2018/8/3
  */
 
-public class ProjectTableFragment extends Fragment implements IProjectTableView, IBaseFragmentView {
+public class ProjectTableFragment extends Fragment implements IProjectTableView, IBaseFragmentView, AdapterView.OnItemClickListener {
 
 
     private ProjectTablePresenter projectTablePresenter;
@@ -56,6 +57,7 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
         txTopTotalMoney = view.findViewById(R.id.id_summoney_projettable);
         txDetailProjectTable = view.findViewById(R.id.id_detail_projecttable);
         projectTableListView = view.findViewById(R.id.id_listview_projecttable);
+        projectTableListView.setOnItemClickListener(this);
         updateTextView();
 
 
@@ -82,7 +84,8 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
 
     }
 
-    private void updateTextView() {
+    @Override
+    public void updateTextView() {
         if (txTopTotalMoney != null && txDetailProjectTable != null) {
             txDetailProjectTable.setText(detailProjectTable);
             txTopTotalMoney.setText(totalMoney + "");
@@ -91,6 +94,7 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     }
 
 
+    @Override
     @SuppressLint("SetTextI18n")
     public void updateTopBarData(int a, int b, int c, int d, int e, int totalMoney) {
         detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
@@ -99,4 +103,14 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getId()) {
+            case R.id.id_listview_projecttable:
+                projectTablePresenter.clickListViewItem(i);
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -43,7 +43,8 @@ public class ProjectTableInterator implements IBaseInteractor, IProjectTableInte
     }
 
 
-    private boolean addSingleProjectBean(ProjectBean projectBean) {
+    @Override
+    public boolean addSingleProjectBean(ProjectBean projectBean) {
 
         Log.i(TAG, "addSingleProjectBean");
         if (projectBean == null) {
@@ -60,7 +61,7 @@ public class ProjectTableInterator implements IBaseInteractor, IProjectTableInte
             projectTableBeanList = new ArrayList<>();
         } else {
             for (ProjectTableBean projectTableBean : projectTableBeanList) {
-                if (projectTableBean.getName().equals(projectBean.getProject())) {
+                if (projectTableBean.getProjectName().equals(projectBean.getProject())) {
                     if (projectTableBean.hasTargetBean(projectBean)) {
                         return false;
                     }
@@ -85,7 +86,7 @@ public class ProjectTableInterator implements IBaseInteractor, IProjectTableInte
 
         if (!findFlag) {
             ProjectTableBean projectTableBean = new ProjectTableBean();
-            projectTableBean.setName(projectBean.getProject());
+            projectTableBean.setProjectName(projectBean.getProject());
             totalMoney += projectBean.getIntMoney();
             if (projectBean.getIntMoney() < 0) {
                 projectTableBean.setSumMoneyOut(projectBean.getIntMoney());
@@ -106,8 +107,6 @@ public class ProjectTableInterator implements IBaseInteractor, IProjectTableInte
         return true;
 
     }
-
-
 
 
     @Override
@@ -135,6 +134,15 @@ public class ProjectTableInterator implements IBaseInteractor, IProjectTableInte
 
         updatePtViewListener.onUpdateViewSuccess(projectTableBeanList, a, b, c, d, e, totalMoney);
 
+    }
+
+    @Override
+    public void clickListViewItem(int position, ClickProjectTableItemListener clickProjectTableItemListener) {
+        if (position >= projectTableBeanList.size()) {
+            clickProjectTableItemListener.onClickProjectTableItemError();
+        } else {
+            clickProjectTableItemListener.onClickProjectTableItemSuccess(projectTableBeanList.get(position).getProjectBeanList());
+        }
     }
 
 

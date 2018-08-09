@@ -59,30 +59,30 @@ public class MainInterator {
             ProjectBean projectBean3 = new ProjectBean();
             ProjectBean projectBean4 = new ProjectBean();
 
-            projectBean.setName("张三");
+            projectBean.setPersonName("张三");
             projectBean.setMoney(800);
             projectBean.setProject("婚礼");
             this.projectBeanList.add(projectBean);
 
 
-            projectBean1.setName("王五");
+            projectBean1.setPersonName("王五");
             projectBean1.setMoney(-800);
             projectBean1.setProject("婚礼");
             this.projectBeanList.add(projectBean1);
 
 
-            projectBean2.setName("二麻子");
+            projectBean2.setPersonName("二麻子");
             projectBean2.setMoney(-100);
             projectBean2.setProject("婚礼");
             this.projectBeanList.add(projectBean2);
 
 
-            projectBean3.setName("demo");
+            projectBean3.setPersonName("demo");
             projectBean3.setMoney(900);
             projectBean3.setProject("婚礼");
             this.projectBeanList.add(projectBean3);
 
-            projectBean4.setName("李四");
+            projectBean4.setPersonName("李四");
             projectBean4.setMoney(900);
             projectBean4.setProject("婚礼");
             this.projectBeanList.add(projectBean4);

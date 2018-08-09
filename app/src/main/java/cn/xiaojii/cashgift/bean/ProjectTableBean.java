@@ -14,7 +14,16 @@ public class ProjectTableBean {
     private String TAG="ProjectTableBean";
 
 
-    private String name;
+    private String projectName;
+
+    public List<ProjectBean> getProjectBeanList() {
+        return projectBeanList;
+    }
+
+    public void setProjectBeanList(List<ProjectBean> projectBeanList) {
+        this.projectBeanList = projectBeanList;
+    }
+
     private int sumMoneyIn;
     private int sumMoneyOut;
 
@@ -50,13 +59,13 @@ public class ProjectTableBean {
         projectBeanList = new ArrayList<>();
     }
 
-    public String getName() {
+    public String getProjectName() {
 
-        return name;
+        return projectName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public int getIntSumMoneyIn() {

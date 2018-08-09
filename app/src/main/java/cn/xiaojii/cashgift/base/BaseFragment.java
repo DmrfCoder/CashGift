@@ -20,7 +20,7 @@ import cn.xiaojii.cashgift.view.impl.AddProjectDialogFragment;
  * @date 2018/8/9
  */
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     public void onBack() {
         Instrumentation inst = new Instrumentation();

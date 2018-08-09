@@ -68,7 +68,7 @@ public class ProjectTableAdapter extends BaseAdapter {
 
 
 
-        viewHolder.txProjectName.setText(projectTableBean.getName());
+        viewHolder.txProjectName.setText(projectTableBean.getProjectName());
         viewHolder.txSumMoneyIn.setText(projectTableBean.getStrSumMoneyIn());
         viewHolder.txSumMoneyOut.setText(projectTableBean.getStrSumMoneyOut());
 

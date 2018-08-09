@@ -125,23 +125,10 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor, IFriendsA
         }
     }
 
-    public interface NeedPositionNameListener {
-        /**
-         * 获取position处的姓名失败
-         */
-        void onNeedPositionNameError();
-
-        /**
-         * 获取position处的姓名成功
-         *
-         * @param name
-         */
-        void onNeedPositionNameSuccess(String name);
 
 
-    }
 
-
+    @Override
     public void clickListViewItem(int position, NeedPositionNameListener needPositionNameListener) {
         if (position >= friendsAndRelativesBeanList.size()) {
             needPositionNameListener.onNeedPositionNameError();

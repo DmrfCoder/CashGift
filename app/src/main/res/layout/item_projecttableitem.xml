@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBrown"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/background_textview"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_item_projecttable_item_total_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="false"
+            android:text="200" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/id_item_projecttable_item_name"
+        android:layout_width="0dp"
+
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="丁一" />
+
+    <TextView
+        android:id="@+id/id_item_projecttable_item_in_money"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="1280" />
+
+    <TextView
+        android:id="@+id/id_item_projecttable_item_out_money"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/colorBrown"
+        android:gravity="center"
+        android:text="-1080" />
+
+</LinearLayout>

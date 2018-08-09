@@ -28,7 +28,7 @@ public interface IBasePresenter {
      * 从MainInteractor eventbus接收数据进行初始化
      * @param projectListMessageEvent
      */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+
     void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent);
 
     /**

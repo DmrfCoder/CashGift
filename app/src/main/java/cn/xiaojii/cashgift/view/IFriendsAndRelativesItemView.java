@@ -23,4 +23,9 @@ public interface IFriendsAndRelativesItemView {
      * @param projectBeanList
      */
     public void updateListView(List<ProjectBean> projectBeanList);
+
+    /**
+     * 更新TextView
+     */
+     void updateTextView();
 }

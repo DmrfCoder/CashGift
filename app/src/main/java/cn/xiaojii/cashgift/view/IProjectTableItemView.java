@@ -3,6 +3,7 @@ package cn.xiaojii.cashgift.view;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectTableItemBean;
 
 /**
  * @author dmrfcoder
@@ -18,13 +19,20 @@ public interface IProjectTableItemView {
      * @param inMoney
      * @param outCount
      * @param outMoney
+     * @param sumMoney
+     * @param personName
      */
-    public void updateView(int inCount,int inMoney,int outCount,int outMoney);
+    public void updateView(int inCount,int inMoney,int outCount,int outMoney,int sumMoney,String personName);
 
     /**
      * 更新；listview
-     * @param projectBeanList
+     * @param projectTableItemBeans
      */
-    public void updateListView(List<ProjectBean> projectBeanList);
+    public void updateListView(List<ProjectTableItemBean> projectTableItemBeans);
+
+    /**
+     * 更新TextView
+     */
+    void updateTextView();
 
 }

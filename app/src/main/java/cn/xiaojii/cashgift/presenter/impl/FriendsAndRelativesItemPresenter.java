@@ -1,14 +1,5 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -18,12 +9,12 @@ import java.util.List;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
-import cn.xiaojii.cashgift.interactor.IBaseInteractor;
-import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesItemPresenter;
+import cn.xiaojii.cashgift.view.IFriendsAndRelativesItemView;
+import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 
 /**
@@ -33,15 +24,16 @@ import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 
 public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesItemPresenter,
         IBasePresenter, IFriendsAndRelativesItemInteractor.UpdateFariViewListener {
-    private FriendsAndRelativesItemFragment friendsAndRelativesItemFragment;
+    private IFriendsAndRelativesItemView iFriendsAndRelativesItemView;
     private FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor;
 
-
-    public FriendsAndRelativesItemPresenter(FriendsAndRelativesItemFragment friendsAndRelativesItemFragment, FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor) {
-        this.friendsAndRelativesItemFragment = friendsAndRelativesItemFragment;
+    public FriendsAndRelativesItemPresenter(IFriendsAndRelativesItemView iFriendsAndRelativesItemView, FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor) {
+        this.iFriendsAndRelativesItemView = iFriendsAndRelativesItemView;
         this.friendsAndRelativesItemInteractor = friendsAndRelativesItemInteractor;
         EventBus.getDefault().register(this);
     }
+
+
 
     @Override
     public void addProjectFromDialog(ProjectBean projectBean) {
@@ -52,7 +44,10 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-        friendsAndRelativesItemInteractor.initData(projectListMessageEvent.getProjectBeans(),this);
+        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)){
+            friendsAndRelativesItemInteractor.initData(projectListMessageEvent.getProjectBeans(),this);
+        }
+
     }
 
 
@@ -79,8 +74,8 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
     @Override
     public void onUpdateViewSuccess(List dataList, int totalMoney, int inCount, int outCount,String name) {
-        friendsAndRelativesItemFragment.updateListView(dataList);
-        friendsAndRelativesItemFragment.updateView(totalMoney, inCount, outCount,name);
+        iFriendsAndRelativesItemView.updateListView(dataList);
+        iFriendsAndRelativesItemView.updateView(totalMoney, inCount, outCount,name);
     }
 
 

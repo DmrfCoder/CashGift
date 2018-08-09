@@ -36,6 +36,7 @@ public class GlobalBean {
     public static String TAG_MAINPRESENTER="MainPresenter";
     public static String TAG_DIALOGFRAGMENT="AddProjectDialogFragment";
     public static String TAG_FRIENDSANDRELATIVES="FriendsAndRelativesPresenter";
+    public static String TAG_PROJECTTABLE="ProjectTablePresenter";
 
 
 }

@@ -17,4 +17,20 @@ public interface IProjectTableView {
      * @param projectTableBeanList
      */
     void updateListView(List<ProjectTableBean> projectTableBeanList);
+
+    /**
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @param e
+     * @param totalMoney
+     */
+    void updateTopBarData(int a, int b, int c, int d, int e, int totalMoney);
+
+    /**
+     * 更新textView
+     */
+    void updateTextView();
 }

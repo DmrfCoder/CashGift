@@ -77,12 +77,11 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_item_top_right:
-                showAddProjectFragmentDialog(getActivity(), "FriendsAndRelativesItemFragment");
+                showAddProjectFragmentDialog(getActivity(), getClass().getName());
                 break;
             case R.id.id_friends_item_top_left:
 
@@ -102,7 +101,8 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
         updateTextView();
     }
 
-    private void updateTextView() {
+    @Override
+    public void updateTextView() {
         if (txOutCount != null && txInCount != null && txOutCount != null) {
             txTotalMoney.setText(totalMoney + "");
             txInCount.setText(inCount + "");

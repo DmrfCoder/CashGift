@@ -2,8 +2,6 @@ package cn.xiaojii.cashgift;
 
 import org.junit.Test;
 
-import java.util.List;
-
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectTableBean;
 
@@ -18,7 +16,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         ProjectTableBean projectTableBean=new ProjectTableBean();
-        projectTableBean.setName("demo");
+        projectTableBean.setProjectName("demo");
         ProjectBean projectBean=new ProjectBean();
         projectBean.setName("demo");
         projectTableBean.addProjectBean(projectBean);

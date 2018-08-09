@@ -1,12 +1,5 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,26 +15,29 @@ import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.IProjectTableInteractor;
 import cn.xiaojii.cashgift.interactor.impl.ProjectTableInterator;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
+import cn.xiaojii.cashgift.presenter.IProjectTablePresenter;
+import cn.xiaojii.cashgift.view.IProjectTableView;
+import cn.xiaojii.cashgift.view.impl.MainActivity;
 import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
+import cn.xiaojii.cashgift.view.impl.ProjectTableItemFragment;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/7
  */
 
-public class ProjectTablePresenter implements IBasePresenter,
-        IBaseInteractor.AddProjectListener, IProjectTableInteractor.UpdatePtViewListener {
-    private ProjectTableFragment projectTableFragment;
+public class ProjectTablePresenter implements IProjectTablePresenter, IBasePresenter,
+        IBaseInteractor.AddProjectListener, IProjectTableInteractor.UpdatePtViewListener,
+        IProjectTableInteractor.ClickProjectTableItemListener {
+    private IProjectTableView iProjectTableView;
     private ProjectTableInterator projectTableInterator;
 
-
-    public ProjectTablePresenter(ProjectTableFragment projectTableFragment, ProjectTableInterator projectTableInterator) {
-        this.projectTableFragment = projectTableFragment;
+    public ProjectTablePresenter(IProjectTableView iProjectTableView, ProjectTableInterator projectTableInterator) {
+        this.iProjectTableView = iProjectTableView;
         this.projectTableInterator = projectTableInterator;
-
         EventBus.getDefault().register(this);
-
     }
+
 
     @Override
     public void addProjectFromDialog(ProjectBean projectBean) {
@@ -92,7 +88,25 @@ public class ProjectTablePresenter implements IBasePresenter,
 
     @Override
     public void onUpdateViewSuccess(List dataList, int a, int b, int c, int d, int e, int totalMoney) {
-        projectTableFragment.updateListView(dataList);
-        projectTableFragment.updateTopBarData(a, b, c, d, e, totalMoney);
+        iProjectTableView.updateListView(dataList);
+        iProjectTableView.updateTopBarData(a, b, c, d, e, totalMoney);
+    }
+
+    @Override
+    public void clickListViewItem(int position) {
+        projectTableInterator.clickListViewItem(position, this);
+    }
+
+    @Override
+    public void onClickProjectTableItemError() {
+
+    }
+
+    @Override
+    public void onClickProjectTableItemSuccess(List list) {
+        ProjectTableItemFragment projectTableItemFragment=new ProjectTableItemFragment();
+        ((MainActivity) ((Fragment) iProjectTableView).getActivity()).startfragment(projectTableItemFragment, true);
+        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(list, GlobalBean.TAG_PROJECTTABLE);
+        EventBus.getDefault().postSticky(projectListMessageEvent);
     }
 }

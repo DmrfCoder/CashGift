@@ -117,7 +117,7 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_friends_top_right:
-                showAddProjectFragmentDialog(getActivity(), "FriendsAndRelativesFragment");
+                showAddProjectFragmentDialog(getActivity(), getClass().getName());
                 break;
             case R.id.id_search_bt:
                 break;

@@ -81,14 +81,11 @@ public class RunningAccountFragment extends BaseFragment implements View.OnClick
     }
 
 
-
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_runningaccount_top_right:
-                showAddProjectFragmentDialog(getActivity(), "RunningAccountFragment");
+                showAddProjectFragmentDialog(getActivity(), getClass().getName());
                 break;
             default:
                 break;
