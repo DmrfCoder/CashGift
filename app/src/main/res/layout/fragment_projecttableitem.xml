@@ -32,7 +32,7 @@
             android:text="张三" />
 
         <Button
-            android:id="@+id/id_friends_item_top_right"
+            android:id="@+id/id_projecttable_item_top_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -57,7 +57,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/id_friends_item_summoney"
+            android:id="@+id/id_projecttable_item_summoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -68,37 +68,29 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="送礼个数：" />
 
         <TextView
-            android:id="@+id/id_friends_item_out_count"
+            android:id="@+id/id_projecttable_item_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1" />
+            android:text="收礼：10160（10个）" />
+
 
         <TextView
+            android:id="@+id/id_projecttable_item_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="收礼个数：" />
-
-        <TextView
-            android:id="@+id/id_friends_item_in_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1" />
+            android:text="送礼：-9840（10个）" />
 
     </LinearLayout>
 
     <ListView
-        android:id="@+id/id_friends_item_listview"
+        android:id="@+id/id_projecttable_item_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

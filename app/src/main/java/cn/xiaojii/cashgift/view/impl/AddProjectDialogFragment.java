@@ -26,7 +26,7 @@ import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
  * @date 2018/8/9
  */
 
-public class AddProjectDialogFragment extends DialogFragment {
+public class AddProjectDialogFragment extends DialogFragment  {
     Button ok, cancel;
     EditText et_name, et_project, et_money;
     RadioGroup inOrOutRg;

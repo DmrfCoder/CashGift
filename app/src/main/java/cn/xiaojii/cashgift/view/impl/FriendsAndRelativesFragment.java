@@ -63,12 +63,7 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friendsandrelatives, null);
 
-        initView(view);
-
-        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
-
-
-        friendsAndRelativesPresenter.updateView();
+        initFragment(view);
 
 
         return view;
@@ -80,7 +75,8 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
         super.onPause();
     }
 
-    private void initView(View view) {
+    @Override
+    public void initFragment(View view) {
 
         /*
             初始化listview
@@ -99,7 +95,10 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
 
         view.findViewById(R.id.id_search_bt).setOnClickListener(this);
         view.findViewById(R.id.id_friends_top_right).setOnClickListener(this);
+        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(this, new FriendsAndRelativesInteractor());
 
+
+        friendsAndRelativesPresenter.updateView();
 
     }
 
@@ -147,14 +146,6 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
 
 
     @Override
-    public void updateData(List<Class> classList) {
-
-    }
-
-
-
-
-    @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         Log.i(TAG, "beforeTextChanged");
     }
@@ -177,4 +168,6 @@ public class FriendsAndRelativesFragment extends BaseFragment implements IFriend
         super.onDestroy();
         friendsAndRelativesPresenter.onDestroy();
     }
+
+
 }

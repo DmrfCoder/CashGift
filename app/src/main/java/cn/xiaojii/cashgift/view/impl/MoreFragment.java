@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IMoreView;
 
@@ -19,7 +20,7 @@ import cn.xiaojii.cashgift.view.IMoreView;
  */
 
 @SuppressLint("ValidFragment")
-public class MoreFragment extends Fragment implements IMoreView {
+public class MoreFragment extends Fragment implements IMoreView ,IBaseFragmentView{
     @SuppressLint("ValidFragment")
     public MoreFragment(IMainPresenter mainPresenter) {
     }
@@ -31,6 +32,12 @@ public class MoreFragment extends Fragment implements IMoreView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_more, null);
+        initFragment(view);
         return view;
+    }
+
+    @Override
+    public void initFragment(View view) {
+
     }
 }

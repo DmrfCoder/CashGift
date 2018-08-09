@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IDiscoverView;
 
@@ -19,7 +20,7 @@ import cn.xiaojii.cashgift.view.IDiscoverView;
  */
 
 @SuppressLint("ValidFragment")
-public class DiscoverFragment extends Fragment implements IDiscoverView {
+public class DiscoverFragment extends Fragment implements IDiscoverView,IBaseFragmentView {
     public DiscoverFragment() {
     }
 
@@ -32,6 +33,12 @@ public class DiscoverFragment extends Fragment implements IDiscoverView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discover, null);
+        initFragment(view);
         return view;
+    }
+
+    @Override
+    public void initFragment(View view) {
+
     }
 }

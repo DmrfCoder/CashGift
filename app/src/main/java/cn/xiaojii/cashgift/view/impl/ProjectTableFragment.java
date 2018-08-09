@@ -45,12 +45,14 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_projecttable, null);
 
-        projectTablePresenter = new ProjectTablePresenter(this, new ProjectTableInterator());
-        initView(view);
+        initFragment(view);
         return view;
     }
 
-    private void initView(View view) {
+
+    @Override
+    public void initFragment(View view) {
+        projectTablePresenter = new ProjectTablePresenter(this, new ProjectTableInterator());
         txTopTotalMoney = view.findViewById(R.id.id_summoney_projettable);
         txDetailProjectTable = view.findViewById(R.id.id_detail_projecttable);
         projectTableListView = view.findViewById(R.id.id_listview_projecttable);
@@ -63,13 +65,6 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
 
         projectTableListView.setAdapter(projectTableAdapter);
     }
-
-
-    @Override
-    public void updateData(List<Class> classList) {
-
-    }
-
 
 
     @Override
@@ -102,4 +97,6 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
         this.totalMoney = totalMoney;
         updateTextView();
     }
+
+
 }

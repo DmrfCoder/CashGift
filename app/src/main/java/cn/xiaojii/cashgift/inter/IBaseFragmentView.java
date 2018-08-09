@@ -1,6 +1,7 @@
 package cn.xiaojii.cashgift.inter;
 
 import android.content.Context;
+import android.view.View;
 
 import java.util.List;
 
@@ -11,13 +12,12 @@ import java.util.List;
 
 public interface IBaseFragmentView  {
 
+
+
     /**
-     * 更新数据list，泛型
-     *
-     * @param classList
+     * 初始化Fragment
+     * @param view
      */
-    void updateData(List<Class> classList);
-
-
+    void initFragment(View view);
 
 }

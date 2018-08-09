@@ -55,11 +55,12 @@ public class RunningAccountFragment extends BaseFragment implements View.OnClick
         View view = inflater.inflate(R.layout.fragment_runningaccount, null);
         runningAccountPresenter = new RunningAccountPresenter(this, new RunningAccountInteractor());
 
-        initView(view);
+        initFragment(view);
         return view;
     }
 
-    private void initView(View view) {
+    @Override
+    public void initFragment(View view) {
         runningAccountListView = view.findViewById(R.id.id_listview_runningaccount);
         if (runningAccountListViewAdapter == null) {
             runningAccountListViewAdapter = new RunningAccountListViewAdapter(getActivity());
@@ -68,6 +69,7 @@ public class RunningAccountFragment extends BaseFragment implements View.OnClick
         view.findViewById(R.id.id_runningaccount_top_right).setOnClickListener(this);
 
     }
+
 
     @Override
     public void updateListView(List<ProjectBean> projectBeanList) {
@@ -79,10 +81,7 @@ public class RunningAccountFragment extends BaseFragment implements View.OnClick
     }
 
 
-    @Override
-    public void updateData(List<Class> classList) {
 
-    }
 
 
     @Override
@@ -96,4 +95,6 @@ public class RunningAccountFragment extends BaseFragment implements View.OnClick
         }
 
     }
+
+
 }

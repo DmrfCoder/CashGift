@@ -50,20 +50,19 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
 
         friendsAndRelativesItemPresenter = new FriendsAndRelativesItemPresenter(this, new FriendsAndRelativesItemInteractor());
 
+        initFragment(view);
 
-        initData();
-        initView(view);
 
         return view;
     }
 
-    private void initData() {
+
+    @Override
+    public void initFragment(View view) {
         if (friendsAndRelativesListViewAdapter == null) {
             friendsAndRelativesListViewAdapter = new RunningAccountListViewAdapter(getActivity());
         }
-    }
 
-    private void initView(View view) {
         friendsAndRelativesItemListview = view.findViewById(R.id.id_friends_item_listview);
         friendsAndRelativesItemListview.setAdapter(friendsAndRelativesListViewAdapter);
         view.findViewById(R.id.id_friends_item_top_right).setOnClickListener(this);
@@ -74,12 +73,9 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
         txName = view.findViewById(R.id.id_friends_item_top_center);
         updateTextView();
 
-    }
-
-    @Override
-    public void updateData(List<Class> classList) {
 
     }
+
 
 
     @Override
@@ -98,11 +94,11 @@ public class FriendsAndRelativesItemFragment extends BaseFragment implements IFr
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void updateView(int totalMoney, int inCount, int outCount,String name) {
+    public void updateView(int totalMoney, int inCount, int outCount, String name) {
         this.totalMoney = totalMoney;
         this.inCount = inCount;
         this.outCount = outCount;
-        this.name=name;
+        this.name = name;
         updateTextView();
     }
 

@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.base.BaseFragment;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.inter.IBaseFragmentView;
 import cn.xiaojii.cashgift.view.IProjectTableItemView;
 
 /**
@@ -18,7 +20,7 @@ import cn.xiaojii.cashgift.view.IProjectTableItemView;
  * @date 2018/8/9
  */
 
-public class ProjectTableItemFragment extends BaseFragment implements IProjectTableItemView {
+public class ProjectTableItemFragment extends BaseFragment implements IProjectTableItemView ,IBaseFragmentView{
 
 
     @Nullable
@@ -26,8 +28,14 @@ public class ProjectTableItemFragment extends BaseFragment implements IProjectTa
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view=inflater.inflate();
+        View view=inflater.inflate(R.layout.fragment_projecttableitem,null);
+        initFragment(view);
         return view;
+    }
+
+    @Override
+    public void initFragment(View view) {
+
     }
 
     @Override
@@ -39,4 +47,7 @@ public class ProjectTableItemFragment extends BaseFragment implements IProjectTa
     public void updateListView(List<ProjectBean> projectBeanList) {
 
     }
+
+
+
 }
