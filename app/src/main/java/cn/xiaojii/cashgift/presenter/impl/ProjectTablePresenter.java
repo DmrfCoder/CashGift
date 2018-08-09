@@ -9,10 +9,15 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.ProjectTableInterator;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
@@ -28,12 +33,11 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
     private ProjectTableInterator projectTableInterator;
 
 
-
     public ProjectTablePresenter(ProjectTableFragment projectTableFragment, ProjectTableInterator projectTableInterator) {
         this.projectTableFragment = projectTableFragment;
         this.projectTableInterator = projectTableInterator;
 
-
+        EventBus.getDefault().register(this);
 
     }
 
@@ -42,15 +46,17 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
 
     }
 
-    @Override
-    public void addProjectFromEventBus(ProjectBean projectBean) {
-        projectTableInterator.addProject(projectBean, this);
-    }
+
 
     @Override
-    public void initDataFromMainInteractor(List dataList) {
-        projectTableInterator.initData(dataList, this);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
+        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)) {
+            List dataList = projectListMessageEvent.getProjectBeans();
+            projectTableInterator.initData(dataList, this);
+        }
     }
+
 
     @Override
     public void updateView() {
@@ -64,7 +70,7 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
 
     @Override
     public void onDestroy() {
-
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -97,7 +103,7 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
     }
 
     @Override
-    public void onUpdateTopBarDataSuccess(int a, int b, int c, int d, int e,int totalMoney) {
-        projectTableFragment.updateTopBarData(a, b, c, d, e,totalMoney);
+    public void onUpdateTopBarDataSuccess(int a, int b, int c, int d, int e, int totalMoney) {
+        projectTableFragment.updateTopBarData(a, b, c, d, e, totalMoney);
     }
 }

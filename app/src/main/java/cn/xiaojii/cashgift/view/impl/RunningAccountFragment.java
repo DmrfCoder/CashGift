@@ -61,7 +61,9 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
 
     private void initView(View view) {
         runningAccountListView=view.findViewById(R.id.id_listview_runningaccount);
-        runningAccountListViewAdapter=new RunningAccountListViewAdapter(getActivity());
+        if (runningAccountListViewAdapter==null){
+            runningAccountListViewAdapter=new RunningAccountListViewAdapter(getActivity());
+        }
         runningAccountListView.setAdapter(runningAccountListViewAdapter);
         view.findViewById(R.id.id_runningaccount_top_right).setOnClickListener(this);
 
@@ -69,6 +71,9 @@ public class RunningAccountFragment extends Fragment implements View.OnClickList
 
     @Override
     public void updateListView(List<ProjectBean> projectBeanList) {
+        if (runningAccountListViewAdapter==null){
+            runningAccountListViewAdapter=new RunningAccountListViewAdapter(getActivity());
+        }
         runningAccountListViewAdapter.setProjectBeanList(projectBeanList);
         runningAccountListViewAdapter.notifyDataSetChanged();
     }

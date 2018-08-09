@@ -13,6 +13,7 @@ import java.util.List;
 
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
@@ -44,15 +45,14 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
     }
 
+
+
     @Override
-    public void addProjectFromEventBus(ProjectBean projectBean) {
+    public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
 
     }
 
-    @Override
-    public void initDataFromMainInteractor(List dataList) {
-        friendsAndRelativesItemInteractor.initData(dataList, this);
-    }
+
 
     @Override
     public void updateView() {

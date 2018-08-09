@@ -3,10 +3,13 @@ package cn.xiaojii.cashgift.presenter.impl;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 import cn.xiaojii.cashgift.presenter.IMainPresenter;
@@ -24,11 +27,10 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     private String TAG = "MainPresenter";
 
 
-
     public MainPresenter(IMainView mainView, MainInterator mainInterator) {
         this.mainView = mainView;
         this.mainInterator = mainInterator;
-
+        EventBus.getDefault().register(this);
     }
 
 
@@ -42,15 +44,21 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
         mainInterator.GetData(onGetDataListener);
     }
 
+
     @Override
-    public void addProject(ProjectBean projectBean) {
-        mainInterator.AddProject(projectBean, this);
+    @Subscribe
+    public void addProjectFromEventBus(ProjectBeanMessageBean projectBeanMessageBean) {
+        if (projectBeanMessageBean.getTag().equals(GlobalBean.TAG_DIALOGFRAGMENT)) {
+            ProjectBean projectBean = projectBeanMessageBean.getProjectBean();
+            mainInterator.AddProject(projectBean, this);
+        }
+
     }
 
     @Override
     public void onDestroy() {
         mainInterator.onDestroy();
-
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -61,9 +69,8 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
 
     @Override
     public void OnInitSuccess(List<ProjectBean> projectBeanList) {
+        sendListEventBus(projectBeanList);
 
-        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(projectBeanList);
-        EventBus.getDefault().postSticky(projectListMessageEvent);
     }
 
 
@@ -75,7 +82,12 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     public void onAddProjectSuccess(List<ProjectBean> list) {
         Log.i(TAG, "onAddProjectSuccess,list size:" + list.size());
+        sendListEventBus(list);
     }
 
+    private void sendListEventBus(List list) {
+        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(list, GlobalBean.TAG_MAINPRESENTER);
+        EventBus.getDefault().postSticky(projectListMessageEvent);
+    }
 
 }

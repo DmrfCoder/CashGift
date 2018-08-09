@@ -9,10 +9,15 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.impl.RunningAccountInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
@@ -23,7 +28,7 @@ import cn.xiaojii.cashgift.view.IRunningAccountView;
  * @date 2018/8/3
  */
 
-public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddProjrctListener,
+public class RunningAccountPresenter implements RunningAccountInteractor.OnAddProjrctListener,
         IBasePresenter, IBaseInteractor.InitDataListener, IBaseInteractor.AddProjectListener {
 
     private IRunningAccountView runningAccountView;
@@ -33,11 +38,7 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
     public RunningAccountPresenter(IRunningAccountView runningAccountView, RunningAccountInteractor runningAccountInteractor) {
         this.runningAccountView = runningAccountView;
         this.runningAccountInteractor = runningAccountInteractor;
-
-
-
-
-
+        EventBus.getDefault().register(this);
     }
 
 
@@ -47,17 +48,18 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
     @Override
     public void addProjectFromDialog(ProjectBean projectBean) {
 
-        runningAccountInteractor.addProject(projectBean,this);
+        runningAccountInteractor.addProject(projectBean, this);
     }
 
-    @Override
-    public void addProjectFromEventBus(ProjectBean projectBean) {
-        runningAccountInteractor.addProject(projectBean,this);
-    }
+
 
     @Override
-    public void initDataFromMainInteractor(List dataList) {
-        runningAccountInteractor.initData(dataList, this);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
+        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)) {
+            List dataList = projectListMessageEvent.getProjectBeans();
+            runningAccountInteractor.initData(dataList, this);
+        }
     }
 
     @Override
@@ -72,7 +74,7 @@ public class RunningAccountPresenter implements  RunningAccountInteractor.OnAddP
 
     @Override
     public void onDestroy() {
-
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

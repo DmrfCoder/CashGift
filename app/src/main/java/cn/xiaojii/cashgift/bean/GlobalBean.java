@@ -33,4 +33,8 @@ public class GlobalBean {
     public static String NORMAR_ACTION4 = "cn.xiaojii.normal.receiver4";
 
 
+    public static String TAG_MAINPRESENTER="MainPresenter";
+    public static String TAG_DIALOGFRAGMENT="AddProjectDialogFragment";
+
+
 }

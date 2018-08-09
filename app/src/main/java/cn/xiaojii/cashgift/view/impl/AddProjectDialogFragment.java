@@ -19,6 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
 
 /**
  * @author dmrfcoder
@@ -81,7 +82,10 @@ public class AddProjectDialogFragment extends DialogFragment {
                     projectBean.setMoney(-Math.abs(Integer.parseInt(money)));
                 }
                 projectBean.setProject(project);
-                EventBus.getDefault().post(projectBean);
+                ProjectBeanMessageBean projectBeanMessageBean=new ProjectBeanMessageBean(projectBean,GlobalBean.TAG_DIALOGFRAGMENT);
+                EventBus.getDefault().post(projectBeanMessageBean);
+
+
                 dismissSelf();
 
             }
@@ -102,6 +106,4 @@ public class AddProjectDialogFragment extends DialogFragment {
 
 
     }
-
-    ;
 }

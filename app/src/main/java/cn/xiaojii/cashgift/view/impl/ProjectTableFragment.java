@@ -36,6 +36,8 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     private ListView projectTableListView;
     private TextView txDetailProjectTable;
     private TextView txTopTotalMoney;
+    private String detailProjectTable = "共：0 人 收礼：0（0个） 送礼：0（0个）";
+    private int totalMoney = 0;
 
 
     @Nullable
@@ -52,7 +54,13 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
         txTopTotalMoney = view.findViewById(R.id.id_summoney_projettable);
         txDetailProjectTable = view.findViewById(R.id.id_detail_projecttable);
         projectTableListView = view.findViewById(R.id.id_listview_projecttable);
-        projectTableAdapter = new ProjectTableAdapter(getActivity());
+        updateTextView();
+
+
+        if (projectTableAdapter == null) {
+            projectTableAdapter = new ProjectTableAdapter(getActivity());
+        }
+
         projectTableListView.setAdapter(projectTableAdapter);
     }
 
@@ -68,11 +76,14 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
     }
 
 
-
     @Override
     public void updateListView(List<ProjectTableBean> projectTableBeanList) {
         if (projectTableBeanList == null) {
             return;
+        }
+
+        if (projectTableAdapter == null) {
+            projectTableAdapter = new ProjectTableAdapter(getActivity());
         }
         projectTableAdapter.setProjectTableBeanList(projectTableBeanList);
         projectTableAdapter.notifyDataSetChanged();
@@ -80,11 +91,19 @@ public class ProjectTableFragment extends Fragment implements IProjectTableView,
 
     }
 
+    private void updateTextView() {
+        if (txTopTotalMoney != null && txDetailProjectTable != null) {
+            txDetailProjectTable.setText(detailProjectTable);
+            txTopTotalMoney.setText(totalMoney + "");
+        }
+
+    }
+
 
     @SuppressLint("SetTextI18n")
     public void updateTopBarData(int a, int b, int c, int d, int e, int totalMoney) {
-        String detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
-        txDetailProjectTable.setText(detailProjectTable);
-        txTopTotalMoney.setText(totalMoney + "");
+        detailProjectTable = "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）";
+        this.totalMoney = totalMoney;
+        updateTextView();
     }
 }

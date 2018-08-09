@@ -11,6 +11,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
+import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
@@ -53,12 +54,8 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void receiveEventBus(ProjectListMessageEvent projectListMessageEvent) {
-        if (projectListMessageEvent != null) {
-            initDataFromMainInteractor(projectListMessageEvent.getProjectBeans());
-        }
-    }
+
+
 
     @Override
     public boolean updateOrder(int Code) {
@@ -87,16 +84,16 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         friendsAndRelativesInteractor.addProject(projectBean, this);
     }
 
-    @Override
-    @Subscribe
-    public void addProjectFromEventBus(ProjectBean projectBean) {
-        friendsAndRelativesInteractor.addProject(projectBean, this);
-    }
 
 
     @Override
-    public void initDataFromMainInteractor(List dataList) {
-        friendsAndRelativesInteractor.initData(dataList, this);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
+        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)){
+            List dataList=projectListMessageEvent.getProjectBeans();
+            friendsAndRelativesInteractor.initData(dataList, this);
+        }
+
     }
 
     @Override

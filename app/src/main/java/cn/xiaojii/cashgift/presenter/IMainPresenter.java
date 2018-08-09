@@ -3,6 +3,7 @@ package cn.xiaojii.cashgift.presenter;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 
 /**
@@ -29,9 +30,9 @@ public interface IMainPresenter {
     /**
      *
      * 增加流水，参数为泛型
-     * @param projectBean
+     * @param projectBeanMessageBean
      */
-    void addProject(ProjectBean projectBean);
+    void addProjectFromEventBus(ProjectBeanMessageBean projectBeanMessageBean);
 
     /**
      * 存储数据

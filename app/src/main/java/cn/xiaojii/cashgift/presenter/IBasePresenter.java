@@ -1,8 +1,12 @@
 package cn.xiaojii.cashgift.presenter;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 
 /**
  * @author dmrfcoder
@@ -19,17 +23,13 @@ public interface IBasePresenter {
     void addProjectFromDialog(ProjectBean projectBean);
 
 
-    /**
-     * 增加从brodcast中获取的条目
-     * @param projectBean
-     */
-    void addProjectFromEventBus(ProjectBean projectBean);
 
     /**
-     * 初始化
-     * @param dataList
+     * 从MainInteractor eventbus接收数据进行初始化
+     * @param projectListMessageEvent
      */
-    void initDataFromMainInteractor(List dataList);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent);
 
     /**
      * 从model拿到数据更新视图

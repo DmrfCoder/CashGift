@@ -9,6 +9,21 @@ import java.util.List;
 
 public class ProjectListMessageEvent {
     private List<ProjectBean> projectBeans;
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public ProjectListMessageEvent(List<ProjectBean> projectBeans, String tag) {
+
+        this.projectBeans = projectBeans;
+        this.tag = tag;
+    }
 
     public ProjectListMessageEvent(List<ProjectBean> projectBeans) {
         this.projectBeans = projectBeans;
