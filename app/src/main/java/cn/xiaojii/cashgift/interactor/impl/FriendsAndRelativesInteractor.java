@@ -12,6 +12,8 @@ import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesInteractor;
+import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.util.ConvertBeanUtil;
 
 /**
@@ -19,7 +21,7 @@ import cn.xiaojii.cashgift.util.ConvertBeanUtil;
  * @date 2018/8/3
  */
 
-public class FriendsAndRelativesInteractor implements IBaseInteractor {
+public class FriendsAndRelativesInteractor implements IBaseInteractor, IFriendsAndRelativesInteractor {
 
     private List<FriendsAndRelativesBean> friendsAndRelativesBeanList;
     private List<ProjectBean> projectBeanList;
@@ -62,23 +64,15 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
 
             }
         }
-        addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList, "FriendsAndRelatives", projectBean);
+        addProjectListener.onAddProjectSuccess(friendsAndRelativesBeanList);
 
     }
 
-    @Override
-    public void initData(List dataList, InitDataListener initDataListener) {
-        if (dataList != null) {
-            projectBeanList = dataList;
-            friendsAndRelativesBeanList = ConvertBeanUtil.convertProjectBeansToFriendsAndRelativesBeans(dataList);
-            initDataListener.onInitDataSuccess(friendsAndRelativesBeanList);
-        } else {
-            initDataListener.onInitDataError();
-        }
-    }
+
+
 
     @Override
-    public void updateView(UpdateViewListener updateViewListener) {
+    public void updateView(UpdateFarViewListener updateViewListener) {
         if (friendsAndRelativesBeanList != null) {
             updateViewListener.onUpdateViewSuccess(friendsAndRelativesBeanList);
         } else {
@@ -87,8 +81,14 @@ public class FriendsAndRelativesInteractor implements IBaseInteractor {
     }
 
     @Override
-    public void clickListViewItem(String name, ClickListviewItemListener clickListviewItemListener) {
-
+    public void initData(List dataList, UpdateFarViewListener updateFarViewListener) {
+        if (dataList != null) {
+            projectBeanList = dataList;
+            friendsAndRelativesBeanList = ConvertBeanUtil.convertProjectBeansToFriendsAndRelativesBeans(dataList);
+            updateFarViewListener.onUpdateViewSuccess(friendsAndRelativesBeanList);
+        } else {
+            updateFarViewListener.onUpdateViewError();
+        }
     }
 
 

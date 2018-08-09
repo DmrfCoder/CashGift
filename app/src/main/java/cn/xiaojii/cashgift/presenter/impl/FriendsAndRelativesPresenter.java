@@ -15,11 +15,14 @@ import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
+import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
+import cn.xiaojii.cashgift.view.impl.MainActivity;
 
 /**
  * @author dmrfcoder
@@ -28,14 +31,11 @@ import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 
 public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresenter,
         IBasePresenter, FriendsAndRelativesInteractor.OnInquireFinishedListener,
-        IBaseInteractor.InitDataListener, IBaseInteractor.AddProjectListener,
-        IBaseInteractor.UpdateViewListener, IBaseInteractor.ClickListviewItemListener,
+        IBaseInteractor.AddProjectListener,
+        IFriendsAndRelativesInteractor.UpdateFarViewListener,
         FriendsAndRelativesInteractor.NeedPositionNameListener {
     private IFriendsAndRelativesView friendsAndRelativesView;
     private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
-
-
-
 
 
     public FriendsAndRelativesPresenter(IFriendsAndRelativesView friendsAndRelativesView, final FriendsAndRelativesInteractor friendsAndRelativesInteractor) {
@@ -45,7 +45,6 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         EventBus.getDefault().register(this);
 
 
-
     }
 
     @Override
@@ -53,8 +52,6 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
         friendsAndRelativesInteractor.Inquire(name, this);
 
     }
-
-
 
 
     @Override
@@ -85,12 +82,11 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     }
 
 
-
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)){
-            List dataList=projectListMessageEvent.getProjectBeans();
+        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)) {
+            List dataList = projectListMessageEvent.getProjectBeans();
             friendsAndRelativesInteractor.initData(dataList, this);
         }
 
@@ -111,27 +107,17 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
     }
 
-    @Override
-    public void onInitDataError() {
-
-    }
-
-    @Override
-    public void onInitDataSuccess(List dataList) {
-        friendsAndRelativesView.updateListView(dataList);
-    }
 
     @Override
     public void onAddProjectError() {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public void onAddProjectSuccess(List beanList, String BroadCastTag, ProjectBean projectBean) {
+    public void onAddProjectSuccess(List beanList) {
         friendsAndRelativesView.updateListView(beanList);
-
     }
+
 
     @Override
     public void onUpdateViewError() {
@@ -145,22 +131,17 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
 
 
     @Override
-    public void onClickItemError() {
-
-    }
-
-    @Override
-    public void onCliskItemSuccess(List dataList) {
-        //发送广播
-    }
-
-    @Override
     public void onNeedPositionNameError() {
 
     }
 
     @Override
     public void onNeedPositionNameSuccess(String name) {
-        ((FriendsAndRelativesFragment) friendsAndRelativesView).jumpToTargetItemFragment(name);
+
+        FriendsAndRelativesItemFragment friendsAndRelativesItemFragment = new FriendsAndRelativesItemFragment();
+        ((MainActivity) ((Fragment) friendsAndRelativesView).getActivity()).startfragment(friendsAndRelativesItemFragment, true);
+        EventBus.getDefault().postSticky(name);
     }
+
+
 }

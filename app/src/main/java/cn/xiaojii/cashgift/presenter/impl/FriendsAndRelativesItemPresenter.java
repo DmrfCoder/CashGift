@@ -9,12 +9,18 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesInteractor;
+import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesItemPresenter;
@@ -25,19 +31,16 @@ import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
  * @date 2018/8/8
  */
 
-public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesItemPresenter, IBasePresenter, IBaseInteractor.UpdateViewListener, IBaseInteractor.InitDataListener, IBaseInteractor.ClickListviewItemListener {
+public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesItemPresenter,
+        IBasePresenter, IFriendsAndRelativesItemInteractor.UpdateFariViewListener {
     private FriendsAndRelativesItemFragment friendsAndRelativesItemFragment;
     private FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor;
-
 
 
     public FriendsAndRelativesItemPresenter(FriendsAndRelativesItemFragment friendsAndRelativesItemFragment, FriendsAndRelativesItemInteractor friendsAndRelativesItemInteractor) {
         this.friendsAndRelativesItemFragment = friendsAndRelativesItemFragment;
         this.friendsAndRelativesItemInteractor = friendsAndRelativesItemInteractor;
-
-
-
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -46,12 +49,10 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
     }
 
 
-
     @Override
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-
+        friendsAndRelativesItemInteractor.initData(projectListMessageEvent.getProjectBeans());
     }
-
 
 
     @Override
@@ -66,7 +67,7 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
     @Override
     public void onDestroy() {
-
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -74,34 +75,19 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
 
     }
 
+
     @Override
-    public void onUpdateViewSuccess(List dataList) {
+    public void onUpdateViewSuccess(List dataList, int totalMoney, int inCount, int outCount) {
         friendsAndRelativesItemFragment.updateListView(dataList);
-    }
-
-    @Override
-    public void onInitDataError() {
-
-    }
-
-    @Override
-    public void onInitDataSuccess(List dataList) {
-        friendsAndRelativesItemFragment.updateListView(dataList);
+        friendsAndRelativesItemFragment.updateView(totalMoney, inCount, outCount);
     }
 
 
     @Override
+    @Subscribe(sticky = true)
     public void updateTargetName(String name) {
         friendsAndRelativesItemInteractor.clickListViewItem(name, this);
     }
 
-    @Override
-    public void onClickItemError() {
 
-    }
-
-    @Override
-    public void onCliskItemSuccess(List dataList) {
-        friendsAndRelativesItemFragment.updateListView(dataList);
-    }
 }

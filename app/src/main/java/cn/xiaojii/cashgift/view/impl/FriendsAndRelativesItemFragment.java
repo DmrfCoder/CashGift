@@ -38,6 +38,7 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
      * RunningAccountListViewAdapter就是此处需要的adapter
      */
     private RunningAccountListViewAdapter friendsAndRelativesListViewAdapter;
+    private int totalMoney = 0, inCount = 0, outCount = 0;
 
 
     @Nullable
@@ -51,13 +52,13 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
         initData();
         initView(view);
 
-        String name = getArguments().getString("name");
-        friendsAndRelativesItemPresenter.updateTargetName(name);
         return view;
     }
 
     private void initData() {
-        friendsAndRelativesListViewAdapter = new RunningAccountListViewAdapter(getActivity());
+        if (friendsAndRelativesListViewAdapter == null) {
+            friendsAndRelativesListViewAdapter = new RunningAccountListViewAdapter(getActivity());
+        }
     }
 
     private void initView(View view) {
@@ -68,7 +69,7 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
         txTotalMoney = view.findViewById(R.id.id_friends_item_summoney);
         txInCount = view.findViewById(R.id.id_friends_item_in_count);
         txOutCount = view.findViewById(R.id.id_friends_item_out_count);
-
+        updateTextView();
 
     }
 
@@ -83,7 +84,6 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
     }
 
 
-
     @Override
     public void onClick(View view) {
 
@@ -92,27 +92,31 @@ public class FriendsAndRelativesItemFragment extends Fragment implements IFriend
     @SuppressLint("SetTextI18n")
     @Override
     public void updateView(int totalMoney, int inCount, int outCount) {
-        txTotalMoney.setText(totalMoney + "");
-        txInCount.setText(inCount + "");
-        txOutCount.setText(outCount + "");
+        this.totalMoney = totalMoney;
+        this.inCount = inCount;
+        this.outCount = outCount;
+        updateTextView();
+    }
+
+    private void updateTextView() {
+        if (txOutCount != null && txInCount != null && txOutCount != null) {
+            txTotalMoney.setText(totalMoney + "");
+            txInCount.setText(inCount + "");
+            txOutCount.setText(outCount + "");
+        }
+
     }
 
     @Override
     public void updateListView(List<ProjectBean> projectBeanList) {
         if (projectBeanList != null) {
+            if (friendsAndRelativesListViewAdapter == null) {
+                friendsAndRelativesListViewAdapter = new RunningAccountListViewAdapter(getActivity());
+            }
             friendsAndRelativesListViewAdapter.setProjectBeanList(projectBeanList);
             friendsAndRelativesListViewAdapter.notifyDataSetChanged();
         }
     }
 
 
-
-    public static Fragment newInstance(String name) {
-
-        FriendsAndRelativesItemFragment fragment = new FriendsAndRelativesItemFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("name", name);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 }

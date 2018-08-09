@@ -118,8 +118,6 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         switch (view.getId()) {
             case R.id.id_friends_top_right:
                 showAddProjectFragmentDialog(getActivity(), "FriendsAndRelativesFragment");
-                // FriendsAndRelativesItemFragment friendsAndRelativesItemFragment = new FriendsAndRelativesItemFragment();
-                // ((MainActivity) getActivity()).startfragment(friendsAndRelativesItemFragment, true);
                 break;
             case R.id.id_search_bt:
                 break;
@@ -179,11 +177,6 @@ public class FriendsAndRelativesFragment extends Fragment implements IFriendsAnd
         Log.i(TAG, "afterTextChanged");
     }
 
-    public void jumpToTargetItemFragment(String name) {
-
-        ((MainActivity) getActivity()).startfragment(FriendsAndRelativesItemFragment.newInstance(name), true);
-
-    }
 
     @Override
     public void onDestroy() {

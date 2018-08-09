@@ -11,13 +11,15 @@ import java.util.List;
 import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IRunningAccountInteractor;
+import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesItemPresenter;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/3
  */
 
-public class RunningAccountInteractor implements IBaseInteractor {
+public class RunningAccountInteractor implements IBaseInteractor,IRunningAccountInteractor {
 
     private List<ProjectBean> projectBeanList;
 
@@ -35,21 +37,16 @@ public class RunningAccountInteractor implements IBaseInteractor {
             projectBeanList = new ArrayList<>();
         }
         projectBeanList.add(projectBean);
-        addProjectListener.onAddProjectSuccess(projectBeanList, "RunningAccount", projectBean);
+        addProjectListener.onAddProjectSuccess(projectBeanList);
     }
 
-    @Override
-    public void initData(List dataList, InitDataListener initDataListener) {
-        if (dataList != null) {
-            projectBeanList = dataList;
-            initDataListener.onInitDataSuccess(dataList);
-        } else {
-            initDataListener.onInitDataError();
-        }
-    }
+
+
+
+
 
     @Override
-    public void updateView(UpdateViewListener updateViewListener) {
+    public void updateView(UpdateRAViewListener updateViewListener) {
         if (projectBeanList != null) {
             updateViewListener.onUpdateViewSuccess(projectBeanList);
         } else {
@@ -58,10 +55,14 @@ public class RunningAccountInteractor implements IBaseInteractor {
     }
 
     @Override
-    public void clickListViewItem(String name, ClickListviewItemListener clickListviewItemListener) {
-
+    public void initData(List dataList, UpdateRAViewListener updateRAViewListener) {
+        if (dataList != null) {
+            projectBeanList = dataList;
+            updateRAViewListener.onUpdateViewSuccess(dataList);
+        } else {
+            updateRAViewListener.onUpdateViewError();
+        }
     }
-
 
 
     public interface OnAddProjrctListener {

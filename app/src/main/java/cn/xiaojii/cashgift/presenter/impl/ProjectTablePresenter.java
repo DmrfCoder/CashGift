@@ -19,6 +19,7 @@ import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IProjectTableInteractor;
 import cn.xiaojii.cashgift.interactor.impl.ProjectTableInterator;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
@@ -28,7 +29,8 @@ import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
  * @date 2018/8/7
  */
 
-public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.AddProjectListener, IBaseInteractor.InitDataListener, ProjectTableInterator.OnUpdateTopBarDataListener {
+public class ProjectTablePresenter implements IBasePresenter,
+        IBaseInteractor.AddProjectListener, IProjectTableInteractor.UpdatePtViewListener {
     private ProjectTableFragment projectTableFragment;
     private ProjectTableInterator projectTableInterator;
 
@@ -45,7 +47,6 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
     public void addProjectFromDialog(ProjectBean projectBean) {
 
     }
-
 
 
     @Override
@@ -79,31 +80,19 @@ public class ProjectTablePresenter implements IBasePresenter, IBaseInteractor.Ad
     }
 
     @Override
-    public void onAddProjectSuccess(List beanList, String BroadCastTag, ProjectBean projectBean) {
-        projectTableInterator.updateTopBarData(this);
-        projectTableFragment.updateListView(beanList);
+    public void onAddProjectSuccess(List beanList) {
+
+    }
+
+
+    @Override
+    public void onUpdateViewError() {
 
     }
 
     @Override
-    public void onInitDataError() {
-
-    }
-
-    @Override
-    public void onInitDataSuccess(List dataList) {
-        projectTableInterator.updateTopBarData(this);
+    public void onUpdateViewSuccess(List dataList, int a, int b, int c, int d, int e, int totalMoney) {
         projectTableFragment.updateListView(dataList);
-
-    }
-
-    @Override
-    public void onUpdateTopBarDataError() {
-
-    }
-
-    @Override
-    public void onUpdateTopBarDataSuccess(int a, int b, int c, int d, int e, int totalMoney) {
         projectTableFragment.updateTopBarData(a, b, c, d, e, totalMoney);
     }
 }

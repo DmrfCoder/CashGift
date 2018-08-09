@@ -19,6 +19,7 @@ import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IRunningAccountInteractor;
 import cn.xiaojii.cashgift.interactor.impl.RunningAccountInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.view.IRunningAccountView;
@@ -29,7 +30,7 @@ import cn.xiaojii.cashgift.view.IRunningAccountView;
  */
 
 public class RunningAccountPresenter implements RunningAccountInteractor.OnAddProjrctListener,
-        IBasePresenter, IBaseInteractor.InitDataListener, IBaseInteractor.AddProjectListener {
+        IBasePresenter, IBaseInteractor.AddProjectListener, IRunningAccountInteractor.UpdateRAViewListener {
 
     private IRunningAccountView runningAccountView;
     private BroadcastReceiver dataReceive;
@@ -50,7 +51,6 @@ public class RunningAccountPresenter implements RunningAccountInteractor.OnAddPr
 
         runningAccountInteractor.addProject(projectBean, this);
     }
-
 
 
     @Override
@@ -87,15 +87,6 @@ public class RunningAccountPresenter implements RunningAccountInteractor.OnAddPr
 
     }
 
-    @Override
-    public void onInitDataError() {
-
-    }
-
-    @Override
-    public void onInitDataSuccess(List dataList) {
-        runningAccountView.updateListView(dataList);
-    }
 
     @Override
     public void onAddProjectError() {
@@ -103,9 +94,18 @@ public class RunningAccountPresenter implements RunningAccountInteractor.OnAddPr
     }
 
     @Override
-    public void onAddProjectSuccess(List beanList, String BroadCastTag, ProjectBean projectBean) {
-        runningAccountView.updateListView(beanList);
+    public void onAddProjectSuccess(List beanList) {
+
     }
 
 
+    @Override
+    public void onUpdateViewError() {
+
+    }
+
+    @Override
+    public void onUpdateViewSuccess(List dataList) {
+        runningAccountView.updateListView(dataList);
+    }
 }

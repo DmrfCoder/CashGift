@@ -8,13 +8,14 @@ import java.util.List;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectTableBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
+import cn.xiaojii.cashgift.interactor.IProjectTableInteractor;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/7
  */
 
-public class ProjectTableInterator implements IBaseInteractor {
+public class ProjectTableInterator implements IBaseInteractor, IProjectTableInteractor {
     private List<ProjectTableBean> projectTableBeanList;
     private String TAG = "ProjectTableInterator";
     private List<String> nameList;
@@ -29,13 +30,13 @@ public class ProjectTableInterator implements IBaseInteractor {
     private int d = 0;
     private int e = 0;
 
-    private int totalMoney=0;
+    private int totalMoney = 0;
 
 
     @Override
     public void addProject(ProjectBean projectBean, AddProjectListener addProjectListener) {
         if (addSingleProjectBean(projectBean)) {
-            addProjectListener.onAddProjectSuccess(projectTableBeanList, null, null);
+            addProjectListener.onAddProjectSuccess(projectTableBeanList);
         } else {
             addProjectListener.onAddProjectError();
         }
@@ -68,7 +69,7 @@ public class ProjectTableInterator implements IBaseInteractor {
 
                     projectTableBean.addProjectBean(projectBean);
 
-                    totalMoney+=projectBean.getIntMoney();
+                    totalMoney += projectBean.getIntMoney();
                     if (projectBean.getIntMoney() < 0) {
                         projectTableBean.updateMoneyOut(projectBean.getIntMoney());
                         d += projectBean.getIntMoney();
@@ -85,7 +86,7 @@ public class ProjectTableInterator implements IBaseInteractor {
         if (!findFlag) {
             ProjectTableBean projectTableBean = new ProjectTableBean();
             projectTableBean.setName(projectBean.getProject());
-            totalMoney+=projectBean.getIntMoney();
+            totalMoney += projectBean.getIntMoney();
             if (projectBean.getIntMoney() < 0) {
                 projectTableBean.setSumMoneyOut(projectBean.getIntMoney());
                 d += projectBean.getIntMoney();
@@ -110,64 +111,31 @@ public class ProjectTableInterator implements IBaseInteractor {
 
 
     @Override
-    public void initData(List dataList, InitDataListener initDataListener) {
-
-        //这里的datalist应该是projectbean类型的
-        Log.i(TAG, "initData");
-        for (Object projectBean : dataList) {
-            if (!addSingleProjectBean((ProjectBean) projectBean)) {
-                initDataListener.onInitDataError();
-
-            }
-        }
-
-        initDataListener.onInitDataSuccess(projectTableBeanList);
-    }
-
-    @Override
-    public void updateView(UpdateViewListener updateViewListener) {
+    public void updateView(UpdatePtViewListener updateViewListener) {
         if (projectTableBeanList == null) {
             updateViewListener.onUpdateViewError();
             return;
         }
 
-        updateViewListener.onUpdateViewSuccess(projectTableBeanList);
+        updateViewListener.onUpdateViewSuccess(projectTableBeanList, a, b, c, d, e, totalMoney);
 
 
     }
 
     @Override
-    public void clickListViewItem(String name, ClickListviewItemListener clickListviewItemListener) {
+    public void initData(List dataList, UpdatePtViewListener updatePtViewListener) {
+        //这里的datalist应该是projectbean类型的
+        Log.i(TAG, "initData");
+        for (Object projectBean : dataList) {
+            if (!addSingleProjectBean((ProjectBean) projectBean)) {
+                updatePtViewListener.onUpdateViewError();
 
-    }
-
-
-
-    public interface OnUpdateTopBarDataListener {
-        /**
-         * 更新顶部数据失败
-         */
-        void onUpdateTopBarDataError();
-
-
-        /**
-         * 更新顶部数据成功，显示格式为：总结：totalMoney "共：" + a + "人 收礼：" + b + "（" + c + "个） 送礼：" + d + "（" + e + "个）"
-         * @param a
-         * @param b
-         * @param c
-         * @param d
-         * @param e
-         * @param totalMoney
-         */
-        void onUpdateTopBarDataSuccess(int a, int b, int c, int d, int e,int totalMoney);
-    }
-
-
-    public void updateTopBarData(OnUpdateTopBarDataListener onUpdateTopBarDataListener) {
-        if (nameList.size() == 0) {
-            onUpdateTopBarDataListener.onUpdateTopBarDataError();
-        } else {
-            onUpdateTopBarDataListener.onUpdateTopBarDataSuccess(a, b, c, d, e,totalMoney);
+            }
         }
+
+        updatePtViewListener.onUpdateViewSuccess(projectTableBeanList, a, b, c, d, e, totalMoney);
+
     }
+
+
 }

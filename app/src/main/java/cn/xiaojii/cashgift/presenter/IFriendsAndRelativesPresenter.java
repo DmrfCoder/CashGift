@@ -1,5 +1,7 @@
 package cn.xiaojii.cashgift.presenter;
 
+import java.util.List;
+
 /**
  * @author dmrfcoder
  * @date 2018/8/3
@@ -20,6 +22,7 @@ public interface IFriendsAndRelativesPresenter {
      * update listview data order by code
      *
      * @param Code
+     * @return boolean
      */
     boolean updateOrder(int Code);
 
@@ -29,6 +32,8 @@ public interface IFriendsAndRelativesPresenter {
      * @param position
      */
     void clickListViewItem(int position);
+
+
 
 
 
