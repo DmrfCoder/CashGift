@@ -39,7 +39,6 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
             if (pwd.length() == 0) {
                 sph.putString("password", md5.toMd5(mPassword, ""));
                 Toast.makeText(context, context.getString(R.string.pwd_setted), Toast.LENGTH_LONG).show();
-                
                 return;
             } else {
                 String encodedPwd = md5.toMd5(mPassword, "");
