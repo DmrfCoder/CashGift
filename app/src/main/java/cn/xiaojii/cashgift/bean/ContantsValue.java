@@ -9,7 +9,9 @@ import java.io.IOException;
  * @date 2018/8/3
  */
 
-public class GlobalBean {
+public class ContantsValue {
+    public static final String GESTURE_KEY ="gesture_key" ;
+
     public static enum inOrOut {
         IN, OUT
     }
@@ -42,11 +44,13 @@ public class GlobalBean {
 
     public static String EXPORTEXCEL = "export_excel";
 
+    public static String CASHGIFT_GESTURE_PWD_KEY="CASHGIFT_GESTURE_PWD_KEY";
+
     public static String APP_FOLDER_PATH;
 
     static {
         try {
-            APP_FOLDER_PATH = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath;
+            APP_FOLDER_PATH = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ContantsValue.filepath;
         } catch (IOException e) {
             e.printStackTrace();
         }

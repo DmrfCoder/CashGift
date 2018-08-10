@@ -17,7 +17,7 @@ import android.widget.RadioGroup;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
 
@@ -67,22 +67,22 @@ public class AddProjectDialogFragment extends DialogFragment  {
                 String name = et_name.getText().toString();
                 String project = et_project.getText().toString();
                 String money = et_money.getText().toString();
-                GlobalBean.inOrOut inOrOut;
+                ContantsValue.inOrOut inOrOut;
                 if (inOrOutRg.getCheckedRadioButtonId() == R.id.id_dialog_in) {
-                    inOrOut = GlobalBean.inOrOut.IN;
+                    inOrOut = ContantsValue.inOrOut.IN;
                 } else {
-                    inOrOut = GlobalBean.inOrOut.OUT;
+                    inOrOut = ContantsValue.inOrOut.OUT;
                 }
 
                 ProjectBean projectBean = new ProjectBean();
                 projectBean.setName(name);
-                if (inOrOut == GlobalBean.inOrOut.IN) {
+                if (inOrOut == ContantsValue.inOrOut.IN) {
                     projectBean.setMoney(Math.abs(Integer.parseInt(money)));
                 } else {
                     projectBean.setMoney(-Math.abs(Integer.parseInt(money)));
                 }
                 projectBean.setProject(project);
-                ProjectBeanMessageBean projectBeanMessageBean=new ProjectBeanMessageBean(projectBean,GlobalBean.TAG_DIALOGFRAGMENT);
+                ProjectBeanMessageBean projectBeanMessageBean=new ProjectBeanMessageBean(projectBean, ContantsValue.TAG_DIALOGFRAGMENT);
                 EventBus.getDefault().post(projectBeanMessageBean);
 
 

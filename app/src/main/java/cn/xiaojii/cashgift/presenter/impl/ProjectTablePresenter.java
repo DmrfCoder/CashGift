@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
@@ -18,7 +18,6 @@ import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IProjectTablePresenter;
 import cn.xiaojii.cashgift.view.IProjectTableView;
 import cn.xiaojii.cashgift.view.impl.MainActivity;
-import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
 import cn.xiaojii.cashgift.view.impl.ProjectTableItemFragment;
 
 /**
@@ -48,7 +47,7 @@ public class ProjectTablePresenter implements IProjectTablePresenter, IBasePrese
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)) {
+        if (projectListMessageEvent.getTag().equals(ContantsValue.TAG_MAINPRESENTER)) {
             List dataList = projectListMessageEvent.getProjectBeans();
             projectTableInterator.initData(dataList, this);
         }
@@ -106,7 +105,7 @@ public class ProjectTablePresenter implements IProjectTablePresenter, IBasePrese
     public void onClickProjectTableItemSuccess(List list) {
         ProjectTableItemFragment projectTableItemFragment=new ProjectTableItemFragment();
         ((MainActivity) ((Fragment) iProjectTableView).getActivity()).startfragment(projectTableItemFragment, true);
-        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(list, GlobalBean.TAG_PROJECTTABLE);
+        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(list, ContantsValue.TAG_PROJECTTABLE);
         EventBus.getDefault().postSticky(projectListMessageEvent);
     }
 }

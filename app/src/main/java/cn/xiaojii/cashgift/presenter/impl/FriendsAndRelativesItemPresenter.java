@@ -6,7 +6,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesItemInteractor;
@@ -14,8 +14,6 @@ import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesItemInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesItemPresenter;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesItemView;
-import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 
 /**
  * @author dmrfcoder
@@ -44,7 +42,7 @@ public class FriendsAndRelativesItemPresenter implements IFriendsAndRelativesIte
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)){
+        if (projectListMessageEvent.getTag().equals(ContantsValue.TAG_MAINPRESENTER)){
             friendsAndRelativesItemInteractor.initData(projectListMessageEvent.getProjectBeans(),this);
         }
 

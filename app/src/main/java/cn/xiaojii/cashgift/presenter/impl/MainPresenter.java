@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectBeanMessageBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
@@ -54,7 +54,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     @Subscribe
     public void addProjectFromEventBus(ProjectBeanMessageBean projectBeanMessageBean) {
-        if (projectBeanMessageBean.getTag().equals(GlobalBean.TAG_DIALOGFRAGMENT)) {
+        if (projectBeanMessageBean.getTag().equals(ContantsValue.TAG_DIALOGFRAGMENT)) {
             ProjectBean projectBean = projectBeanMessageBean.getProjectBean();
             mainInterator.AddProject(projectBean, this);
         }
@@ -70,7 +70,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     @Subscribe
     public void receiveExportExcel(String code) {
-        if (code.equals(GlobalBean.EXPORTEXCEL)) {
+        if (code.equals(ContantsValue.EXPORTEXCEL)) {
             mainInterator.exportExcel(this);
         }
     }
@@ -100,7 +100,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     }
 
     private void sendListEventBus(List list) {
-        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(list, GlobalBean.TAG_MAINPRESENTER);
+        ProjectListMessageEvent projectListMessageEvent = new ProjectListMessageEvent(list, ContantsValue.TAG_MAINPRESENTER);
         EventBus.getDefault().postSticky(projectListMessageEvent);
     }
 
@@ -111,7 +111,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
 
     @Override
     public void onExportExcelSuccess(List list, UserBean userBean) {
-        File file = new File(GlobalBean.APP_FOLDER_PATH);
+        File file = new File(ContantsValue.APP_FOLDER_PATH);
         //文件夹是否已经存在
         if (!file.exists()) {
             file.mkdirs();

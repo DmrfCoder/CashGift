@@ -12,9 +12,8 @@ import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.inter.IBaseFragmentView;
-import cn.xiaojii.cashgift.presenter.IMainPresenter;
 import cn.xiaojii.cashgift.view.IDiscoverView;
 
 /**
@@ -44,7 +43,7 @@ public class DiscoverFragment extends Fragment implements IDiscoverView, IBaseFr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_discover_excel:
-                EventBus.getDefault().post(GlobalBean.EXPORTEXCEL);
+                EventBus.getDefault().post(ContantsValue.EXPORTEXCEL);
                 break;
             default:
                 break;

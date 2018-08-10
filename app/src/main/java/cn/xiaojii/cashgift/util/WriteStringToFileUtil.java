@@ -1,16 +1,13 @@
 package cn.xiaojii.cashgift.util;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 
 /**
  * @author dmrfcoder
@@ -24,13 +21,13 @@ public class WriteStringToFileUtil {
         //如果手机已插入sd卡,且app具有读写sd卡的权限
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             try {
-                File dir = new File(GlobalBean.APP_FOLDER_PATH);
+                File dir = new File(ContantsValue.APP_FOLDER_PATH);
                 //文件夹是否已经存在
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
-                filename = GlobalBean.APP_FOLDER_PATH + "/" + filename + ".json";
+                filename = ContantsValue.APP_FOLDER_PATH + "/" + filename + ".json";
                 FileOutputStream output = new FileOutputStream(filename);
                 output.write(content.getBytes());
                 output.close();

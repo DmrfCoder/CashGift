@@ -1,19 +1,14 @@
 package cn.xiaojii.cashgift.util;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Environment;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 
 /**
  * @author dmrfcoder
@@ -28,13 +23,13 @@ public class ReadFileToStringUtil {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             try {
 
-                File dir = new File(Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath);
+                File dir = new File(Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ContantsValue.filepath);
                 //文件夹是否已经存在
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
-                filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + GlobalBean.filepath + "/" + filename + ".json";
+                filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ContantsValue.filepath + "/" + filename + ".json";
                 try {
                     FileInputStream input = new FileInputStream(filename);
                     byte[] b = new byte[input.available()];

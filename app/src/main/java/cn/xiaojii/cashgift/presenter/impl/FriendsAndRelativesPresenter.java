@@ -1,7 +1,5 @@
 package cn.xiaojii.cashgift.presenter.impl;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -11,7 +9,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.ProjectListMessageEvent;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
@@ -20,7 +18,6 @@ import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
 import cn.xiaojii.cashgift.presenter.IBasePresenter;
 import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.view.IFriendsAndRelativesView;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
 import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesItemFragment;
 import cn.xiaojii.cashgift.view.impl.MainActivity;
 
@@ -85,7 +82,7 @@ public class FriendsAndRelativesPresenter implements IFriendsAndRelativesPresent
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageEvent projectListMessageEvent) {
-        if (projectListMessageEvent.getTag().equals(GlobalBean.TAG_MAINPRESENTER)) {
+        if (projectListMessageEvent.getTag().equals(ContantsValue.TAG_MAINPRESENTER)) {
             List dataList = projectListMessageEvent.getProjectBeans();
             friendsAndRelativesInteractor.initData(dataList, this);
         }

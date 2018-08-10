@@ -1,19 +1,12 @@
 package cn.xiaojii.cashgift.interactor.impl;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
-import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.IBaseInteractor;
 import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesInteractor;
-import cn.xiaojii.cashgift.presenter.IFriendsAndRelativesPresenter;
 import cn.xiaojii.cashgift.util.ConvertBeanUtil;
 
 /**

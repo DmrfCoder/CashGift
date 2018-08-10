@@ -1,15 +1,9 @@
 package cn.xiaojii.cashgift.interactor.impl;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.GlobalBean;
+import cn.xiaojii.cashgift.bean.ContantsValue;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.bean.UserBean;
 import cn.xiaojii.cashgift.interactor.IMainInteractor;
@@ -35,7 +29,7 @@ public class MainInterator implements IMainInteractor {
 
     public void onDestroy() {
         String json = ListToJsonUtil.ListToJson(projectBeanList);
-        WriteStringToFileUtil.write(json, GlobalBean.filename);
+        WriteStringToFileUtil.write(json, ContantsValue.filename);
     }
 
     @Override
@@ -55,7 +49,7 @@ public class MainInterator implements IMainInteractor {
 
     public void initData(OnInitDataListener onInitDataListener) {
 
-        String fileContent = ReadFileToStringUtil.read(GlobalBean.filename);
+        String fileContent = ReadFileToStringUtil.read(ContantsValue.filename);
         List<ProjectBean> projectBeanList = JsonToListUtil.jsonToList(fileContent);
 
         if (projectBeanList == null) {

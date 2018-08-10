@@ -29,9 +29,6 @@ import cn.xiaojii.cashgift.view.IMoreView;
 public class MoreFragment extends Fragment implements IMoreView, IBaseFragmentView, View.OnClickListener {
 
 
-    private FingerprintManagerCompat fingerprintManagerCompat;
-    //取消的对象
-    private CancellationSignal cancellationSignal;
 
 
     @Nullable
@@ -44,8 +41,6 @@ public class MoreFragment extends Fragment implements IMoreView, IBaseFragmentVi
 
     @Override
     public void initFragment(View view) {
-        fingerprintManagerCompat = FingerprintManagerCompat.from(getContext());
-        cancellationSignal = new CancellationSignal();
 
         view.findViewById(R.id.id_more_finger).setOnClickListener(this);
         view.findViewById(R.id.id_more_pass).setOnClickListener(this);
@@ -67,42 +62,10 @@ public class MoreFragment extends Fragment implements IMoreView, IBaseFragmentVi
     private void finger() {
 
 
-        fingerprintManagerCompat.authenticate(null, 0, cancellationSignal, new FingerDiscentListener(), null);
 
 
     }
 
 
-    private class FingerDiscentListener extends FingerprintManagerCompat.AuthenticationCallback {
-        @Override
-        public void onAuthenticationError(int errMsgId, CharSequence errString) {
-            super.onAuthenticationError(errMsgId, errString);
-            if (errMsgId == 5) {//取消识别
 
-            } else if (errMsgId == 7) {
-                Toast.makeText(getActivity(), "操作过于频繁，请稍后重试", Toast.LENGTH_SHORT).show();
-                if (cancellationSignal != null) {
-                    cancellationSignal.cancel();
-                    cancellationSignal = null;
-                }
-            }
-        }
-
-        @Override
-        public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-            super.onAuthenticationSucceeded(result);
-            Toast.makeText(getActivity(), "指纹识别成功", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onAuthenticationFailed() {
-            super.onAuthenticationFailed();
-            Toast.makeText(getActivity(), "指纹识别失败", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-            super.onAuthenticationHelp(helpMsgId, helpString);
-        }
-    }
 }

@@ -1,28 +1,19 @@
 package cn.xiaojii.cashgift.view.impl;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 
 import java.util.List;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.adapter.RunningAccountListViewAdapter;
 import cn.xiaojii.cashgift.base.BaseFragment;
-import cn.xiaojii.cashgift.bean.GlobalBean;
 import cn.xiaojii.cashgift.bean.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.RunningAccountInteractor;
 import cn.xiaojii.cashgift.presenter.impl.RunningAccountPresenter;
