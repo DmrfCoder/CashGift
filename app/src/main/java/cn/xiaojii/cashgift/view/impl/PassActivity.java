@@ -1,16 +1,20 @@
 package cn.xiaojii.cashgift.view.impl;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.util.Md5Util;
+import cn.xiaojii.cashgift.util.SharedPreferencesUtil;
+import cn.xiaojii.cashgift.view.IGesturePassWordView;
 import cn.xiaojii.cashgift.view.IPassView;
 
 /**
@@ -19,11 +23,40 @@ import cn.xiaojii.cashgift.view.IPassView;
  */
 
 public class PassActivity extends Activity implements IPassView, View.OnClickListener {
-
-    private TextView tvHint;
+    private GesturePassWordView gesturePassWordView;
+    private Context context;
     private FingerprintManagerCompat fingerprintManagerCompat;
     //取消的对象
     private CancellationSignal cancellationSignal;
+
+    IGesturePassWordView.OnCompleteListener onCompleteListener=new IGesturePassWordView.OnCompleteListener() {
+        @Override
+        public void onComplete(String mPassword) {
+            SharedPreferencesUtil sph = SharedPreferencesUtil.getInstance(getApplicationContext());
+            String pwd = sph.getString("password", "");
+            Md5Util md5 = new Md5Util();
+            boolean passed = false;
+            if (pwd.length() == 0) {
+                sph.putString("password", md5.toMd5(mPassword, ""));
+                Toast.makeText(context, context.getString(R.string.pwd_setted), Toast.LENGTH_LONG).show();
+                
+                return;
+            } else {
+                String encodedPwd = md5.toMd5(mPassword, "");
+                if (encodedPwd.equals(pwd)) {
+                    passed = true;
+                } else {
+                    gesturePassWordView.markError();
+                }
+            }
+
+            if (passed) {
+                Log.d("hcj", "password is correct!");
+                Toast.makeText(context, context.getString(R.string.pwd_correct), Toast.LENGTH_LONG).show();
+//					finish();
+            }
+        }
+    };
 
 
     @Override
@@ -39,12 +72,11 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
 
         fingerprintManagerCompat = FingerprintManagerCompat.from(this);
         cancellationSignal = new CancellationSignal();
+        context = getApplicationContext();
+        gesturePassWordView = (GesturePassWordView) this.findViewById(R.id.id_pass_gesture);
+        gesturePassWordView.setOnCompleteListener(onCompleteListener);
 
 
-        findViewById(R.id.id_set).setOnClickListener(this);
-        findViewById(R.id.id_yanzheng).setOnClickListener(this);
-
-        tvHint = findViewById(R.id.id_txt);
         fingerprintManagerCompat.authenticate(null, 0, cancellationSignal, new FingerDiscentListener(), null);
 
 
@@ -69,7 +101,7 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
                 //取消识别
 
             } else if (errMsgId == 7) {
-                tvHint.setText("操作过于频繁，请稍后重试");
+                //tvHint.setText("操作过于频繁，请稍后重试");
                 if (cancellationSignal != null) {
                     cancellationSignal.cancel();
                     cancellationSignal = null;
@@ -80,13 +112,13 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         @Override
         public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
-            tvHint.setText("指纹识别成功");
+            //tvHint.setText("指纹识别成功");
         }
 
         @Override
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
-            tvHint.setText("指纹识别失败");
+            //tvHint.setText("指纹识别失败");
         }
 
         @Override

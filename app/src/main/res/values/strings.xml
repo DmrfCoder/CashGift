@@ -1,3 +1,9 @@
 <resources>
-    <string personName="app_name">CashGift</string>
+
+    <string name="app_name">CashGift</string>
+    <string name="action_settings">Settings</string>
+    <string name="plz_draw_code">Please draw your code</string>
+    <string name="pwd_setted">Your password is setted!</string>
+    <string name="pwd_correct">Your password is correct.</string>
+
 </resources>
