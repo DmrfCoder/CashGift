@@ -3,9 +3,8 @@ package cn.xiaojii.cashgift.interactor.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.interactor.IBaseInteractor;
-import cn.xiaojii.cashgift.interactor.IFriendsAndRelativesItemInteractor;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
+import cn.xiaojii.cashgift.interactor.inter.fragment.IFriendsAndRelativesItemInteractor;
 
 /**
  * @author dmrfcoder

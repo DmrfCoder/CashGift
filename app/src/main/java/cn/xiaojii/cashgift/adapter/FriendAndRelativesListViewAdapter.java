@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
+import cn.xiaojii.cashgift.bean.fragment.FriendsAndRelativesBean;
 
 /**
  * @author dmrfcoder

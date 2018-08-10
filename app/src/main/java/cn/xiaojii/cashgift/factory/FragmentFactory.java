@@ -1,14 +1,12 @@
 package cn.xiaojii.cashgift.factory;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 
-import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
-import cn.xiaojii.cashgift.view.impl.DiscoverFragment;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
-import cn.xiaojii.cashgift.view.impl.MoreFragment;
-import cn.xiaojii.cashgift.view.impl.ProjectTableFragment;
-import cn.xiaojii.cashgift.view.impl.RunningAccountFragment;
+import cn.xiaojii.cashgift.view.impl.fragment.DiscoverFragment;
+import cn.xiaojii.cashgift.view.impl.fragment.FriendsAndRelativesFragment;
+import cn.xiaojii.cashgift.view.impl.fragment.MoreFragment;
+import cn.xiaojii.cashgift.view.impl.fragment.ProjectTableFragment;
+import cn.xiaojii.cashgift.view.impl.fragment.RunningAccountFragment;
 
 
 public class FragmentFactory {

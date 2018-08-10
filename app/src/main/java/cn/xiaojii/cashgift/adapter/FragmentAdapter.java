@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import cn.xiaojii.cashgift.factory.FragmentFactory;
-import cn.xiaojii.cashgift.presenter.impl.MainPresenter;
 
 /**
  * Created by Carson_Ho on 16/5/23.

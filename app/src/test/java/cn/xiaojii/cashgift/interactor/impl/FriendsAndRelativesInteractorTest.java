@@ -1,22 +1,14 @@
 package cn.xiaojii.cashgift.interactor.impl;
 
-import android.util.Log;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
-import java.util.List;
-
 import cn.xiaojii.cashgift.BuildConfig;
-import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.interactor.IBaseInteractor;
-
-import static org.junit.Assert.*;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 
 /**
  * @author dmrfcoder
@@ -27,14 +19,14 @@ import static org.junit.Assert.*;
 @Config(constants = BuildConfig.class, sdk = 23)
 public class FriendsAndRelativesInteractorTest {
 
-    private FriendsAndRelativesInteractor friendsAndRelativesInteractor;
+    private FriendsAndRelativesFragmentInteractor friendsAndRelativesInteractor;
     private String TAG = "FriendsAndRelativesInteractorTest";
 
 
     @Before
     public void setUp() {
         ShadowLog.stream = System.out;
-        friendsAndRelativesInteractor = new FriendsAndRelativesInteractor();
+        friendsAndRelativesInteractor = new FriendsAndRelativesFragmentInteractor();
     }
 
 

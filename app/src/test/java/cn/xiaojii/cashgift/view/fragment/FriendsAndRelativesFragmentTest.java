@@ -18,8 +18,8 @@ import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
 import cn.xiaojii.cashgift.BuildConfig;
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
-import cn.xiaojii.cashgift.view.impl.MainActivity;
+import cn.xiaojii.cashgift.view.impl.fragment.FriendsAndRelativesFragment;
+import cn.xiaojii.cashgift.view.impl.activity.MainActivity;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

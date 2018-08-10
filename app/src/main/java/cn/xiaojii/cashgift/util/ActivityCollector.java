@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 回收activity，保证所有的activity被销毁
+ * @author dmrfcoder
  */
 
 public class ActivityCollector {
@@ -20,6 +21,7 @@ public class ActivityCollector {
         activityList.remove(activity);
     }
 
+    //加所有activity销毁，只保留
     public static void finishAllButLast() {
         Activity activity = activityList.get(activityList.size() - 1);
         removeActivity(activity);
@@ -34,10 +36,13 @@ public class ActivityCollector {
         activityList.add(activity);
     }
 
+
+
+
+
     public static void finishAll() {
         for (Activity activity : activityList) {
             if (!activity.isFinishing()) {
-//                Log.i("Back",activity.toString());
                 activity.finish();
             }
         }

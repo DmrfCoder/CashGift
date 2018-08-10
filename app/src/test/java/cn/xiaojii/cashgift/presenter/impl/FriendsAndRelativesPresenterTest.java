@@ -8,9 +8,10 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
 import cn.xiaojii.cashgift.BuildConfig;
-import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesInteractor;
-import cn.xiaojii.cashgift.view.impl.FriendsAndRelativesFragment;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
+import cn.xiaojii.cashgift.interactor.impl.FriendsAndRelativesFragmentInteractor;
+import cn.xiaojii.cashgift.presenter.impl.fragment.FriendsAndRelativesFragmentPresenter;
+import cn.xiaojii.cashgift.view.impl.fragment.FriendsAndRelativesFragment;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -26,14 +27,14 @@ import static org.mockito.Mockito.verify;
 public class FriendsAndRelativesPresenterTest {
 
 
-    private FriendsAndRelativesPresenter friendsAndRelativesPresenter;
+    private FriendsAndRelativesFragmentPresenter friendsAndRelativesPresenter;
     private FriendsAndRelativesFragment friendsAndRelativesFragment;
 
     @Before
     public void setUp() {
         ShadowLog.stream = System.out;
         friendsAndRelativesFragment = new FriendsAndRelativesFragment();
-        friendsAndRelativesPresenter = new FriendsAndRelativesPresenter(friendsAndRelativesFragment, new FriendsAndRelativesInteractor());
+        friendsAndRelativesPresenter = new FriendsAndRelativesFragmentPresenter(friendsAndRelativesFragment, new FriendsAndRelativesFragmentInteractor());
     }
 
 

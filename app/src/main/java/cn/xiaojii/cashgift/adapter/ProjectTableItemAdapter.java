@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.ProjectTableItemBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectTableItemBean;
 
 /**
  * @author dmrfcoder

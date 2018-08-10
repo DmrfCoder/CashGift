@@ -5,17 +5,17 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.bean.ProjectTableBean;
-import cn.xiaojii.cashgift.interactor.IBaseInteractor;
-import cn.xiaojii.cashgift.interactor.IProjectTableInteractor;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectTableBean;
+import cn.xiaojii.cashgift.interactor.inter.base.IBaseFragmentInteractor;
+import cn.xiaojii.cashgift.interactor.inter.fragment.IProjectTableInteractor;
 
 /**
  * @author dmrfcoder
  * @date 2018/8/7
  */
 
-public class ProjectTableInterator implements IBaseInteractor, IProjectTableInteractor {
+public class ProjectTableInterator implements IBaseFragmentInteractor, IProjectTableInteractor {
     private List<ProjectTableBean> projectTableBeanList;
     private String TAG = "ProjectTableInterator";
     private List<String> nameList;

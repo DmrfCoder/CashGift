@@ -3,8 +3,8 @@ package cn.xiaojii.cashgift.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.FriendsAndRelativesBean;
-import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.fragment.FriendsAndRelativesBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 
 /**
  * @author dmrfcoder

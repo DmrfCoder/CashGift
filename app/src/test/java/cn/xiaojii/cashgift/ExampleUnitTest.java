@@ -2,8 +2,8 @@ package cn.xiaojii.cashgift;
 
 import org.junit.Test;
 
-import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.bean.ProjectTableBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectTableBean;
 
 import static org.junit.Assert.*;
 

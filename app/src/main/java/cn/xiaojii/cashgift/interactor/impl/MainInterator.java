@@ -3,14 +3,14 @@ package cn.xiaojii.cashgift.interactor.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.ContantsValue;
-import cn.xiaojii.cashgift.bean.ProjectBean;
-import cn.xiaojii.cashgift.bean.UserBean;
-import cn.xiaojii.cashgift.interactor.IMainInteractor;
-import cn.xiaojii.cashgift.util.JsonToListUtil;
-import cn.xiaojii.cashgift.util.ListToJsonUtil;
-import cn.xiaojii.cashgift.util.ReadFileToStringUtil;
-import cn.xiaojii.cashgift.util.WriteStringToFileUtil;
+import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
+import cn.xiaojii.cashgift.bean.global.UserBean;
+import cn.xiaojii.cashgift.interactor.inter.activity.IMainInteractor;
+import cn.xiaojii.cashgift.util.json.JsonToListUtil;
+import cn.xiaojii.cashgift.util.json.ListToJsonUtil;
+import cn.xiaojii.cashgift.util.io.ReadFileToStringUtil;
+import cn.xiaojii.cashgift.util.io.WriteStringToFileUtil;
 
 /**
  * @author dmrfcoder
@@ -29,7 +29,7 @@ public class MainInterator implements IMainInteractor {
 
     public void onDestroy() {
         String json = ListToJsonUtil.ListToJson(projectBeanList);
-        WriteStringToFileUtil.write(json, ContantsValue.filename);
+        WriteStringToFileUtil.write(json, ContantsBean.filename);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MainInterator implements IMainInteractor {
 
     public void initData(OnInitDataListener onInitDataListener) {
 
-        String fileContent = ReadFileToStringUtil.read(ContantsValue.filename);
+        String fileContent = ReadFileToStringUtil.read(ContantsBean.filename);
         List<ProjectBean> projectBeanList = JsonToListUtil.jsonToList(fileContent);
 
         if (projectBeanList == null) {

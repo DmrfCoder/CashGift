@@ -12,7 +12,7 @@ import org.robolectric.shadows.ShadowLog;
 import java.util.List;
 
 import cn.xiaojii.cashgift.BuildConfig;
-import cn.xiaojii.cashgift.bean.ProjectBean;
+import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 import cn.xiaojii.cashgift.interactor.impl.MainInterator;
 
 /**
