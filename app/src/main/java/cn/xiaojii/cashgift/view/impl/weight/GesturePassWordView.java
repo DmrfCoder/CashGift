@@ -4,13 +4,13 @@ package cn.xiaojii.cashgift.view.impl.weight;
  * Created by Wjyyy on 2018/8/9.
  */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -25,23 +25,20 @@ import cn.xiaojii.cashgift.bean.gesture.PointBean;
 import cn.xiaojii.cashgift.util.gesture.MathUtil;
 import cn.xiaojii.cashgift.view.inter.weight.IGesturePassWordView;
 
-public class GesturePassWordView extends View implements IGesturePassWordView{
-    private float width = 0;
-    private float height = 0;
+/**
+ * @author dmrfcoder
+ *
+ */
+public class GesturePassWordView extends View implements IGesturePassWordView {
 
-    //
     private boolean isCache = false;
-    //
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    //
     private PointBean[][] mpoints = new PointBean[3][3];
-    //
     private float dotRadius = 0;
-    //
     private List<PointBean> sPointBeans = new ArrayList<PointBean>();
     private boolean checking = false;
-    private long CLEAR_TIME = 1000;
+    private long clearTime = 1000;
     private int pwdMaxLen = 9;
     private int pwdMinLen = 4;
     private boolean isTouch = true;
@@ -60,8 +57,10 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
     private boolean movingNoPoint = false;
     private float moveingX, moveingY;
     private Timer timer = new Timer();
+
     private TimerTask task = null;
     private OnCompleteListener mCompleteListener;
+
     public GesturePassWordView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
@@ -85,24 +84,24 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
     @Override
     public void drawToCanvas(Canvas canvas) {
         boolean inErrorState = false;
-        for (PointBean[] pointBeans: mpoints){
-            for (PointBean pointBean:pointBeans){
+        for (PointBean[] pointBeans : mpoints) {
+            for (PointBean pointBean : pointBeans) {
                 if (pointBean.state == PointBean.STATE_CHECK) {
                     selectedPaint.setColor(outterSelectedColor);
                     canvas.drawCircle(pointBean.x, pointBean.y, dotRadius, selectedPaint);
                     selectedPaint.setColor(selectedColor);
-                    canvas.drawCircle(pointBean.x, pointBean.y, dotRadius/4, selectedPaint);
+                    canvas.drawCircle(pointBean.x, pointBean.y, dotRadius / 4, selectedPaint);
                 } else if (pointBean.state == PointBean.STATE_CHECK_ERROR) {
                     inErrorState = true;
                     errorPaint.setColor(outterErrorColor);
                     canvas.drawCircle(pointBean.x, pointBean.y, dotRadius, errorPaint);
                     errorPaint.setColor(errorColor);
-                    canvas.drawCircle(pointBean.x, pointBean.y, dotRadius/4, errorPaint);
+                    canvas.drawCircle(pointBean.x, pointBean.y, dotRadius / 4, errorPaint);
                 } else {
                     normalPaint.setColor(dotColor);
                     canvas.drawCircle(pointBean.x, pointBean.y, dotRadius, normalPaint);
                     normalPaint.setColor(outterDotColor);
-                    canvas.drawCircle(pointBean.x, pointBean.y, dotRadius/4, normalPaint);
+                    canvas.drawCircle(pointBean.x, pointBean.y, dotRadius / 4, normalPaint);
                 }
             }
         }
@@ -121,7 +120,7 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
             for (int i = 1; i < sPointBeans.size(); i++) {
                 PointBean p = sPointBeans.get(i);
                 drawLine(tp, p, canvas, linePaint);
-                drawArrow(canvas, arrowPaint, tp, p, dotRadius/4, 38);
+                drawArrow(canvas, arrowPaint, tp, p, dotRadius / 4, 38);
                 tp = p;
             }
             if (this.movingNoPoint) {
@@ -131,28 +130,29 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         }
 
     }
+
     @Override
     public void drawLine(PointBean start, PointBean end, Canvas canvas, Paint paint) {
         double d = MathUtil.distance(start.x, start.y, end.x, end.y);
-        float rx = (float) ((end.x-start.x) * dotRadius / 4 / d);
-        float ry = (float) ((end.y-start.y) * dotRadius / 4 / d);
-        canvas.drawLine(start.x+rx, start.y+ry, end.x-rx, end.y-ry, paint);
+        float rx = (float) ((end.x - start.x) * dotRadius / 4 / d);
+        float ry = (float) ((end.y - start.y) * dotRadius / 4 / d);
+        canvas.drawLine(start.x + rx, start.y + ry, end.x - rx, end.y - ry, paint);
     }
 
     @Override
     public void drawArrow(Canvas canvas, Paint paint, PointBean start, PointBean end, float arrowHeight, int angle) {
         double d = MathUtil.distance(start.x, start.y, end.x, end.y);
-        float sin_B = (float) ((end.x - start.x) / d);
-        float cos_B = (float) ((end.y - start.y) / d);
-        float tan_A = (float) Math.tan(Math.toRadians(angle));
+        float sinB = (float) ((end.x - start.x) / d);
+        float cosB = (float) ((end.y - start.y) / d);
+        float tanA = (float) Math.tan(Math.toRadians(angle));
         float h = (float) (d - arrowHeight - dotRadius * 1.1);
-        float l = arrowHeight * tan_A;
-        float a = l * sin_B;
-        float b = l * cos_B;
-        float x0 = h * sin_B;
-        float y0 = h * cos_B;
-        float x1 = start.x + (h + arrowHeight) * sin_B;
-        float y1 = start.y + (h + arrowHeight) * cos_B;
+        float l = arrowHeight * tanA;
+        float a = l * sinB;
+        float b = l * cosB;
+        float x0 = h * sinB;
+        float y0 = h * cosB;
+        float x1 = start.x + (h + arrowHeight) * sinB;
+        float y1 = start.y + (h + arrowHeight) * cosB;
         float x2 = start.x + x0 - b;
         float y2 = start.y + y0 + a;
         float x3 = start.x + x0 + b;
@@ -167,8 +167,8 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
 
     @Override
     public void initCache() {
-        width = this.getWidth();
-        height = this.getHeight();
+        float width = this.getWidth();
+        float height = this.getHeight();
         float x = 0;
         float y = 0;
 
@@ -195,15 +195,14 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         mpoints[2][1] = new PointBean(x + middleX, y + middleY + dotPadding, 8);
         mpoints[2][2] = new PointBean(x + middleX + dotPadding, y + middleY + dotPadding, 9);
 
-        Log.d("jerome", "canvas width:"+width);
         dotRadius = width / 10;
         isCache = true;
 
-        initPaints();
+        initPaintBeans();
     }
 
     @Override
-    public void initPaints() {
+    public void initPaintBeans() {
         arrowPaint = new Paint();
         arrowPaint.setColor(selectedColor);
         arrowPaint.setStyle(Style.FILL);
@@ -239,16 +238,11 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         return ai;
     }
 
-    /**
-     * @param x
-     * @param y
-     * @return
-     */
+
     @Override
     public PointBean checkSelectPoint(float x, float y) {
-        for (int i = 0; i < mpoints.length; i++) {
-            for (int j = 0; j < mpoints[i].length; j++) {
-                PointBean p = mpoints[i][j];
+        for (PointBean[] mpoint : mpoints) {
+            for (PointBean p : mpoint) {
                 if (MathUtil.checkInRound(p.x, p.y, dotRadius, (int) x, (int) y)) {
                     return p;
                 }
@@ -256,7 +250,6 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         }
         return null;
     }
-
 
 
     @Override
@@ -268,41 +261,31 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         this.enableTouch();
     }
 
-    /**
-     *
-     *
-     * @param p
-     * @return
-     */
+
     @Override
-    public int crossPoint(PointBean p) {
+    public int crossPointBean(PointBean p) {
         // reset
         if (sPointBeans.contains(p)) {
             if (sPointBeans.size() > 2) {
-                //
                 if (sPointBeans.get(sPointBeans.size() - 1).index != p.index) {
                     return 2;
                 }
             }
-            return 1; //
+            return 1;
         } else {
-            return 0; //
+            return 0;
         }
     }
 
-    /**
-     *
-     *
-     * @param point
-     */
+
     @Override
     public void addPointBean(PointBean point) {
         if (sPointBeans.size() > 0) {
             PointBean lastPoint = sPointBeans.get(sPointBeans.size() - 1);
             int dx = Math.abs(lastPoint.getColNum() - point.getColNum());
             int dy = Math.abs(lastPoint.getRowNum() - point.getRowNum());
-            if ((dx > 1 || dy > 1) && (dx == 0 || dy == 0 || dx == dy)) {
-//			if ((dx > 1 || dy > 1) && (dx != 2 * dy) && (dy != 2 * dx)) {
+            boolean ifFlag = (dx > 1 || dy > 1) && (dx == 0 || dy == 0 || dx == dy);
+            if (ifFlag) {
                 int middleIndex = (point.index + lastPoint.index) / 2 - 1;
                 PointBean middlePoint = mpoints[middleIndex / 3][middleIndex % 3];
                 if (middlePoint.state != PointBean.STATE_CHECK) {
@@ -329,9 +312,9 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //
         if (!isTouch) {
             return false;
         }
@@ -341,17 +324,14 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         float ex = event.getX();
         float ey = event.getY();
         boolean isFinish = false;
-        boolean redraw = false;
         PointBean pointBean = null;
+
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: //
-                //
+            case MotionEvent.ACTION_DOWN:
                 if (task != null) {
                     task.cancel();
                     task = null;
-                    Log.d("task", "touch cancel()");
                 }
-                //
                 reset();
                 pointBean = checkSelectPoint(ex, ey);
                 if (pointBean != null) {
@@ -373,39 +353,27 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
                 checking = false;
                 isFinish = true;
                 break;
+            default:
+                break;
         }
         if (!isFinish && checking && pointBean != null) {
 
-            int rk = crossPoint(pointBean);
-            if (rk == 2) //
-            {
-                // reset();
-                // checking = false;
-
+            int rk = crossPointBean(pointBean);
+            if (rk == 2) {
                 movingNoPoint = true;
                 moveingX = ex;
                 moveingY = ey;
-
-                redraw = true;
-            } else if (rk == 0) //
-            {
+            } else if (rk == 0) {
                 pointBean.state = PointBean.STATE_CHECK;
                 addPointBean(pointBean);
-                redraw = true;
             }
-            // rk == 1
-
         }
 
-        //
-        if (redraw) {
 
-        }
         if (isFinish) {
             if (this.sPointBeans.size() == 1) {
                 this.reset();
             } else if (sPointBeans.size() < pwdMinLen || sPointBeans.size() > pwdMaxLen) {
-                // mCompleteListener.onPasswordTooMin(sPointBeans.size());
                 error();
                 clearPassword();
                 Toast.makeText(this.getContext(), "password too short or too long, cannot be saved!",
@@ -419,9 +387,7 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         return true;
     }
 
-    /**
-     *
-     */
+
     @Override
     public void error() {
         for (PointBean p : sPointBeans) {
@@ -430,7 +396,7 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
     }
 
     public void markError() {
-        markError(CLEAR_TIME);
+        markError(clearTime);
     }
 
     public void markError(final long time) {
@@ -439,10 +405,12 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
         }
         this.clearPassword(time);
     }
+
     @Override
     public void enableTouch() {
         isTouch = true;
     }
+
     @Override
     public void disableTouch() {
         isTouch = false;
@@ -450,35 +418,31 @@ public class GesturePassWordView extends View implements IGesturePassWordView{
 
     @Override
     public void clearPassword() {
-        clearPassword(CLEAR_TIME);
+        clearPassword(clearTime);
     }
+
     @Override
     public void clearPassword(final long time) {
         if (time > 1) {
             if (task != null) {
                 task.cancel();
-                Log.d("task", "clearPassword cancel()");
             }
             postInvalidate();
             task = new TimerTask() {
+                @Override
                 public void run() {
                     reset();
                     postInvalidate();
                 }
             };
-            Log.d("task", "clearPassword schedule(" + time + ")");
             timer.schedule(task, time);
         } else {
             reset();
             postInvalidate();
         }
-
     }
 
 
-    /**
-     * @param mCompleteListener
-     */
     @Override
     public void setOnCompleteListener(OnCompleteListener mCompleteListener) {
         this.mCompleteListener = mCompleteListener;

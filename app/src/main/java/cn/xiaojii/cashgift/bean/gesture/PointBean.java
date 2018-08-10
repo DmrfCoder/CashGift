@@ -7,17 +7,13 @@ package cn.xiaojii.cashgift.bean.gesture;
 
 public class PointBean {
     public static int STATE_NORMAL = 0;
-    public static int STATE_CHECK = 1; //
-    public static int STATE_CHECK_ERROR = 2; //
+    public static int STATE_CHECK = 1;
+    public static int STATE_CHECK_ERROR = 2;
 
     public float x;
     public float y;
     public int state = 0;
-    public int index = 0;//
-
-    public PointBean() {
-
-    }
+    public int index = 0;
 
     public PointBean(float x, float y, int value) {
         this.x = x;

@@ -1,7 +1,9 @@
 package cn.xiaojii.cashgift.util.gesture;
 
 /**
- * Created by Wjyyy on 2018/8/9.
+ *
+ * @author Wjyyy
+ * @date 2018/8/9
  */
 
 public class MathUtil {
@@ -11,9 +13,6 @@ public class MathUtil {
                 + Math.abs(y1 - y2) * Math.abs(y1 - y2));
     }
 
-    public static double pointTotoDegrees(double x, double y) {
-        return Math.toDegrees(Math.atan2(x, y));
-    }
 
     public static boolean checkInRound(float sx, float sy, float r, float x,
                                        float y) {

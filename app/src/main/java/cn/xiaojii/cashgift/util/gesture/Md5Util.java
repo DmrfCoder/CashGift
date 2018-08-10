@@ -6,14 +6,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by Wjyyy on 2018/8/9.
+ *
+ * @author Wjyyy
+ * @date 2018/8/9
  */
 
 public class Md5Util {
 
-    // first argument is the password need MD5
-    // second argument is algorithm
-    // third argument is separate symbol
+    /**
+     * first argument is the password need MD5
+     * second argument is algorithm
+     * third argument is separate symbol
+     *
+     * @param original
+     * @param separator
+     * @return
+     */
+
     public String toMd5(String original, String separator) {
         try {
             String result;
@@ -28,54 +37,11 @@ public class Md5Util {
         }
     }
 
-    public String toHexString(byte[] bytes, String separator) {
+    private String toHexString(byte[] bytes, String separator) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : bytes) {
             hexString.append(String.format("%02x", 0xFF & b)).append(separator);
         }
         return hexString.toString();
-    }
-
-    /** Calculate MD5 sum of a file */
-    static final public String calcMD5(File file){
-        try{
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            FileInputStream input = new FileInputStream(file);
-            byte[] buf = new byte[1024];
-
-            while (input.available() > 0) {
-                int res = input.read(buf, 0, buf.length);
-
-                md.update(buf, 0, res);
-            }
-            input.close();
-
-            byte[] md5 = md.digest();
-
-            return bytesToHexString(md5);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        return ""+file.length();
-    }
-
-    /**
-     * Convert an array of bytes to a string of hexadecimal numbers
-     */
-    static final private String bytesToHexString(byte[] array) {
-        StringBuffer res = new StringBuffer();
-
-        for (int i = 0; i < array.length; i++) {
-            int val = array[i] + 256;
-            String b = "00" + Integer.toHexString(val);
-            int len = b.length();
-            String sub = b.substring(len - 2);
-
-            res.append(sub);
-        }
-
-        return res.toString();
     }
 }
