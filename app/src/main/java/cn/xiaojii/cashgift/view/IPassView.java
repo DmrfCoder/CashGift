@@ -7,9 +7,16 @@ package cn.xiaojii.cashgift.view;
 
 public interface IPassView {
 
+    /**
+     * 初始化activity
+     */
     void initActivity();
 
-    void startMainActivity()
+
+    /**
+     * 跳转到MainActivity
+     */
+    void startMainActivity();
 
 
 }
