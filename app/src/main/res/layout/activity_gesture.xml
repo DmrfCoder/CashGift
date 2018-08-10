@@ -15,7 +15,6 @@
     <cn.xiaojii.cashgift.view.impl.GesturePassWordView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-
         android:layout_gravity="center"
         android:layout_weight="4"
         android:id="@+id/id_pass_gesture"/>

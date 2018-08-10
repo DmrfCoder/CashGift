@@ -9,5 +9,7 @@ public interface IPassView {
 
     void initActivity();
 
+    void startMainActivity();
+
 
 }

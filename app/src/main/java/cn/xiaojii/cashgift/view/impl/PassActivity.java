@@ -1,7 +1,10 @@
 package cn.xiaojii.cashgift.view.impl;
 
 import android.app.Activity;
+
 import android.content.Context;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
@@ -9,6 +12,7 @@ import android.support.v4.os.CancellationSignal;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 
 
 import cn.xiaojii.cashgift.R;
@@ -28,6 +32,7 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
     private FingerprintManagerCompat fingerprintManagerCompat;
     //取消的对象
     private CancellationSignal cancellationSignal;
+    private boolean fingerFlag = true;
 
     IGesturePassWordView.OnCompleteListener onCompleteListener=new IGesturePassWordView.OnCompleteListener() {
         @Override
@@ -39,17 +44,20 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
             if (pwd.length() == 0) {
                 sph.putString("password", md5.toMd5(mPassword, ""));
                 Toast.makeText(context, context.getString(R.string.pwd_setted), Toast.LENGTH_LONG).show();
+               startMainActivity();
                 return;
             } else {
                 String encodedPwd = md5.toMd5(mPassword, "");
                 if (encodedPwd.equals(pwd)) {
                     passed = true;
+
                 } else {
                     gesturePassWordView.markError();
                 }
             }
 
             if (passed) {
+                startMainActivity();
                 Log.d("hcj", "password is correct!");
                 Toast.makeText(context, context.getString(R.string.pwd_correct), Toast.LENGTH_LONG).show();
 //					finish();
@@ -76,7 +84,12 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         gesturePassWordView.setOnCompleteListener(onCompleteListener);
 
 
-        fingerprintManagerCompat.authenticate(null, 0, cancellationSignal, new FingerDiscentListener(), null);
+
+        if (fingerFlag) {
+            fingerprintManagerCompat.authenticate(null, 0, cancellationSignal, new FingerDiscentListener(), null);
+        } else {
+            startMainActivity();
+        }
 
 
     }
@@ -111,7 +124,8 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         @Override
         public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
-            //tvHint.setText("指纹识别成功");
+
+            startMainActivity();
         }
 
         @Override
@@ -124,5 +138,12 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
             super.onAuthenticationHelp(helpMsgId, helpString);
         }
+    }
+
+
+    @Override
+    public void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
