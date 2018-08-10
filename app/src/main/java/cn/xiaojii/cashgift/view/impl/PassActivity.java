@@ -1,6 +1,7 @@
 package cn.xiaojii.cashgift.view.impl;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import org.apache.log4j.chainsaw.Main;
 
 import cn.xiaojii.cashgift.R;
 import cn.xiaojii.cashgift.view.IPassView;
@@ -24,6 +27,7 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
     private FingerprintManagerCompat fingerprintManagerCompat;
     //取消的对象
     private CancellationSignal cancellationSignal;
+    private boolean fingerFlag = true;
 
 
     @Override
@@ -41,11 +45,13 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         cancellationSignal = new CancellationSignal();
 
 
-        findViewById(R.id.id_set).setOnClickListener(this);
-        findViewById(R.id.id_yanzheng).setOnClickListener(this);
 
         tvHint = findViewById(R.id.id_txt);
-        fingerprintManagerCompat.authenticate(null, 0, cancellationSignal, new FingerDiscentListener(), null);
+        if (fingerFlag) {
+            fingerprintManagerCompat.authenticate(null, 0, cancellationSignal, new FingerDiscentListener(), null);
+        } else {
+            startMainActivity();
+        }
 
 
     }
@@ -81,6 +87,7 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
             tvHint.setText("指纹识别成功");
+            startMainActivity();
         }
 
         @Override
@@ -93,5 +100,12 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
         public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
             super.onAuthenticationHelp(helpMsgId, helpString);
         }
+    }
+
+
+    @Override
+    public void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
