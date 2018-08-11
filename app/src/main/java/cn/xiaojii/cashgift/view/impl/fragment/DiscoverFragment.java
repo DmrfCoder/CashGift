@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.xiaojii.cashgift.R;
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.view.impl.base.BaseFragment;
 import cn.xiaojii.cashgift.view.inter.fragment.IDiscoverView;
 
@@ -43,7 +42,7 @@ public class DiscoverFragment extends BaseFragment implements IDiscoverView, Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_discover_excel:
-                EventBus.getDefault().post(ContantsBean.EXPORTEXCEL);
+                EventBus.getDefault().post(ConstantsBean.EXPORTEXCEL);
                 break;
             default:
                 break;

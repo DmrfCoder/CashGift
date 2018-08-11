@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 
 /**
  * @author dmrfcoder
@@ -23,13 +23,13 @@ public class ReadFileToStringUtil {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             try {
 
-                File dir = new File(Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ContantsBean.filepath);
+                File dir = new File(Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ConstantsBean.filepath);
                 //文件夹是否已经存在
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
-                filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ContantsBean.filepath + "/" + filename + ".json";
+                filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ConstantsBean.filepath + "/" + filename + ".json";
                 try {
                     FileInputStream input = new FileInputStream(filename);
                     byte[] b = new byte[input.available()];

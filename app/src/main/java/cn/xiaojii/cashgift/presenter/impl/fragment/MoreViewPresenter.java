@@ -2,7 +2,7 @@ package cn.xiaojii.cashgift.presenter.impl.fragment;
 
 import android.support.v4.app.Fragment;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.bean.global.PasswordBean;
 import cn.xiaojii.cashgift.interactor.inter.fragment.IMoreInteractor;
 import cn.xiaojii.cashgift.presenter.inter.fragment.IMoreViewPresenter;
@@ -27,7 +27,7 @@ public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.Up
     @Override
     public void updatePasswordBean() {
         SharedPreferencesUtil sph = SharedPreferencesUtil.getInstance(((Fragment) iMoreView).getActivity().getApplicationContext());
-        PasswordBean passwordBean = sph.getPasswordBean(ContantsBean.APP_CONFIG_SP_KEY);
+        PasswordBean passwordBean = sph.getPasswordBean(ConstantsBean.APP_CONFIG_SP_KEY);
         iMoreInteractor.updatePasswordBean(passwordBean, this);
     }
 

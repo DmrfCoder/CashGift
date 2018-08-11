@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 import cn.xiaojii.cashgift.bean.message.ProjectBeanMessageBean;
 import cn.xiaojii.cashgift.bean.message.ProjectListMessageBean;
@@ -54,7 +54,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     @Subscribe
     public void addProjectFromEventBus(ProjectBeanMessageBean projectBeanMessageBean) {
-        if (projectBeanMessageBean.getTag().equals(ContantsBean.TAG_DIALOGFRAGMENT)) {
+        if (projectBeanMessageBean.getTag().equals(ConstantsBean.TAG_DIALOGFRAGMENT)) {
             ProjectBean projectBean = projectBeanMessageBean.getProjectBean();
             mainInterator.AddProject(projectBean, this);
         }
@@ -70,7 +70,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     @Subscribe
     public void receiveExportExcel(String code) {
-        if (code.equals(ContantsBean.EXPORTEXCEL)) {
+        if (code.equals(ConstantsBean.EXPORTEXCEL)) {
             mainInterator.exportExcel(this);
         }
     }
@@ -100,7 +100,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     }
 
     private void sendListEventBus(List list) {
-        ProjectListMessageBean projectListMessageBean = new ProjectListMessageBean(list, ContantsBean.TAG_MAINPRESENTER);
+        ProjectListMessageBean projectListMessageBean = new ProjectListMessageBean(list, ConstantsBean.TAG_MAINPRESENTER);
         EventBus.getDefault().postSticky(projectListMessageBean);
     }
 
@@ -111,7 +111,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
 
     @Override
     public void onExportExcelSuccess(List list, UserBean userBean) {
-        File file = new File(ContantsBean.APP_FOLDER_PATH);
+        File file = new File(ConstantsBean.APP_FOLDER_PATH);
         //文件夹是否已经存在
         if (!file.exists()) {
             file.mkdirs();

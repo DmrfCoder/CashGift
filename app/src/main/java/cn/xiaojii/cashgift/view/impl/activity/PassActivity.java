@@ -7,6 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
 import android.util.Log;
@@ -14,10 +18,11 @@ import android.view.View;
 import android.widget.Toast;
 
 
-
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.util.gesture.Md5Util;
 import cn.xiaojii.cashgift.util.io.SharedPreferencesUtil;
+import cn.xiaojii.cashgift.view.impl.fragment.GestureFragment;
 import cn.xiaojii.cashgift.view.inter.weight.IGesturePassWordView;
 import cn.xiaojii.cashgift.view.inter.activity.IPassView;
 import cn.xiaojii.cashgift.view.impl.weight.GesturePassWordView;
@@ -27,7 +32,7 @@ import cn.xiaojii.cashgift.view.impl.weight.GesturePassWordView;
  * @date 2018/8/10
  */
 
-public class PassActivity extends Activity implements IPassView, View.OnClickListener {
+public class PassActivity extends FragmentActivity implements IPassView, View.OnClickListener {
     private GesturePassWordView gesturePassWordView;
     private Context context;
     private FingerprintManagerCompat fingerprintManagerCompat;
@@ -35,36 +40,8 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
     private CancellationSignal cancellationSignal;
     private boolean fingerFlag = true;
 
-    IGesturePassWordView.OnCompleteListener onCompleteListener=new IGesturePassWordView.OnCompleteListener() {
-        @Override
-        public void onComplete(String mPassword) {
-            SharedPreferencesUtil sph = SharedPreferencesUtil.getInstance(getApplicationContext());
-            String pwd = sph.getString("password", "");
-            Md5Util md5 = new Md5Util();
-            boolean passed = false;
-            if (pwd.length() == 0) {
-                sph.putString("password", md5.toMd5(mPassword, ""));
-                Toast.makeText(context, context.getString(R.string.pwd_setted), Toast.LENGTH_LONG).show();
-               startMainActivity();
-                return;
-            } else {
-                String encodedPwd = md5.toMd5(mPassword, "");
-                if (encodedPwd.equals(pwd)) {
-                    passed = true;
-
-                } else {
-                    gesturePassWordView.markError();
-                }
-            }
-
-            if (passed) {
-                startMainActivity();
-                Log.d("hcj", "password is correct!");
-                Toast.makeText(context, context.getString(R.string.pwd_correct), Toast.LENGTH_LONG).show();
-//					finish();
-            }
-        }
-    };
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -78,12 +55,19 @@ public class PassActivity extends Activity implements IPassView, View.OnClickLis
     @Override
     public void initActivity() {
 
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment fragment = GestureFragment.getInstance(ConstantsBean.GESTURE_TYPE.GESTURE_SET);
+        fragmentTransaction.replace(R.id.id_pass_gesture_fragment, fragment, fragment.getClass().getName());
+
+        fragmentTransaction.commit();
+
+
         fingerprintManagerCompat = FingerprintManagerCompat.from(this);
         cancellationSignal = new CancellationSignal();
         context = getApplicationContext();
-        gesturePassWordView = (GesturePassWordView) this.findViewById(R.id.id_pass_gesture);
-        gesturePassWordView.setOnCompleteListener(onCompleteListener);
-
 
 
         if (fingerFlag) {

@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 import cn.xiaojii.cashgift.bean.message.ProjectListMessageBean;
 import cn.xiaojii.cashgift.interactor.inter.base.IBaseFragmentInteractor;
@@ -47,7 +47,7 @@ public class ProjectTableFragmentPresenter implements IProjectTablePresenter, IB
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageBean projectListMessageBean) {
-        if (projectListMessageBean.getTag().equals(ContantsBean.TAG_MAINPRESENTER)) {
+        if (projectListMessageBean.getTag().equals(ConstantsBean.TAG_MAINPRESENTER)) {
             List dataList = projectListMessageBean.getProjectBeans();
             projectTableInterator.initData(dataList, this);
         }
@@ -105,7 +105,7 @@ public class ProjectTableFragmentPresenter implements IProjectTablePresenter, IB
     public void onClickProjectTableItemSuccess(List list) {
         ProjectTableItemFragment projectTableItemFragment=new ProjectTableItemFragment();
         ((MainActivity) ((Fragment) iProjectTableView).getActivity()).startfragment(projectTableItemFragment, true);
-        ProjectListMessageBean projectListMessageBean = new ProjectListMessageBean(list, ContantsBean.TAG_PROJECTTABLE);
+        ProjectListMessageBean projectListMessageBean = new ProjectListMessageBean(list, ConstantsBean.TAG_PROJECTTABLE);
         EventBus.getDefault().postSticky(projectListMessageBean);
     }
 }

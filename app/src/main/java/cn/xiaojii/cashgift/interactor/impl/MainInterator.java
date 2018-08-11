@@ -3,7 +3,7 @@ package cn.xiaojii.cashgift.interactor.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 import cn.xiaojii.cashgift.bean.global.UserBean;
 import cn.xiaojii.cashgift.interactor.inter.activity.IMainInteractor;
@@ -29,7 +29,7 @@ public class MainInterator implements IMainInteractor {
 
     public void onDestroy() {
         String json = ListToJsonUtil.ListToJson(projectBeanList);
-        WriteStringToFileUtil.write(json, ContantsBean.filename);
+        WriteStringToFileUtil.write(json, ConstantsBean.filename);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MainInterator implements IMainInteractor {
 
     public void initData(OnInitDataListener onInitDataListener) {
 
-        String fileContent = ReadFileToStringUtil.read(ContantsBean.filename);
+        String fileContent = ReadFileToStringUtil.read(ConstantsBean.filename);
         List<ProjectBean> projectBeanList = JsonToListUtil.jsonToList(fileContent);
 
         if (projectBeanList == null) {

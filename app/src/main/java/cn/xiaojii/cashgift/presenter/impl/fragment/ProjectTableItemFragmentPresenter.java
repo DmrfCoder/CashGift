@@ -6,7 +6,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 import cn.xiaojii.cashgift.bean.message.ProjectListMessageBean;
 import cn.xiaojii.cashgift.interactor.inter.fragment.IProjectTableItemInteractor;
@@ -38,9 +38,9 @@ public class ProjectTableItemFragmentPresenter implements IProjectTableItemPrese
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageBean projectListMessageBean) {
-        if (projectListMessageBean.getTag().equals(ContantsBean.TAG_PROJECTTABLE)) {
+        if (projectListMessageBean.getTag().equals(ConstantsBean.TAG_PROJECTTABLE)) {
             projectTableItemInteractor.initData(projectListMessageBean.getProjectBeans(), this);
-        } else if (projectListMessageBean.getTag().equals(ContantsBean.TAG_MAINPRESENTER)) {
+        } else if (projectListMessageBean.getTag().equals(ConstantsBean.TAG_MAINPRESENTER)) {
             List<ProjectBean> projectBeans = projectListMessageBean.getProjectBeans();
             ProjectBean projectBean = projectBeans.get(projectBeans.size() - 1);
             projectTableItemInteractor.addSignalProjectBean(projectBean,this);

@@ -9,8 +9,7 @@ import java.io.IOException;
  * @date 2018/8/3
  */
 
-public class ContantsBean {
-    public static final String GESTURE_KEY ="gesture_key" ;
+public class ConstantsBean {
 
     public static enum inOrOut {
         IN, OUT
@@ -44,17 +43,51 @@ public class ContantsBean {
 
     public static String EXPORTEXCEL = "export_excel";
 
-    public static String CASHGIFT_GESTURE_PWD_KEY="CASHGIFT_GESTURE_PWD_KEY";
-    public static String APP_CONFIG_SP_KEY="APP_CONFIG_SP_KEY";
+    public static String CASHGIFT_GESTURE_PWD_KEY = "CASHGIFT_GESTURE_PWD_KEY";
+    public static String APP_CONFIG_SP_KEY = "APP_CONFIG_SP_KEY";
 
 
+    /**
+     * 手势枚举
+     */
+    public enum GESTURE_TYPE {
+        /**
+         * 设置、重置、验证
+         */
+        GESTURE_SET("set", 0), GESTURE_RESET("reset", 1), GESTURE_VERIFICATION("verification", 2);
+        private String name;
+        private int index;
 
+        GESTURE_TYPE(String name, int index) {
+            this.name = name;
+            this.index = index;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public static GESTURE_TYPE getItemByIndex(int index) {
+            for (GESTURE_TYPE gesture_type : GESTURE_TYPE.values()) {
+                if (gesture_type.getIndex() == index) {
+                    return gesture_type;
+                }
+            }
+            return null;
+        }
+    }
+
+    public static String GESTURE_KEY = "GESTURE_KEY";
 
     public static String APP_FOLDER_PATH;
 
     static {
         try {
-            APP_FOLDER_PATH = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ContantsBean.filepath;
+            APP_FOLDER_PATH = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + ConstantsBean.filepath;
         } catch (IOException e) {
             e.printStackTrace();
         }

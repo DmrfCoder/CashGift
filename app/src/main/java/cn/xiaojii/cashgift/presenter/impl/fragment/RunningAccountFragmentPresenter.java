@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import cn.xiaojii.cashgift.bean.global.ContantsBean;
+import cn.xiaojii.cashgift.bean.global.ConstantsBean;
 import cn.xiaojii.cashgift.bean.fragment.ProjectBean;
 import cn.xiaojii.cashgift.bean.message.ProjectListMessageBean;
 import cn.xiaojii.cashgift.interactor.inter.base.IBaseFragmentInteractor;
@@ -49,7 +49,7 @@ public class RunningAccountFragmentPresenter implements RunningAccountFragmentIn
     @Override
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void initDataFromMainInteractor(ProjectListMessageBean projectListMessageBean) {
-        if (projectListMessageBean.getTag().equals(ContantsBean.TAG_MAINPRESENTER)) {
+        if (projectListMessageBean.getTag().equals(ConstantsBean.TAG_MAINPRESENTER)) {
             List dataList = projectListMessageBean.getProjectBeans();
             runningAccountInteractor.initData(dataList, this);
         }
