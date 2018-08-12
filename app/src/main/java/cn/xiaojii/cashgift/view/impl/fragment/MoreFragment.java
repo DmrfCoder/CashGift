@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import cn.xiaojii.cashgift.R;
+import cn.xiaojii.cashgift.interactor.impl.MoreInteractor;
+import cn.xiaojii.cashgift.presenter.impl.fragment.MoreViewPresenter;
 import cn.xiaojii.cashgift.util.io.SharedPreferencesUtil;
 import cn.xiaojii.cashgift.view.impl.base.BaseFragment;
 import cn.xiaojii.cashgift.view.inter.fragment.IMoreView;
@@ -27,8 +29,8 @@ public class MoreFragment extends BaseFragment implements IMoreView, CompoundBut
 
     private Switch fingerSwitch;
     private Switch graphWitch;
-    private boolean isShowGesturePwd;
 
+    private MoreViewPresenter moreViewPresenter;
 
     @Nullable
     @Override
@@ -40,7 +42,7 @@ public class MoreFragment extends BaseFragment implements IMoreView, CompoundBut
 
     @Override
     public void initFragment(View view) {
-
+        moreViewPresenter = new MoreViewPresenter(this, new MoreInteractor());
 
         fingerSwitch = view.findViewById(R.id.id_more_finger_switch);
         graphWitch = view.findViewById(R.id.id_more_graph_switch);
@@ -53,21 +55,17 @@ public class MoreFragment extends BaseFragment implements IMoreView, CompoundBut
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         switch (compoundButton.getId()) {
             case R.id.id_more_finger_switch:
-                SharedPreferencesUtil sph = SharedPreferencesUtil.getInstance(getActivity().getApplicationContext());
-
                 if (fingerSwitch.isChecked()) {
-                    //从未开启到开启，需要验证指纹
-                    int a = 0;
+                    moreViewPresenter.fingerOnToOff();
                 } else {
-                    //从开启到未开启，也需验证指纹
-                    int bs = 0;
+                    moreViewPresenter.fingerOffToOn();
                 }
                 break;
             case R.id.id_more_graph_switch:
                 if (graphWitch.isChecked()) {
-//从未开启到开启，如果之前未设置手势图像，需要引导用户设置手势，若之前已设置，则直接打开开关
+                    moreViewPresenter.gestureOffToOn();
                 } else {
-//从开启到未开启，需验证手势
+                    moreViewPresenter.gestureOnToOff();
                 }
                 break;
             default:
@@ -76,17 +74,4 @@ public class MoreFragment extends BaseFragment implements IMoreView, CompoundBut
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        graphWitch.setOnCheckedChangeListener(null);
-        if (isShowGesturePwd) {
-            graphWitch.setChecked(true);
-        } else {
-            graphWitch.setChecked(false);
-        }
-
-        //注册回调
-        graphWitch.setOnCheckedChangeListener(this);
-    }
 }

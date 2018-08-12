@@ -42,7 +42,7 @@ public class DiscoverFragment extends BaseFragment implements IDiscoverView, Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_discover_excel:
-                EventBus.getDefault().post(ConstantsBean.EXPORTEXCEL);
+                EventBus.getDefault().post(ConstantsBean.EXPOR_TEXCEL);
                 break;
             default:
                 break;

@@ -27,7 +27,7 @@ public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.Up
     @Override
     public void updatePasswordBean() {
         SharedPreferencesUtil sph = SharedPreferencesUtil.getInstance(((Fragment) iMoreView).getActivity().getApplicationContext());
-        PasswordBean passwordBean = sph.getPasswordBean(ConstantsBean.APP_CONFIG_SP_KEY);
+        PasswordBean passwordBean = sph.getPasswordBean(ConstantsBean.APP_CONFIG_GESTURE_SP_KEY);
         iMoreInteractor.updatePasswordBean(passwordBean, this);
     }
 
@@ -38,6 +38,26 @@ public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.Up
 
     @Override
     public void setGestureFlag(boolean gestureFlag, String pass) {
+
+    }
+
+    @Override
+    public void gestureOnToOff() {
+
+    }
+
+    @Override
+    public void gestureOffToOn() {
+
+    }
+
+    @Override
+    public void fingerOnToOff() {
+
+    }
+
+    @Override
+    public void fingerOffToOn() {
 
     }
 

@@ -70,7 +70,7 @@ public class MainPresenter implements IMainPresenter, MainInterator.OnInitDataLi
     @Override
     @Subscribe
     public void receiveExportExcel(String code) {
-        if (code.equals(ConstantsBean.EXPORTEXCEL)) {
+        if (code.equals(ConstantsBean.EXPOR_TEXCEL)) {
             mainInterator.exportExcel(this);
         }
     }
