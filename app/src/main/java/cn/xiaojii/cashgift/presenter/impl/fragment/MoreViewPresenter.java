@@ -7,6 +7,7 @@ import cn.xiaojii.cashgift.bean.global.PasswordBean;
 import cn.xiaojii.cashgift.interactor.inter.fragment.IMoreInteractor;
 import cn.xiaojii.cashgift.presenter.inter.fragment.IMoreViewPresenter;
 import cn.xiaojii.cashgift.util.io.SharedPreferencesUtil;
+import cn.xiaojii.cashgift.view.impl.activity.MainActivity;
 import cn.xiaojii.cashgift.view.inter.fragment.IMoreView;
 
 /**
@@ -14,7 +15,7 @@ import cn.xiaojii.cashgift.view.inter.fragment.IMoreView;
  * @date 2018/8/10
  */
 
-public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.UpdatePasswordBeanListener {
+public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.DestroyListener,IMoreInteractor.UpdatePasswordBeanListener {
     private IMoreView iMoreView;
     private IMoreInteractor iMoreInteractor;
 
@@ -22,6 +23,17 @@ public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.Up
         this.iMoreView = iMoreView;
         this.iMoreInteractor = iMoreInteractor;
         updatePasswordBean();
+    }
+
+    @Override
+    public boolean verifyGesture() {
+
+        return false;
+    }
+
+    @Override
+    public boolean verifyFinger() {
+        return false;
     }
 
     @Override
@@ -62,6 +74,11 @@ public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.Up
     }
 
     @Override
+    public void Destroy( ) {
+        iMoreInteractor.Destroy(this);
+    }
+
+    @Override
     public void onUpdatePasswordBeanError() {
         //没有从SP中读出可用的配置信息
     }
@@ -69,5 +86,16 @@ public class MoreViewPresenter implements IMoreViewPresenter, IMoreInteractor.Up
     @Override
     public void onUpdatePasswordBeanSuccess(PasswordBean passwordBean) {
         //配置记录
+    }
+
+    @Override
+    public void onDestroyError() {
+
+    }
+
+    @Override
+    public void onDestroySuccess(PasswordBean passwordBean) {
+SharedPreferencesUtil sharedPreferencesUtil=SharedPreferencesUtil.getInstance(((Fragment)iMoreView).getActivity());
+sharedPreferencesUtil.putPasswordBean(ConstantsBean.GESTURE_KEY,passwordBean);
     }
 }

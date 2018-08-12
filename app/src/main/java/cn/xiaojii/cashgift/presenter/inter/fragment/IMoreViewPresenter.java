@@ -1,11 +1,19 @@
 package cn.xiaojii.cashgift.presenter.inter.fragment;
 
+import cn.xiaojii.cashgift.bean.global.PasswordBean;
+
 /**
  * @author dmrfcoder
  * @date 2018/8/10
  */
 
 public interface IMoreViewPresenter {
+
+
+    boolean verifyGesture();
+
+    boolean verifyFinger();
+
 
     /**
      * 更新PasswordBean
@@ -46,6 +54,10 @@ public interface IMoreViewPresenter {
      * 指纹开关从关闭到开启
      */
     void fingerOffToOn();
+
+    void Destroy();
+
+
 
 
 }

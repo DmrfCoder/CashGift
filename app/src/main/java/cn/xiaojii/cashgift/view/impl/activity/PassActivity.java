@@ -32,7 +32,7 @@ import cn.xiaojii.cashgift.view.impl.weight.GesturePassWordView;
  * @date 2018/8/10
  */
 
-public class PassActivity extends FragmentActivity implements IPassView, View.OnClickListener {
+public class PassActivity extends FragmentActivity implements GestureFragment.GestureListener,IPassView, View.OnClickListener {
     private GesturePassWordView gesturePassWordView;
     private Context context;
     private FingerprintManagerCompat fingerprintManagerCompat;
@@ -87,6 +87,26 @@ public class PassActivity extends FragmentActivity implements IPassView, View.On
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onSetError() {
+
+    }
+
+    @Override
+    public void onSetSuccess(String password) {
+
+    }
+
+    @Override
+    public void onVerifyError() {
+
+    }
+
+    @Override
+    public void onVerifySuccess() {
+
     }
 
 

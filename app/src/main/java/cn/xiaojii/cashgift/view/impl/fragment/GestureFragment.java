@@ -30,7 +30,22 @@ import cn.xiaojii.cashgift.view.inter.weight.IGesturePassWordView;
 public class GestureFragment extends BaseFragment {
 
 
+    public interface GestureListener{
+        void onSetError();
+        void onSetSuccess(String password);
+        void onVerifyError();
+        void onVerifySuccess();
+    }
 
+    private GestureListener gestureListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context!=null){
+            gestureListener= (GestureListener) context;
+        }
+    }
 
     private GesturePassWordView gesturePassWordView;
     private Context context;
@@ -58,9 +73,10 @@ public class GestureFragment extends BaseFragment {
                         firstSetPwd = encodedPwd;
 
                     } else if (firstSetPwd.equals(encodedPwd)) {
-                        sph.putString(ConstantsBean.GESTURE_KEY, encodedPwd);
+                        gestureListener.onSetSuccess(encodedPwd);
                         Toast.makeText(context, "手势设置成功", Toast.LENGTH_LONG).show();
                     } else {
+                        gestureListener.onSetError();
                         Toast.makeText(context, "两次手势不一致，请重新设置", Toast.LENGTH_LONG).show();
                     }
 

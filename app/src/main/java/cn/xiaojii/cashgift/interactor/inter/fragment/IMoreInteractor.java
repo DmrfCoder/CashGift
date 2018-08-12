@@ -9,6 +9,13 @@ import cn.xiaojii.cashgift.bean.global.PasswordBean;
 
 public interface IMoreInteractor {
 
+
+    void Destroy(DestroyListener destroyListener);
+    interface DestroyListener{
+        void onDestroyError();
+        void onDestroySuccess(PasswordBean passwordBean);
+    }
+
     interface UpdatePasswordBeanListener {
         void onUpdatePasswordBeanError();
 

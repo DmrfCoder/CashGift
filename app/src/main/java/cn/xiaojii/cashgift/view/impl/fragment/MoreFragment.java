@@ -52,13 +52,20 @@ public class MoreFragment extends BaseFragment implements IMoreView, CompoundBut
 
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        moreViewPresenter.Destroy();
+    }
+
+    @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         switch (compoundButton.getId()) {
             case R.id.id_more_finger_switch:
                 if (fingerSwitch.isChecked()) {
-                    moreViewPresenter.fingerOnToOff();
-                } else {
                     moreViewPresenter.fingerOffToOn();
+
+                } else {
+                    moreViewPresenter.fingerOnToOff();
                 }
                 break;
             case R.id.id_more_graph_switch:
