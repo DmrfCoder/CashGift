@@ -25,7 +25,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
 /**
- * @author dmrfcoder
+ * @author dmrfcodere
  * @date 2018/8/9
  */
 public class ExcelUtil {
