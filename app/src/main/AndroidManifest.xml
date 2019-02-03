@@ -16,12 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.impl.activity.MainActivity"
+            android:name=".view.impl.activity.PassActivity"
             android:windowSoftInputMode="adjustPan"
             tools:ignore="InnerclassSeparator" />
 
         <activity
-            android:name=".view.impl.activity.PassActivity"
+            android:name=".view.impl.activity.MainActivity"
             android:windowSoftInputMode="adjustPan"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
